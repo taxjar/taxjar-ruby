@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'yard'
+
 group :test do
   gem 'rspec', '~>3'
   gem 'webmock', '~>1'
