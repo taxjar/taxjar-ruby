@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'taxjar/taxjar/version'
+require 'taxjar/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "taxjar-ruby"
-  spec.version       = Taxjar::Ruby::VERSION
+  spec.version       = Taxjar::Version
   spec.authors       = ["Tim Case"]
   spec.email         = ["tim@2drops.net"]
   spec.summary       = %q{Ruby wrapper for Taxjar API}
