@@ -57,7 +57,10 @@ module Taxjar
       end
 
       def extract_error(code, body)
-        nil
+        klass = Taxjar::Error::ERRORS[code]
+        if !klass.nil?
+          klass.from_response(body)
+        end
       end
 
 

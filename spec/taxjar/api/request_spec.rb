@@ -79,14 +79,29 @@ describe Taxjar::API::Request do
 
     it 'should return a body if no errors' do
       stub_request(:get, "https://api.taxjar.com/api_path").
-        with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close', 'Host'=>'api.taxjar.com', 'User-Agent'=>'TaxjarRubyGem/1.0.0'}).
-        to_return(:status => 200, :body => '{"object": {"id": "3"}}', :headers => {content_type: 'application/json; charset utf-8'})
+        with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
+                          'Host'=>'api.taxjar.com',
+                          'User-Agent'=>'TaxjarRubyGem/1.0.0'}).
+        to_return(:status => 200, :body => '{"object": {"id": "3"}}',
+                  :headers => {content_type: 'application/json; charset utf-8'})
 
 
       expect(subject.perform).to eq({id: '3'})
     end
 
-    # it 'should raise error if error thrown'
+    Taxjar::Error::ERRORS.each do |status, exception|
+      context "when HTTP status is #{status}" do
+        it "raises #{exception}" do
+          stub_request(:get, "https://api.taxjar.com/api_path").
+            with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
+                              'Host'=>'api.taxjar.com',
+                              'User-Agent'=>'TaxjarRubyGem/1.0.0'}).
+            to_return(:status => status, :body => '{}',
+                      :headers => {content_type: 'application/json; charset utf-8'})
+          expect{subject.perform}.to raise_error(exception)
+        end
+      end
+    end
   end
 
 end

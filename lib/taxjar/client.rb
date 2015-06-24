@@ -1,4 +1,5 @@
 require 'taxjar/api/api'
+require 'taxjar/error'
 require 'taxjar/api/request'
 require 'taxjar/api/utils'
 module Taxjar
