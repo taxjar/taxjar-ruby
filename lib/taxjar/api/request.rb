@@ -23,7 +23,8 @@ module Taxjar
       end
 
       def perform
-        response = HTTP.with(headers).public_send(request_method, uri.to_s, params: @options)
+        options_key = @request_method == :get ? :params : :json
+        response = HTTP.with(headers).public_send(request_method, uri.to_s, options_key =>  @options)
         response_body = symbolize_keys!(response.parse)
         fail_or_return_response_body(response.code, response_body)
       end

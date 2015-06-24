@@ -77,16 +77,40 @@ describe Taxjar::API::Request do
       Taxjar::API::Request.new(client, :get, '/api_path', 'object')
     end
 
-    it 'should return a body if no errors' do
-      stub_request(:get, "https://api.taxjar.com/api_path").
-        with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
-                          'Host'=>'api.taxjar.com',
-                          'User-Agent'=>'TaxjarRubyGem/1.0.0'}).
-        to_return(:status => 200, :body => '{"object": {"id": "3"}}',
-                  :headers => {content_type: 'application/json; charset utf-8'})
+    context 'with get' do
+      it 'should return a body if no errors' do
+        stub_request(:get, "https://api.taxjar.com/api_path").
+          with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
+                            'Host'=>'api.taxjar.com',
+                            'User-Agent'=>'TaxjarRubyGem/1.0.0'}).
+          to_return(:status => 200, :body => '{"object": {"id": "3"}}',
+                    :headers => {content_type: 'application/json; charset utf-8'})
 
 
-      expect(subject.perform).to eq({id: '3'})
+        expect(subject.perform).to eq({id: '3'})
+      end
+    end
+
+    context 'with POST' do
+
+      let(:client){ Taxjar::Client.new(api_key: 'AK')}
+      let(:subject) do
+        Taxjar::API::Request.new(client, :post, '/api_path', 'object', {:city => "New York"})
+      end
+
+      it 'should return a body if no errors' do
+         stub_request(:post, "https://api.taxjar.com/api_path").
+                    with(:body => "{\"city\":\"New York\"}",
+                         :headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
+                                      'Content-Type'=>'application/json',
+                                      'Host'=>'api.taxjar.com',
+                                      'User-Agent'=>'TaxjarRubyGem/1.0.0'}).
+          to_return(:status => 200, :body => '{"object": {"id": "3"}}',
+                    :headers => {content_type: 'application/json; charset utf-8'})
+
+
+        expect(subject.perform).to eq({id: '3'})
+      end
     end
 
     Taxjar::Error::ERRORS.each do |status, exception|
