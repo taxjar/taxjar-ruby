@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["tim@2drops.net"]
   spec.summary       = %q{Ruby wrapper for Taxjar API}
   spec.description   = %q{Ruby wrapper for Taxjar API, more info at developer.taxjar.com}
-  spec.homepage      = "developers.taxjar.com"
+  spec.homepage      = "http://developers.taxjar.com"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -18,6 +18,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.add_dependency 'addressable', '~>2.3'
+  spec.add_dependency 'http', '~>0.8.12'
+  spec.add_dependency 'http-form_data', '~>1.0'
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
 end
