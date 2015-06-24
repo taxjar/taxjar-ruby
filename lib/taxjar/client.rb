@@ -1,3 +1,6 @@
+require 'taxjar/api/api'
+require 'taxjar/api/request'
+require 'taxjar/api/utils'
 module Taxjar
   class Client
     attr_accessor :api_key
