@@ -121,8 +121,11 @@ describe Taxjar::API::Request do
                               'Host'=>'api.taxjar.com',
                               'User-Agent'=>'TaxjarRubyGem/1.0.0'}).
             to_return(:status => status, :body => '{}',
+                      :body => '{"error": "Not Acceptable",
+                                 "detail": "error explanation",
+                                 "status": "'+ status.to_s + '"}',
                       :headers => {content_type: 'application/json; charset utf-8'})
-          expect{subject.perform}.to raise_error(exception)
+          expect{subject.perform}.to raise_error(exception, 'error explanation')
         end
       end
     end
