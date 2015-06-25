@@ -30,7 +30,7 @@ describe Taxjar::API do
     before do
       @postal_code = "90210"
       stub_get("/v2/enhanced/rates/#{@postal_code}").to_return(body: fixture('rates.json'),
-                                headers: {content_type: 'application/json; charset=utf-8'})
+                                                               headers: {content_type: 'application/json; charset=utf-8'})
 
     end
 
@@ -49,22 +49,18 @@ describe Taxjar::API do
   describe "#tax_for_order" do
     before do
       stub_post("/v2/enhanced/taxes").to_return(body: fixture('taxes.json'),
-                                headers: {content_type: 'application/json; charset=utf-8'})
+                                                headers: {content_type: 'application/json; charset=utf-8'})
 
       @order = {:from_country => 'US',
-                   :from_zip => '92806',
-                   :from_state => 'CA',
-                   :from_city => 'Anaheim',
-                   :from_street => '1731 N. Pheasant St.',
-                   :to_state => 'CA',
-                   :to_city => 'Santa Barbara',
-                   :to_street => '500 N. Molina',
-                   :amount => 15.02,
-                   :shipping => 1.5,
-                   :line_items => [{:line_item => {:quantity => 1,
-                                                   :unit_price => 15.0,
-                                                   :product_tax_code => 20010}}]
-                  }
+                :from_zip => '07001',
+                :from_state => 'NJ',
+                :to_zip => '07446',
+                :amount => 16.50,
+                :shipping => 1.5,
+                :line_items => [{:line_item => {:quantity => 1,
+                                                :unit_price => 15.0,
+                                                :product_tax_code => '20010'}}]
+      }
     end
 
     it 'requests the right resource' do
