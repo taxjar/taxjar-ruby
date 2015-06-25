@@ -19,7 +19,8 @@ module Taxjar
       perform_post_with_object("/v2/enhanced/transactions/orders", 'order', options, Taxjar::Order)
     end
 
-    def update_order(id, options = {})
+    def update_order(options = {})
+      id = options.fetch(:transaction_id)
       perform_put_with_object("/v2/enhanced/transactions/orders/#{id}", 'order', options, Taxjar::Order)
     end
 

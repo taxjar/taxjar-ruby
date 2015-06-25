@@ -109,4 +109,33 @@ describe Taxjar::API do
     end
   end
 
+  describe "#update_order" do
+    before do
+      @order_id = 123
+      stub_put("/v2/enhanced/transactions/orders/#{@order_id}").to_return(body: fixture('order.json'),
+                                            headers: {content_type: 'application/json; charset=utf-8'})
+
+      @order = {:transaction_id => '123',
+                :amount => 17.95,
+                :shipping => 2.0,
+                :line_items => [{:line_item => {:quantity => 1,
+                                                :product_identifier => '12-34243-0',
+                                                :descriptiion => 'Heavy  Widget',
+                                                :unit_price => 15.0,
+                                                :discount => 0.0,
+                                                :sales_tax => 0.95}}]
+      }
+    end
+
+    it 'requests the right resource' do
+      @client.update_order(@order)
+      expect(a_put("/v2/enhanced/transactions/orders/#{@order_id}")).to have_been_made
+    end
+
+    it 'returns the updated order' do
+      order = @client.update_order(@order)
+      expect(order).to be_a Taxjar::Order
+      expect(order.transaction_id).to eq('123')
+    end
+  end
 end
