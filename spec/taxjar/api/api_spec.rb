@@ -89,11 +89,11 @@ describe Taxjar::API do
                 :amount => 17.45,
                 :shipping => 1.5,
                 :sales_tax => 0.95,
-                :line_items => [{:line_item => {:quantity => 1,
-                                                :product_identifier => '12-34243-9',
-                                                :descriptiion => 'Fuzzy Widget',
-                                                :unit_price => 15.0,
-                                                :sales_tax => 0.95}}]
+                :line_items => [{:quantity => 1,
+                                 :product_identifier => '12-34243-9',
+                                 :descriptiion => 'Fuzzy Widget',
+                                 :unit_price => 15.0,
+                                 :sales_tax => 0.95}]
       }
     end
 
@@ -118,12 +118,12 @@ describe Taxjar::API do
       @order = {:transaction_id => '123',
                 :amount => 17.95,
                 :shipping => 2.0,
-                :line_items => [{:line_item => {:quantity => 1,
-                                                :product_identifier => '12-34243-0',
-                                                :descriptiion => 'Heavy  Widget',
-                                                :unit_price => 15.0,
-                                                :discount => 0.0,
-                                                :sales_tax => 0.95}}]
+                :line_items => [{:quantity => 1,
+                                 :product_identifier => '12-34243-0',
+                                 :descriptiion => 'Heavy  Widget',
+                                 :unit_price => 15.0,
+                                 :discount => 0.0,
+                                 :sales_tax => 0.95}]
       }
     end
 
@@ -155,11 +155,11 @@ describe Taxjar::API do
                 :amount => 17.45,
                 :shipping => 1.5,
                 :sales_tax => 0.95,
-                :line_items => [{:line_item => {:quantity => 1,
-                                                :product_identifier => '12-34243-9',
-                                                :descriptiion => 'Fuzzy Widget',
-                                                :unit_price => 15.0,
-                                                :sales_tax => 0.95}}]
+                :line_items => [{:quantity => 1,
+                                 :product_identifier => '12-34243-9',
+                                 :descriptiion => 'Fuzzy Widget',
+                                 :unit_price => 15.0,
+                                 :sales_tax => 0.95}]
       }
     end
 

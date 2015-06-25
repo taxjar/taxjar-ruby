@@ -44,10 +44,10 @@ module Taxjar
       # @param klass [Symbol]
       # @param key1 [Symbol]
       # @param key2 [Symbol]
-      # def object_attr_reader(klass, key1, key2 = nil)
-      #   define_attribute_method(key1, klass, key2)
-      #   define_predicate_method(key1)
-      # end
+      def object_attr_reader(klass, key1, key2 = nil)
+        define_attribute_method(key1, klass, key2)
+        define_predicate_method(key1)
+      end
 
       # Define URI methods from attributes
       #
