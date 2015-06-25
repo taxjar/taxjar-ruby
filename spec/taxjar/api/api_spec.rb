@@ -174,4 +174,34 @@ describe Taxjar::API do
       expect(refund.transaction_id).to eq('321')
     end
   end
+
+  describe "#update_refund" do
+    before do
+      @refund_id = 321
+      stub_put("/v2/enhanced/transactions/refunds/#{@refund_id}").to_return(body: fixture('refund.json'),
+                                            headers: {content_type: 'application/json; charset=utf-8'})
+
+      @refund = {:transaction_id => '321',
+                :amount => 17.95,
+                :shipping => 2.0,
+                :sales_tax => 0.95,
+                :line_items => [{:quantity => 1,
+                                 :product_identifier => '12-34243-9',
+                                 :descriptiion => 'Heavy Widget',
+                                 :unit_price => 15.0,
+                                 :sales_tax => 0.95}]
+      }
+    end
+
+    it 'requests the right resource' do
+      @client.update_refund(@refund)
+      expect(a_put("/v2/enhanced/transactions/refunds/#{@refund_id}")).to have_been_made
+    end
+
+    it 'returns the updated refund' do
+      refund = @client.update_refund(@refund)
+      expect(refund).to be_a Taxjar::Refund
+      expect(refund.transaction_id).to eq('321')
+    end
+  end
 end

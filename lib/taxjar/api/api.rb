@@ -28,8 +28,9 @@ module Taxjar
       perform_post_with_object("/v2/enhanced/transactions/refunds", 'refund', options, Taxjar::Refund)
     end
 
-    def update_refund(id, options = {})
-      perform_put_with_object("/v2/enhanced/transactions/refunds/#{id}", 'order', Taxjar::Refund, options)
+    def update_refund(options = {})
+      id = options.fetch(:transaction_id)
+      perform_put_with_object("/v2/enhanced/transactions/refunds/#{id}", 'refund', options, Taxjar::Refund)
     end
 
   end
