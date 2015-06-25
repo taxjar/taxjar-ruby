@@ -12,7 +12,7 @@ module Taxjar
     end
 
     def tax_for_order(options = {})
-      perform_post_with_object("/v2/enhanced/taxes", 'tax', Taxjar::Tax, options)
+      perform_post_with_object("/v2/enhanced/taxes", 'tax', options, Taxjar::Tax)
     end
 
     def create_order(options = {})

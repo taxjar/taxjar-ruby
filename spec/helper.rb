@@ -15,8 +15,16 @@ def a_get(path)
   a_request(:get, Taxjar::API::Request::BASE_URL + path)
 end
 
+def a_post(path)
+  a_request(:post, Taxjar::API::Request::BASE_URL + path)
+end
+
 def stub_get(path)
   stub_request(:get, Taxjar::API::Request::BASE_URL + path)
+end
+
+def stub_post(path)
+  stub_request(:post, Taxjar::API::Request::BASE_URL + path)
 end
 
 def fixture_path
