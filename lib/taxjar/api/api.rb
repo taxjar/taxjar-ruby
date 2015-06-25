@@ -16,11 +16,11 @@ module Taxjar
     end
 
     def create_order(options = {})
-      perform_post_with_object("/v2/enhanced/transactions/orders", 'order', Taxjar::Order, options)
+      perform_post_with_object("/v2/enhanced/transactions/orders", 'order', options, Taxjar::Order)
     end
 
     def update_order(id, options = {})
-      perform_put_with_object("/v2/enhanced/transactions/orders/#{id}", 'order', Taxjar::Order, options)
+      perform_put_with_object("/v2/enhanced/transactions/orders/#{id}", 'order', options, Taxjar::Order)
     end
 
     def create_refund(options = {})
