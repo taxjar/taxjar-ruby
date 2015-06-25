@@ -4,6 +4,7 @@ require 'taxjar/api/request'
 require 'taxjar/api/utils'
 module Taxjar
   class Client
+    include Taxjar::API
     attr_accessor :api_key
 
     # Initializes a new Client object
