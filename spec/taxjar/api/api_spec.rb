@@ -26,4 +26,23 @@ describe Taxjar::API do
     end
   end
 
+  describe '#rate_for_location' do
+    before do
+      @postal_code = "90210"
+      stub_get("/v2/enhanced/rates/#{@postal_code}").to_return(body: fixture('rates.json'),
+                                                    headers: {content_type: 'application/json; charset=utf-8'})
+
+    end
+
+    it 'requests the right resource' do
+      @client.rates_for_location(@postal_code)
+      expect(a_get("/v2/enhanced/rates/#{@postal_code}")).to have_been_made
+    end
+
+    it 'returns the requested rates' do
+      rates = @client.rates_for_location(@postal_code)
+      expect(rates).to be_a Taxjar::Rate
+      expect(rates.county).to eq('LOS ANGELES')
+    end
+  end
 end

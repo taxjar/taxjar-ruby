@@ -16,7 +16,7 @@ module Taxjar
         perform_request_with_objects(:get, path, object_key, options, klass)
       end
 
-      def perform_request_with_object(request_method, path, object_key, options)
+      def perform_request_with_object(request_method, path, object_key, options, klass)
         response = perform_request(request_method, path, object_key, options)
         klass.new(response)
       end
