@@ -16,3 +16,4 @@ mkmf.log
 *.swo
 vendor/bundle
 tester.rb
+tags
