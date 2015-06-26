@@ -6,7 +6,7 @@ module Taxjar
       :to_state, :to_city, :to_street, :amount, :shipping, :sales_tax
 
     def line_items
-      @line_items ||= map_collection(Woocom::LineItem, :line_items)
+      @line_items ||= map_collection(Taxjar::LineItem, :line_items)
     end
 
   end

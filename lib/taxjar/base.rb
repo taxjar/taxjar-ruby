@@ -114,7 +114,7 @@ module Taxjar
     # Initializes a new object
     #
     # @param attrs [Hash]
-    # @return [Woocom::Base]
+    # @return [Taxjar::Base]
     def initialize(attrs = {})
       attrs = values_as_floats_where_possible(attrs)
       @attrs = attrs || {}
