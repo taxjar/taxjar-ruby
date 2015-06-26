@@ -105,7 +105,7 @@ describe Taxjar::API do
     it 'returns the created order' do
       order = @client.create_order(@order)
       expect(order).to be_a Taxjar::Order
-      expect(order.transaction_id).to eq('123')
+      expect(order.transaction_id).to eq(123)
     end
   end
 
@@ -135,7 +135,7 @@ describe Taxjar::API do
     it 'returns the updated order' do
       order = @client.update_order(@order)
       expect(order).to be_a Taxjar::Order
-      expect(order.transaction_id).to eq('123')
+      expect(order.transaction_id).to eq(123)
     end
   end
 
@@ -171,7 +171,7 @@ describe Taxjar::API do
     it 'returns the created order' do
       refund  = @client.create_refund(@refund)
       expect(refund).to be_a Taxjar::Refund
-      expect(refund.transaction_id).to eq('321')
+      expect(refund.transaction_id).to eq(321)
     end
   end
 
@@ -201,7 +201,7 @@ describe Taxjar::API do
     it 'returns the updated refund' do
       refund = @client.update_refund(@refund)
       expect(refund).to be_a Taxjar::Refund
-      expect(refund.transaction_id).to eq('321')
+      expect(refund.transaction_id).to eq(321)
     end
   end
 end
