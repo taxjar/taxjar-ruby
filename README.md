@@ -114,6 +114,21 @@ rates = client.rates_for_location('10001')
                                  :sales_tax => 0.95}]
       })
 ```
+
+### Update refund transaction
+```ruby
+      refund = client.update_refund{
+                :transaction_id => '321',
+                :amount => 17.95,
+                :shipping => 2.0,
+                :sales_tax => 0.95,
+                :line_items => [{:quantity => 1,
+                                 :product_identifier => '12-34243-9',
+                                 :descriptiion => 'Heavy Widget',
+                                 :unit_price => 15.0,
+                                 :sales_tax => 0.95}]
+      })
+```
 ## Tests
 An Rspec test suite is available to ensure API functionality:
 
