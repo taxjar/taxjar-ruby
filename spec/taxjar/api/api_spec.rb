@@ -8,14 +8,14 @@ describe Taxjar::API do
 
   describe '#categories' do
     before do
-      stub_get('/v2/enhanced/categories').to_return(body: fixture('categories.json'),
+      stub_get('/v2/categories').to_return(body: fixture('categories.json'),
                                                     headers: {content_type: 'application/json; charset=utf-8'})
 
     end
 
     it 'requests the right resource' do
       @client.categories
-      expect(a_get('/v2/enhanced/categories')).to have_been_made
+      expect(a_get('/v2/categories')).to have_been_made
     end
 
     it 'returns the requested categories' do
@@ -29,14 +29,14 @@ describe Taxjar::API do
   describe '#rate_for_location' do
     before do
       @postal_code = "90210"
-      stub_get("/v2/enhanced/rates/#{@postal_code}").to_return(body: fixture('rates.json'),
+      stub_get("/v2/rates/#{@postal_code}").to_return(body: fixture('rates.json'),
                                                                headers: {content_type: 'application/json; charset=utf-8'})
 
     end
 
     it 'requests the right resource' do
       @client.rates_for_location(@postal_code)
-      expect(a_get("/v2/enhanced/rates/#{@postal_code}")).to have_been_made
+      expect(a_get("/v2/rates/#{@postal_code}")).to have_been_made
     end
 
     it 'returns the requested rates' do
@@ -48,7 +48,7 @@ describe Taxjar::API do
 
   describe "#tax_for_order" do
     before do
-      stub_post("/v2/enhanced/taxes").to_return(body: fixture('taxes.json'),
+      stub_post("/v2/taxes").to_return(body: fixture('taxes.json'),
                                                 headers: {content_type: 'application/json; charset=utf-8'})
 
       @order = {:from_country => 'US',
@@ -65,7 +65,7 @@ describe Taxjar::API do
 
     it 'requests the right resource' do
       @client.tax_for_order(@order)
-      expect(a_post("/v2/enhanced/taxes")).to have_been_made
+      expect(a_post("/v2/taxes")).to have_been_made
     end
 
     it 'returns the requested taxes' do
@@ -77,7 +77,7 @@ describe Taxjar::API do
 
   describe "#create_order" do
     before do
-      stub_post("/v2/enhanced/transactions/orders").to_return(body: fixture('order.json'),
+      stub_post("/v2/transactions/orders").to_return(body: fixture('order.json'),
                                             headers: {content_type: 'application/json; charset=utf-8'})
 
       @order = {:transaction_id => '123',
@@ -99,7 +99,7 @@ describe Taxjar::API do
 
     it 'requests the right resource' do
       @client.create_order(@order)
-      expect(a_post("/v2/enhanced/transactions/orders")).to have_been_made
+      expect(a_post("/v2/transactions/orders")).to have_been_made
     end
 
     it 'returns the created order' do
@@ -112,7 +112,7 @@ describe Taxjar::API do
   describe "#update_order" do
     before do
       @order_id = 123
-      stub_put("/v2/enhanced/transactions/orders/#{@order_id}").to_return(body: fixture('order.json'),
+      stub_put("/v2/transactions/orders/#{@order_id}").to_return(body: fixture('order.json'),
                                             headers: {content_type: 'application/json; charset=utf-8'})
 
       @order = {:transaction_id => '123',
@@ -129,7 +129,7 @@ describe Taxjar::API do
 
     it 'requests the right resource' do
       @client.update_order(@order)
-      expect(a_put("/v2/enhanced/transactions/orders/#{@order_id}")).to have_been_made
+      expect(a_put("/v2/transactions/orders/#{@order_id}")).to have_been_made
     end
 
     it 'returns the updated order' do
@@ -141,7 +141,7 @@ describe Taxjar::API do
 
   describe "#create_refund" do
     before do
-      stub_post("/v2/enhanced/transactions/refunds").to_return(body: fixture('refund.json'),
+      stub_post("/v2/transactions/refunds").to_return(body: fixture('refund.json'),
                                             headers: {content_type: 'application/json; charset=utf-8'})
 
       @refund = {:transaction_id => '321',
@@ -165,7 +165,7 @@ describe Taxjar::API do
 
     it 'requests the right resource' do
       @client.create_refund(@refund)
-      expect(a_post("/v2/enhanced/transactions/refunds")).to have_been_made
+      expect(a_post("/v2/transactions/refunds")).to have_been_made
     end
 
     it 'returns the created order' do
@@ -178,7 +178,7 @@ describe Taxjar::API do
   describe "#update_refund" do
     before do
       @refund_id = 321
-      stub_put("/v2/enhanced/transactions/refunds/#{@refund_id}").to_return(body: fixture('refund.json'),
+      stub_put("/v2/transactions/refunds/#{@refund_id}").to_return(body: fixture('refund.json'),
                                             headers: {content_type: 'application/json; charset=utf-8'})
 
       @refund = {:transaction_id => '321',
@@ -195,7 +195,7 @@ describe Taxjar::API do
 
     it 'requests the right resource' do
       @client.update_refund(@refund)
-      expect(a_put("/v2/enhanced/transactions/refunds/#{@refund_id}")).to have_been_made
+      expect(a_put("/v2/transactions/refunds/#{@refund_id}")).to have_been_made
     end
 
     it 'returns the updated refund' do
