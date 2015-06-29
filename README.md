@@ -20,7 +20,7 @@ Installing this gem also installs the following gems:
 
 Add this line to your application's Gemfile:
 ```ruby
-    gem 'taxjar-ruby'
+    gem 'taxjar-ruby', require: 'taxjar'
 ```
 And then execute:
 ```shell
@@ -39,9 +39,6 @@ Then copy and paste in your API keys:
 ```ruby
 client = Taxjar::Client.new(api_key: "YOUR KEY")
 ```
-If you are using Taxjar with a Rails application then a good location
-for the key would be to create an initializer, for example you could
-place the above code in /config/initializers/taxjar.rb.
 
 
 You are ready to use Taxjar.
