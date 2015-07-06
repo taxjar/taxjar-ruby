@@ -55,6 +55,24 @@ categories = client.categories
 rates = client.rates_for_location('10001')
 ```
 
+### Calculate Sales tax for an order
+```ruby
+      order = client.tax_for_order({
+                :to_country => 'US',
+                :to_zip => '90002',
+                :to_city => 'Los Angeles',
+                :from_country => 'US',
+                :from_zip => '92093',
+                :from_city => 'San Diego',                
+                :amount => 16.50,
+                :shipping => 1.5,
+                :line_items => [{:quantity => 1,
+                                 :product_identifier => '12-34243-9',
+                                 :unit_price => 15.0,
+                                 :product_tax_code => 31000}]
+      })
+```
+
 ### Create order transaction
 ```ruby
       order = client.create_order({
