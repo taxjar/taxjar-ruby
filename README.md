@@ -1,6 +1,6 @@
-<a href="http://developers.taxjar.com"><img src="http://www.taxjar.com/img/TJ_logo_color_office_png.png" alt="TaxJar" width="220"></a>
-
 # TaxJar Ruby Gem
+
+<a href="http://developers.taxjar.com"><img src="http://www.taxjar.com/img/TJ_logo_color_office_png.png" alt="TaxJar" width="220"></a>
 
 A Ruby interface to the TaxJar API. TaxJar makes sales tax filing easier for online sellers and merchants. 
 See local jurisdictional tax reports, get payment reminders, and more. You can use our API to access TaxJar API endpoints, 
@@ -109,7 +109,7 @@ order = client.update_order({
     :shipping => 2.0,
     :line_items => [{:quantity => 1,
                      :product_identifier => '12-34243-0',
-                     :description => 'Heavy  Widget',
+                     :description => 'Heavy Widget',
                      :unit_price => 15.0,
                      :discount => 0.0,
                      :sales_tax => 0.95}]
