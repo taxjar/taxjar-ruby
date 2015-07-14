@@ -1,6 +1,6 @@
-# TaxJar Ruby Gem
-
 <a href="http://developers.taxjar.com"><img src="http://www.taxjar.com/img/TJ_logo_color_office_png.png" alt="TaxJar" width="220"></a>
+
+# TaxJar Ruby Gem
 
 A Ruby interface to the TaxJar API. TaxJar makes sales tax filing easier for online sellers and merchants. 
 See local jurisdictional tax reports, get payment reminders, and more. You can use our API to access TaxJar API endpoints, 
@@ -13,38 +13,39 @@ which can get information on sales tax rates, categories or upload transactions.
 
 Installing this gem also installs the following gems:
 
-* [http](https://github.com/httprb/http.rb) http.rb: a fast Ruby HTTP client with a chainable API and full streaming support
-* [addressable](https://github.com/sporkmonger/addressable) Addressable is a replacement for the URI implementation that is part of Ruby's standard library. It more closely conforms to the relevant RFCs and adds support for IRIs and URI templates.
-* [memoizable](https://github.com/dkubb/memoizable) Memoize method return values
+* [http](https://github.com/httprb/http.rb) Fast Ruby HTTP client with a chainable API and full streaming support.
+* [addressable](https://github.com/sporkmonger/addressable) Replacement for the URI implementation that is part of Ruby's standard library. It more closely conforms to the relevant RFCs and adds support for IRIs and URI templates.
+* [memoizable](https://github.com/dkubb/memoizable) Memoize method return values.
 
 ## Installation
 
 Add this line to your application's Gemfile:
+
 ```ruby
 gem 'taxjar-ruby', require: 'taxjar'
 ```
 
 And then execute:
+
 ```shell
 $ bundle install
 ```
 
 Or install it yourself as:
+
 ```shell
 $ gem install taxjar-ruby
 ```
 
 ## Quick Start Guide
 
-First, [get an API key from TaxJar](https://app.taxjar.com/api_sign_up/plus/).
-
-Then copy and paste in your API keys:
+First, [get an API key from TaxJar](https://app.taxjar.com/api_sign_up/plus/). Copy and paste in your API key:
 
 ```ruby
 client = Taxjar::Client.new(api_key: "YOUR KEY")
 ```
 
-You are ready to use TaxJar.
+You are now ready to use TaxJar!
 
 ## Usage
 
@@ -79,6 +80,7 @@ order = client.tax_for_order({
 ```
 
 ### Create order transaction
+
 ```ruby
 order = client.create_order({
     :transaction_id => '123',
@@ -99,6 +101,7 @@ order = client.create_order({
 ```
 
 ### Update order transaction
+
 ```ruby
 order = client.update_order({
     :transaction_id => '123',
@@ -154,21 +157,24 @@ refund = client.update_refund{
 
 ## Tests
 
-An Rspec test suite is available to ensure API functionality:
+An RSpec test suite is available to ensure API functionality:
 
-1. $ git clone git://github.com/taxjar/taxjar-ruby.git
-2. $ bundle install (installs rspec and other supporting gems, see
-   [GEMFILE](https://github.com/taxjar/taxjar-ruby/blob/master/Gemfile)
-   for complete listing)
-3. $ rspec
+```shell
+$ git clone git://github.com/taxjar/taxjar-ruby.git
+$ bundle install
+$ rspec
+```
 
 ## More Information
-More information can be found on the [TaxJar developer site](https://developers.taxjar.com).
+
+More information can be found on the [TaxJar developer site](http://developers.taxjar.com).
 
 ## License
+
 Taxjar is released under the [MIT License](https://github.com/taxjar/taxjar-ruby/blob/master/LICENSE.txt).
 
 ## Support
+
 Bug reports and feature requests should be filed on the [GitHub issue tracking page](https://github.com/taxjar/taxjar-ruby/issues). 
 
 ## Contributing
