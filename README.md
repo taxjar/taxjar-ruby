@@ -42,7 +42,7 @@ $ gem install taxjar-ruby
 First, [get an API key from TaxJar](https://app.taxjar.com/api_sign_up/plus/). Copy and paste in your API key:
 
 ```ruby
-client = Taxjar::Client.new(api_key: "YOUR KEY")
+client = Taxjar::Client.new(api_key: 'YOUR KEY')
 ```
 
 You are now ready to use TaxJar!
@@ -171,7 +171,7 @@ More information can be found on the [TaxJar developer site](http://developers.t
 
 ## License
 
-Taxjar is released under the [MIT License](https://github.com/taxjar/taxjar-ruby/blob/master/LICENSE.txt).
+TaxJar is released under the [MIT License](https://github.com/taxjar/taxjar-ruby/blob/master/LICENSE.txt).
 
 ## Support
 
