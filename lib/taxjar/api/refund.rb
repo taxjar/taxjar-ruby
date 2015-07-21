@@ -4,7 +4,8 @@ module Taxjar
     module Refund
       include Taxjar::API::Utils
 
-      def list_refunds
+      def list_refunds(options = {})
+        perform_get_with_array("/v2/transactions/refunds", 'refunds', options)
       end
 
       def show_refund

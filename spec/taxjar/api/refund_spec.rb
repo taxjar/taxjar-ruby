@@ -6,6 +6,51 @@ describe Taxjar::API::Refund do
     @client = Taxjar::Client.new(api_key: 'AK')
   end
 
+  describe "#list_refunds" do
+    context "without parameters" do
+      before do
+        stub_get('/v2/transactions/refunds').to_return(body: fixture('refunds.json'),
+                                                      headers: {content_type: 'application/json; charset=utf-8'})
+
+      end
+
+      it 'requests the right resource' do
+        @client.list_refunds
+        expect(a_get('/v2/transactions/refunds')).to have_been_made
+      end
+
+      it 'returns the requested refunds' do
+        refunds = @client.list_refunds
+        expect(refunds).to be_an Array
+        expect(refunds.first).to be_a String
+        expect(refunds.first).to eq('321')
+      end
+    end
+
+    context "with parameters" do
+      before do
+        stub_get('/v2/transactions/refunds?from_transaction_date=2015/05/01&to_transaction_date=2015/05/31').
+          to_return(body: fixture('refunds.json'),
+                    headers: {content_type: 'application/json; charset=utf-8'})
+
+      end
+
+      it 'requests the right resource' do
+        @client.list_refunds(from_transaction_date: '2015/05/01',
+                                     to_transaction_date: '2015/05/31')
+        expect(a_get('/v2/transactions/refunds?from_transaction_date=2015/05/01&to_transaction_date=2015/05/31')).to have_been_made
+      end
+
+      it 'returns the requested refunds' do
+        refunds = @client.list_refunds(from_transaction_date: '2015/05/01',
+                                     to_transaction_date: '2015/05/31')
+        expect(refunds).to be_an Array
+        expect(refunds.first).to be_a String
+        expect(refunds.first).to eq('321')
+      end
+    end
+  end
+
   describe "#create_refund" do
     before do
       stub_post("/v2/transactions/refunds").to_return(body: fixture('refund.json'),
@@ -35,7 +80,7 @@ describe Taxjar::API::Refund do
       expect(a_post("/v2/transactions/refunds")).to have_been_made
     end
 
-    it 'returns the created order' do
+    it 'returns the created refund' do
       refund  = @client.create_refund(@refund)
       expect(refund).to be_a Taxjar::Refund
       expect(refund.transaction_id).to eq(321)
