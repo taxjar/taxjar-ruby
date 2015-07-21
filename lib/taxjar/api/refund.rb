@@ -12,9 +12,6 @@ module Taxjar
         perform_get_with_object("/v2/transactions/refunds/#{id}", 'refund', options, Taxjar::Refund)
       end
 
-      def delete_refund
-      end
-
       def create_refund(options = {})
         perform_post_with_object("/v2/transactions/refunds", 'refund', options, Taxjar::Refund)
       end
@@ -22,6 +19,10 @@ module Taxjar
       def update_refund(options = {})
         id = options.fetch(:transaction_id)
         perform_put_with_object("/v2/transactions/refunds/#{id}", 'refund', options, Taxjar::Refund)
+      end
+
+      def delete_refund(id, options={})
+        perform_delete_with_object("/v2/transactions/refunds/#{id}", 'refund', options, Taxjar::Refund)
       end
     end
   end

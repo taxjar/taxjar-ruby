@@ -135,4 +135,23 @@ describe Taxjar::API::Refund do
       expect(refund.transaction_id).to eq(321)
     end
   end
+
+  describe "#delete_refund" do
+    before do
+        stub_delete('/v2/transactions/refunds/321').
+          to_return(body: fixture('refund.json'),
+                    headers: {content_type: 'application/json; charset=utf-8'})
+    end
+
+    it 'requests the right resource' do
+      @client.delete_refund('321')
+      expect(a_delete('/v2/transactions/refunds/321')).to have_been_made
+    end
+
+    it 'returns the delete refund' do
+      refund = @client.delete_refund('321')
+      expect(refund).to be_an Taxjar::Refund
+      expect(refund.transaction_id).to eq(321)
+    end
+  end
 end
