@@ -74,8 +74,18 @@ client.categories
 
 ### List tax rates for a location (by zip/postal code)
 
+#### Definition
 ```ruby
-rates = client.rates_for_location('10001')
+client.rates_for_location
+```
+#### Example Request
+```ruby
+client.rates_for_location('10001')
+```
+
+#### Example Response
+```ruby
+#<Taxjar::Rate:0x007fc47056a928 @attrs={:zip=>90002, :state=>"CA", :state_rate=>0.065, :county=>"LOS ANGELES", :county_rate=>0.01, :city=>"WATTS", :city_rate=>0, :combined_district_rate=>0.015, :combined_rate=>0.09}>
 ```
 
 ### Calculate Sales tax for an order
