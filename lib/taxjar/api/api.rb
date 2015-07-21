@@ -11,7 +11,5 @@ module Taxjar
       perform_get_with_object("/v2/rates/#{postal_code}", 'rate', options, Taxjar::Rate)
     end
 
-
-
   end
 end
