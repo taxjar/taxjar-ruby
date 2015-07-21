@@ -12,10 +12,6 @@ module Taxjar
         perform_get_with_object("/v2/transactions/orders/#{id}", 'order', options, Taxjar::Order)
       end
 
-      def tax_for_order(options = {})
-        perform_post_with_object("/v2/taxes", 'tax', options, Taxjar::Tax)
-      end
-
       def create_order(options = {})
         perform_post_with_object("/v2/transactions/orders", 'order', options, Taxjar::Order)
       end
