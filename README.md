@@ -80,6 +80,9 @@ client.rates_for_location
 ```
 #### Example Request
 ```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
 client.rates_for_location('10001')
 ```
 
@@ -127,17 +130,49 @@ client.tax_for_order({
 #<Taxjar::Tax:0x007f3945688fc8 @attrs={:order_total_amount=>16.5, :amount_to_collect=>1.35, :has_nexus=>true, :freight_taxable=>false, :tax_source=>"destination", :breakdown=>{:state_taxable_amount=>15.0, :state_tax_collectable=>0.98, :county_taxable_amount=>15.0, :county_tax_collectable=>0.15, :city_taxable_amount=>0.0, :city_tax_collectable=>0.0, :special_district_taxable_amount=>15.0, :special_district_tax_collectable=>0.22, :line_items=>[{:id=>"1", :state_taxable_amount=>15.0, :state_sales_tax_rate=>0.065, :county_taxable_amount=>15.0, :county_tax_rate=>0.01, :city_taxable_amount=>0.0, :city_tax_rate=>0.0, :special_district_taxable_amount=>15.0, :special_tax_rate=>0.015}]}}>
 ```
 
-### Create order transaction
-
+### List order transactions
+#### Definition
 ```ruby
-order = client.create_order({
+client.list_orders
+```
+
+#### Example Request
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.list_orders({:from_transaction_date => '2014/01/01',
+                    :to_transaction_date => '2015/05/30'})
+```
+
+#### Example Response
+```ruby
+["20", "21", "22"]
+```
+
+### Create order transaction
+#### Definition
+```ruby
+client.create_order
+```
+#### Example Request
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.create_order({
     :transaction_id => '123',
     :transaction_date => '2015/05/14',
+    :from_state => 'CA',
+    :from_city => 'Santa Barbara',
+    :from_street => '1218 State St',
+    :from_country => 'US',
+    :from_zip => '93101',
     :to_country => 'US',
-    :to_zip => '90002',
     :to_state => 'CA',
     :to_city => 'Los Angeles',
     :to_street => '123 Palm Grove Ln',
+    :to_zip => '90002',
     :amount => 17.45,
     :shipping => 1.5,
     :sales_tax => 0.95,
@@ -149,6 +184,10 @@ order = client.create_order({
 })
 ```
 
+####Example Response
+```ruby
+#<Taxjar::Order:0x007f6d65b252d0 @attrs={:transaction_id=>20, :user_id=>11836, :transaction_date=>"2015-05-14T00:00:00Z", :transaction_reference_id=>nil, :from_country=>"US", :from_zip=>93101, :from_state=>"CA", :from_city=>"SANTA BARBARA", :from_street=>"1218 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>15.02, :shipping=>1.5, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, :product_identifier=>"12-34243-9", :product_tax_code=>nil, :description=>"Fuzzy Widget", :unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.85"}]}>
+```
 ### Update order transaction
 
 ```ruby
