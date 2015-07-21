@@ -7,22 +7,66 @@ describe Taxjar::API::Order do
   end
 
   describe "#list_orders" do
-    before do
-      stub_get('/v2/transactions/orders').to_return(body: fixture('orders.json'),
-                                                    headers: {content_type: 'application/json; charset=utf-8'})
+    context "without parameters" do
+      before do
+        stub_get('/v2/transactions/orders').to_return(body: fixture('orders.json'),
+                                                      headers: {content_type: 'application/json; charset=utf-8'})
 
+      end
+
+      it 'requests the right resource' do
+        @client.list_orders
+        expect(a_get('/v2/transactions/orders')).to have_been_made
+      end
+
+      it 'returns the requested orders' do
+        orders = @client.list_orders
+        expect(orders).to be_an Array
+        expect(orders.first).to be_a String
+        expect(orders.first).to eq('123')
+      end
+    end
+
+    context "with parameters" do
+      before do
+        stub_get('/v2/transactions/orders?from_transaction_date=2015/05/01&to_transaction_date=2015/05/31').
+          to_return(body: fixture('orders.json'),
+                    headers: {content_type: 'application/json; charset=utf-8'})
+
+      end
+
+      it 'requests the right resource' do
+        @client.list_orders(from_transaction_date: '2015/05/01',
+                                     to_transaction_date: '2015/05/31')
+        expect(a_get('/v2/transactions/orders?from_transaction_date=2015/05/01&to_transaction_date=2015/05/31')).to have_been_made
+      end
+
+      it 'returns the requested orders' do
+        orders = @client.list_orders(from_transaction_date: '2015/05/01',
+                                     to_transaction_date: '2015/05/31')
+        expect(orders).to be_an Array
+        expect(orders.first).to be_a String
+        expect(orders.first).to eq('123')
+      end
+    end
+  end
+
+  describe "#show_order" do
+    before do
+        stub_get('/v2/transactions/orders/123').
+          to_return(body: fixture('order.json'),
+                    headers: {content_type: 'application/json; charset=utf-8'})
     end
 
     it 'requests the right resource' do
-      @client.list_orders
-      expect(a_get('/v2/transactions/orders')).to have_been_made
+      @client.show_order('123')
+      expect(a_get('/v2/transactions/orders/123')).to have_been_made
     end
 
-    it 'returns the requested orders' do
-      orders = @client.list_orders
-      expect(orders).to be_an Array
-      expect(orders.first).to be_a String
-      expect(orders.first).to eq('123')
+    it 'returns the requested order' do
+      order = @client.show_order('123')
+      expect(order).to be_an Taxjar::Order
+      expect(order.transaction_id).to eq(123)
     end
   end
 

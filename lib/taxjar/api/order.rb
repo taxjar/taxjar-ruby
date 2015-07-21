@@ -8,6 +8,10 @@ module Taxjar
         perform_get_with_array("/v2/transactions/orders", 'orders', options)
       end
 
+      def show_order(id, options = {})
+        perform_get_with_object("/v2/transactions/orders/#{id}", 'order', options, Taxjar::Order)
+      end
+
       def tax_for_order(options = {})
         perform_post_with_object("/v2/taxes", 'tax', options, Taxjar::Tax)
       end
@@ -19,9 +23,6 @@ module Taxjar
       def update_order(options = {})
         id = options.fetch(:transaction_id)
         perform_put_with_object("/v2/transactions/orders/#{id}", 'order', options, Taxjar::Order)
-      end
-
-      def show_order
       end
 
       def delete_order
