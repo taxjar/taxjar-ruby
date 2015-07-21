@@ -5,7 +5,27 @@ describe Taxjar::API::Order do
   before do
     @client = Taxjar::Client.new(api_key: 'AK')
   end
-    
+
+  describe "#list_orders" do
+    before do
+      stub_get('/v2/transactions/orders').to_return(body: fixture('orders.json'),
+                                                    headers: {content_type: 'application/json; charset=utf-8'})
+
+    end
+
+    it 'requests the right resource' do
+      @client.list_orders
+      expect(a_get('/v2/transactions/orders')).to have_been_made
+    end
+
+    it 'returns the requested orders' do
+      orders = @client.list_orders
+      expect(orders).to be_an Array
+      expect(orders.first).to be_a String
+      expect(orders.first).to eq('123')
+    end
+  end
+
   describe "#tax_for_order" do
     before do
       stub_post("/v2/taxes").to_return(body: fixture('taxes.json'),

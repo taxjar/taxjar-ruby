@@ -16,6 +16,10 @@ module Taxjar
         perform_request_with_objects(:get, path, object_key, options, klass)
       end
 
+      def perform_get_with_array(path, object_key, options)
+        perform_request_with_array(:get, path, object_key, options)
+      end
+
       def perform_post_with_object(path, object_key, options, klass)
         perform_request_with_object(:post, path, object_key, options, klass)
       end
@@ -34,6 +38,10 @@ module Taxjar
         response_array.collect do |element|
           klass.new(element)
         end
+      end
+
+      def perform_request_with_array(request_method, path, object_key, options)
+        perform_request(request_method, path, object_key, options) || []
       end
     end
   end

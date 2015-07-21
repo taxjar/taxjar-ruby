@@ -4,6 +4,10 @@ module Taxjar
     module Order
       include Taxjar::API::Utils
 
+      def list_orders(options = {})
+        perform_get_with_array("/v2/transactions/orders", 'orders', options)
+      end
+
       def tax_for_order(options = {})
         perform_post_with_object("/v2/taxes", 'tax', options, Taxjar::Tax)
       end
@@ -15,9 +19,6 @@ module Taxjar
       def update_order(options = {})
         id = options.fetch(:transaction_id)
         perform_put_with_object("/v2/transactions/orders/#{id}", 'order', options, Taxjar::Order)
-      end
-
-      def list_orders
       end
 
       def show_order
