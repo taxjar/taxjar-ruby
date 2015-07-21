@@ -28,6 +28,10 @@ module Taxjar
         perform_request_with_object(:put, path, object_key, options, klass)
       end
 
+      def perform_delete_with_object(path, object_key, options, klass)
+        perform_request_with_object(:delete, path, object_key, options, klass)
+      end
+
       def perform_request_with_object(request_method, path, object_key, options, klass)
         response = perform_request(request_method, path, object_key, options)
         klass.new(response)

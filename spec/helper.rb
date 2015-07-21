@@ -19,6 +19,10 @@ def a_post(path)
   a_request(:post, Taxjar::API::Request::BASE_URL + path)
 end
 
+def a_delete(path)
+  a_request(:delete, Taxjar::API::Request::BASE_URL + path)
+end
+
 def a_put(path)
   a_request(:put, Taxjar::API::Request::BASE_URL + path)
 end
@@ -33,6 +37,10 @@ end
 
 def stub_put(path)
   stub_request(:put, Taxjar::API::Request::BASE_URL + path)
+end
+
+def stub_delete(path)
+  stub_request(:delete, Taxjar::API::Request::BASE_URL + path)
 end
 
 def fixture_path

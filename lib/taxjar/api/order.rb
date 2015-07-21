@@ -25,7 +25,8 @@ module Taxjar
         perform_put_with_object("/v2/transactions/orders/#{id}", 'order', options, Taxjar::Order)
       end
 
-      def delete_order
+      def delete_order(id, options={})
+        perform_delete_with_object("/v2/transactions/orders/#{id}", 'order', options, Taxjar::Order)
       end
     end
   end

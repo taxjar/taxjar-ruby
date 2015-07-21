@@ -163,4 +163,23 @@ describe Taxjar::API::Order do
     end
   end
 
+  describe "#delete_order" do
+    before do
+        stub_delete('/v2/transactions/orders/123').
+          to_return(body: fixture('order.json'),
+                    headers: {content_type: 'application/json; charset=utf-8'})
+    end
+
+    it 'requests the right resource' do
+      @client.delete_order('123')
+      expect(a_delete('/v2/transactions/orders/123')).to have_been_made
+    end
+
+    it 'returns the requested order' do
+      # order = @client.show_order('123')
+      # expect(order).to be_an Taxjar::Order
+      # expect(order.transaction_id).to eq(123)
+    end
+  end
+
 end

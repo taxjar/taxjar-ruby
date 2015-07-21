@@ -10,7 +10,7 @@ module Taxjar
       def show_refund
       end
 
-      def delete_order
+      def delete_refund
       end
 
       def create_refund(options = {})
