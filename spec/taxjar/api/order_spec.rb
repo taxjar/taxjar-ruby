@@ -175,10 +175,10 @@ describe Taxjar::API::Order do
       expect(a_delete('/v2/transactions/orders/123')).to have_been_made
     end
 
-    it 'returns the requested order' do
-      # order = @client.show_order('123')
-      # expect(order).to be_an Taxjar::Order
-      # expect(order.transaction_id).to eq(123)
+    it 'returns the deleted order' do
+      order = @client.delete_order('123')
+      expect(order).to be_an Taxjar::Order
+      expect(order.transaction_id).to eq(123)
     end
   end
 
