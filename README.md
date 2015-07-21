@@ -46,8 +46,6 @@ $ gem install taxjar-ruby
 First, [get an API key from TaxJar](https://app.taxjar.com/api_sign_up/plus/). Copy and paste in your API key:
 
 ```ruby
-client = Taxjar::Client.new(api_key: 'YOUR KEY')
-```
 
 You are now ready to use TaxJar!
 
@@ -63,7 +61,7 @@ client.categories
 #### Example Request
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: ''48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
 
 client.categories
 ```
@@ -82,8 +80,17 @@ rates = client.rates_for_location('10001')
 
 ### Calculate Sales tax for an order
 
+#### Definition
 ```ruby
-order = client.tax_for_order({
+client.tax_for_order
+```
+
+#### Example Request
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.tax_for_order({
     :to_country => 'US',
     :to_zip => '90002',
     :to_city => 'Los Angeles',
@@ -93,11 +100,21 @@ order = client.tax_for_order({
     :from_city => 'San Diego',                
     :amount => 16.50,
     :shipping => 1.5,
+    :nexus_addresses => [{:address_id => 1,
+                          :country => 'US',
+                          :zip => '93101',
+                          :state => 'CA',
+                          :city => 'Santa Barbara',
+                          :street => '1218 State St.'}],
     :line_items => [{:quantity => 1,
                      :product_identifier => '12-34243-9',
                      :unit_price => 15.0,
                      :product_tax_code => 31000}]
 })
+```
+####Example Response
+```ruby
+#<Taxjar::Tax:0x007f3945688fc8 @attrs={:order_total_amount=>16.5, :amount_to_collect=>1.35, :has_nexus=>true, :freight_taxable=>false, :tax_source=>"destination", :breakdown=>{:state_taxable_amount=>15.0, :state_tax_collectable=>0.98, :county_taxable_amount=>15.0, :county_tax_collectable=>0.15, :city_taxable_amount=>0.0, :city_tax_collectable=>0.0, :special_district_taxable_amount=>15.0, :special_district_tax_collectable=>0.22, :line_items=>[{:id=>"1", :state_taxable_amount=>15.0, :state_sales_tax_rate=>0.065, :county_taxable_amount=>15.0, :county_tax_rate=>0.01, :city_taxable_amount=>0.0, :city_tax_rate=>0.0, :special_district_taxable_amount=>15.0, :special_tax_rate=>0.015}]}}>
 ```
 
 ### Create order transaction
