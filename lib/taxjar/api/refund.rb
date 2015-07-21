@@ -8,7 +8,8 @@ module Taxjar
         perform_get_with_array("/v2/transactions/refunds", 'refunds', options)
       end
 
-      def show_refund
+      def show_refund(id, options = {})
+        perform_get_with_object("/v2/transactions/refunds/#{id}", 'refund', options, Taxjar::Refund)
       end
 
       def delete_refund

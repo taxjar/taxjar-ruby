@@ -51,6 +51,25 @@ describe Taxjar::API::Refund do
     end
   end
 
+  describe "#show_refund" do
+    before do
+        stub_get('/v2/transactions/refunds/321').
+          to_return(body: fixture('refund.json'),
+                    headers: {content_type: 'application/json; charset=utf-8'})
+    end
+
+    it 'requests the right resource' do
+      @client.show_refund('321')
+      expect(a_get('/v2/transactions/refunds/321')).to have_been_made
+    end
+
+    it 'returns the requested refund' do
+      refund = @client.show_refund('321')
+      expect(refund).to be_an Taxjar::Refund
+      expect(refund.transaction_id).to eq(321)
+    end
+  end
+
   describe "#create_refund" do
     before do
       stub_post("/v2/transactions/refunds").to_return(body: fixture('refund.json'),
