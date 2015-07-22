@@ -135,17 +135,18 @@ client.tax_for_order({
                      :product_tax_code => 31000}]
 })
 ```
-####Example Response
+#### Example Response
 ```
-#<Taxjar::Tax:0x007f3945688fc8 @attrs={:order_total_amount=>16.5, 
-:amount_to_collect=>1.35, :has_nexus=>true, :freight_taxable=>false, 
-:tax_source=>"destination", :breakdown=>{:state_taxable_amount=>15.0, 
-:state_tax_collectable=>0.98, :county_taxable_amount=>15.0, 
-:county_tax_collectable=>0.15, :city_taxable_amount=>0.0, :city_tax_collectable=>0.0, 
-:special_district_taxable_amount=>15.0, :special_district_tax_collectable=>0.22, 
-:line_items=>[{:id=>"1", :state_taxable_amount=>15.0, :state_sales_tax_rate=>0.065, 
-:county_taxable_amount=>15.0, :county_tax_rate=>0.01, :city_taxable_amount=>0.0, 
-:city_tax_rate=>0.0, :special_district_taxable_amount=>15.0, 
+#<Taxjar::Tax:0x007f3945688fc8 @attrs={:order_total_amount=>16.5,
+:amount_to_collect=>1.35, :has_nexus=>true, :freight_taxable=>false,
+:tax_source=>"destination", :breakdown=>{:state_taxable_amount=>15.0,
+:state_tax_collectable=>0.98, :county_taxable_amount=>15.0,
+:county_tax_collectable=>0.15, :city_taxable_amount=>0.0,
+:city_tax_collectable=>0.0,:special_district_taxable_amount=>15.0,
+:special_district_tax_collectable=>0.22,
+:line_items=>[{:id=>"1", :state_taxable_amount=>15.0, :state_sales_tax_rate=>0.065,
+:county_taxable_amount=>15.0, :county_tax_rate=>0.01, :city_taxable_amount=>0.0,
+:city_tax_rate=>0.0, :special_district_taxable_amount=>15.0,
 :special_tax_rate=>0.015}]}}>
 ```
 
