@@ -150,6 +150,23 @@ client.list_orders({:from_transaction_date => '2014/01/01',
 ["20", "21", "22"]
 ```
 
+### Show order transaction
+#### Definition
+```ruby
+client.show_order
+```
+#### Example Request
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.show_order('123')
+```
+#### Example Response
+```ruby
+#<Taxjar::Order:0x007fd3e514a940 @attrs={:transaction_id=>123, :user_id=>11836, :transaction_date=>"2015-05-14T00:00:00Z", :transaction_reference_id=>nil, :from_country=>"US", :from_zip=>93107, :from_state=>"CA", :from_city=>"SANTA BARBARA", :from_street=>"1281 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>17.95, :shipping=>2, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, :product_identifier=>"12-34243-0", :product_tax_code=>nil, :description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.95"}]}>
+```
+
 ### Create order transaction
 #### Definition
 ```ruby
@@ -189,9 +206,13 @@ client.create_order({
 #<Taxjar::Order:0x007f6d65b252d0 @attrs={:transaction_id=>20, :user_id=>11836, :transaction_date=>"2015-05-14T00:00:00Z", :transaction_reference_id=>nil, :from_country=>"US", :from_zip=>93101, :from_state=>"CA", :from_city=>"SANTA BARBARA", :from_street=>"1218 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>15.02, :shipping=>1.5, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, :product_identifier=>"12-34243-9", :product_tax_code=>nil, :description=>"Fuzzy Widget", :unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.85"}]}>
 ```
 ### Update order transaction
-
+#### Definition
 ```ruby
-order = client.update_order({
+client.update_order
+```
+#### Example Request
+```ruby
+client.update_order({
     :transaction_id => '123',
     :amount => 17.95,
     :shipping => 2.0,
@@ -203,14 +224,91 @@ order = client.update_order({
                      :sales_tax => 0.95}]
 })
 ```
+#### Example Response
+```ruby
+#<Taxjar::Order:0x007f6d65b252d0 @attrs={:transaction_id=>123, :user_id=>11836, :transaction_date=>"2015-05-14T00:00:00Z", :transaction_reference_id=>nil, :from_country=>"US", :from_zip=>93101, :from_state=>"CA", :from_city=>"SANTA BARBARA", :from_street=>"1218 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>17.95, :shipping=>2.0, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, :product_identifier=>"12-34243-0", :product_tax_code=>nil, :description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.95"}]}>
+```
+
+### Delete order transaction
+#### Definition
+```ruby
+client.delete_order
+```
+
+#### Example Request
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.delete_order(123)
+```
+#### Example Response
+```ruby
+#<Taxjar::Order:0x007f6d65b252d0 @attrs={:transaction_id=>123, :user_id=>11836, :transaction_date=>"2015-05-14T00:00:00Z", :transaction_reference_id=>nil, :from_country=>"US", :from_zip=>93101, :from_state=>"CA", :from_city=>"SANTA BARBARA", :from_street=>"1218 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>17.95, :shipping=>2.0, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, :product_identifier=>"12-34243-0", :product_tax_code=>nil, :description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.95"}]}>
+```
+
+### Listing refund transactions
+#### Definition
+```ruby
+client.list_refunds
+```
+
+#### Example Request
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.list_refunds({:from_transaction_date => '2014/01/01',
+                     :to_transaction_date => '2015/05/30'})
+```
+
+#### Example Response
+```ruby
+["203", "204", "205"]
+```
+
+### Show refund transaction
+#### Definition
+```ruby
+client.show_refund
+```
+
+#### Example Request
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.show_refund('321')
+```
+#### Example Response
+```ruby
+
+#<Taxjar::Refund:0x007f6da40e33a0 @attrs={:transaction_id=>321, :user_id=>11836, :transaction_date=>"2015-06-14T00:00:00Z", :transaction_reference_id=>123, :from_country=>"US", :from_zip=>93107, :from_state=>"CA", :from_city=>"SANTA BARBARA", :from_street=>"1218 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>17.95, :shipping=>2.0, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, :product_identifier=>"12-34243-0", :product_tax_code=>nil, :description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.95"}]}>
+
+```
+
+
 
 ### Create refund transaction
-
+#### Definition
 ```ruby
+client.create_refund
+```
+
+#### Example Request
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
 refund = client.create_refund({
     :transaction_id => '321',
     :transaction_date => '2015/05/14',
     :transaction_reference_id => '123',
+    :from_country => 'US',
+    :from_zip => '93107',
+    :from_state => 'CA',
+    :from_city => 'Santa Barbara',
+    :from_street => '1218 State St',
     :to_country => 'US',
     :to_zip => '90002',
     :to_state => 'CA',
@@ -227,8 +325,18 @@ refund = client.create_refund({
 })
 ```
 
-### Update refund transaction
+#### Example Response
+```ruby
+#<Taxjar::Refund:0x007f6da40e33a0 @attrs={:transaction_id=>321, :user_id=>11836, :transaction_date=>"2015-06-14T00:00:00Z", :transaction_reference_id=>123, :from_country=>"US", :from_zip=>93107, :from_state=>"CA", :from_city=>"SANTA BARBARA", :from_street=>"1218 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>17.95, :shipping=>2.0, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, :product_identifier=>"12-34243-0", :product_tax_code=>nil, :description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.95"}]}>
+```
 
+### Update refund transaction
+#### Definition
+```ruby
+client.update_refund
+```
+
+#### Example Request
 ```ruby
 refund = client.update_refund{
     :transaction_id => '321',
@@ -241,6 +349,27 @@ refund = client.update_refund{
                      :unit_price => 15.0,
                      :sales_tax => 0.95}]
 })
+```
+
+#### Example Response
+```ruby
+#<Taxjar::Refund:0x007f6da40e33a0 @attrs={:transaction_id=>321, :user_id=>11836, :transaction_date=>"2015-06-14T00:00:00Z", :transaction_reference_id=>123, :from_country=>"US", :from_zip=>93107, :from_state=>"CA", :from_city=>"SANTA BARBARA", :from_street=>"1218 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>17.95, :shipping=>2.0, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, :product_identifier=>"12-34243-9", :product_tax_code=>nil, :description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.95"}]}>
+```
+
+### Delete refund transaction
+#### Definition
+```ruby
+client.delete_refund
+```
+
+#### Example Request
+```ruby
+client.delete_refund(321)
+```
+
+#### Example Response
+```ruby
+#<Taxjar::Refund:0x007f6da40e33a0 @attrs={:transaction_id=>321, :user_id=>11836, :transaction_date=>"2015-06-14T00:00:00Z", :transaction_reference_id=>123, :from_country=>"US", :from_zip=>93107, :from_state=>"CA", :from_city=>"SANTA BARBARA", :from_street=>"1218 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>17.95, :shipping=>2.0, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, :product_identifier=>"12-34243-9", :product_tax_code=>nil, :description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.95"}]}>
 ```
 
 ## Tests
