@@ -145,7 +145,8 @@ client.tax_for_order({
 :special_district_taxable_amount=>15.0, :special_district_tax_collectable=>0.22, 
 :line_items=>[{:id=>"1", :state_taxable_amount=>15.0, :state_sales_tax_rate=>0.065, 
 :county_taxable_amount=>15.0, :county_tax_rate=>0.01, :city_taxable_amount=>0.0, 
-:city_tax_rate=>0.0, :special_district_taxable_amount=>15.0, :special_tax_rate=>0.015}]}}>
+:city_tax_rate=>0.0, :special_district_taxable_amount=>15.0, 
+:special_tax_rate=>0.015}]}}>
 ```
 
 ### List order transactions
@@ -267,8 +268,9 @@ client.update_order({
 :from_street=>"1218 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", 
 :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>17.95, 
 :shipping=>2.0, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, 
-:product_identifier=>"12-34243-0", :product_tax_code=>nil, :description=>"Heavy Widget", 
-:unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.95"}]}>
+:product_identifier=>"12-34243-0", :product_tax_code=>nil, 
+:description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", 
+:sales_tax=>"0.95"}]}>
 ```
 
 ### Delete order transaction
@@ -292,8 +294,9 @@ client.delete_order(123)
 :from_street=>"1218 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", 
 :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>17.95, 
 :shipping=>2.0, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, 
-:product_identifier=>"12-34243-0", :product_tax_code=>nil, :description=>"Heavy Widget", 
-:unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.95"}]}>
+:product_identifier=>"12-34243-0", :product_tax_code=>nil, 
+:description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", 
+:sales_tax=>"0.95"}]}>
 ```
 
 ### Listing refund transactions
@@ -338,7 +341,8 @@ client.show_refund('321')
 :to_state=>"CA", :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", 
 :amount=>17.95, :shipping=>2.0, :sales_tax=>0.95, :line_items=>[{:id=>1, 
 :quantity=>1, :product_identifier=>"12-34243-0", :product_tax_code=>nil, 
-:description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.95"}]}>
+:description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", 
+:sales_tax=>"0.95"}]}>
 
 ```
 
@@ -388,8 +392,9 @@ refund = client.create_refund({
 :from_state=>"CA", :from_city=>"SANTA BARBARA", :from_street=>"1218 State St", 
 :to_country=>"US", :to_zip=>90002, :to_state=>"CA", :to_city=>"LOS ANGELES", 
 :to_street=>"123 Palm Grove Ln", :amount=>17.95, :shipping=>2.0, 
-:sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, :product_identifier=>"12-34243-0", 
-:product_tax_code=>nil, :description=>"Heavy Widget", :unit_price=>"15.0", 
+:sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, 
+:product_identifier=>"12-34243-0", :product_tax_code=>nil, 
+:description=>"Heavy Widget", :unit_price=>"15.0", 
 :discount=>"0.0", :sales_tax=>"0.95"}]}>
 ```
 
@@ -422,8 +427,9 @@ refund = client.update_refund{
 :from_street=>"1218 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", 
 :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>17.95, 
 :shipping=>2.0, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, 
-:product_identifier=>"12-34243-9", :product_tax_code=>nil, :description=>"Heavy Widget", 
-:unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.95"}]}>
+:product_identifier=>"12-34243-9", :product_tax_code=>nil, 
+:description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", 
+:sales_tax=>"0.95"}]}>
 ```
 
 ### Delete refund transaction
@@ -445,8 +451,9 @@ client.delete_refund(321)
 :from_street=>"1218 State St", :to_country=>"US", :to_zip=>90002, :to_state=>"CA", 
 :to_city=>"LOS ANGELES", :to_street=>"123 Palm Grove Ln", :amount=>17.95, 
 :shipping=>2.0, :sales_tax=>0.95, :line_items=>[{:id=>1, :quantity=>1, 
-:product_identifier=>"12-34243-9", :product_tax_code=>nil, :description=>"Heavy Widget", 
-:unit_price=>"15.0", :discount=>"0.0", :sales_tax=>"0.95"}]}>
+:product_identifier=>"12-34243-9", :product_tax_code=>nil, 
+:description=>"Heavy Widget", :unit_price=>"15.0", :discount=>"0.0", 
+:sales_tax=>"0.95"}]}>
 ```
 
 ## Tests
