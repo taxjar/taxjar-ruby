@@ -45,7 +45,6 @@ $ gem install taxjar-ruby
 
 First, [get an API key from TaxJar](https://app.taxjar.com/api_sign_up/plus/). Copy and paste in your API key:
 
-```ruby
 
 You are now ready to use TaxJar!
 
