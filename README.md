@@ -69,7 +69,15 @@ client.categories
 
 #### Example Response
 ```ruby
-[#<Taxjar::Category:0x007f081dc3e278 @attrs={:name=>"Digital Goods", :product_tax_code=>31000, :description=>"Digital products transferred electronically, meaning obtained by the purchaser by means other than tangible storage media."}>, #<Taxjar::Category:0x007f081dc3de90 @attrs={:name=>"Clothing", :product_tax_code=>20010, :description=>" All human wearing apparel suitable for general use"}>, #<Taxjar::Category:0x007f081dc3da80 @attrs={:name=>"Non-Prescription", :product_tax_code=>51010, :description=>"Drugs for human use without a prescription"}>, #<Taxjar::Category:0x007f081dc3d670 @attrs={:name=>"Prescription", :product_tax_code=>51020, :description=>"Drugs for human use with a prescription"}>, #<Taxjar::Category:0x007f081dc3d288 @attrs={:name=>"Food & Groceries", :product_tax_code=>40030, :description=>"Food for humans consumption, unprepared"}>, #<Taxjar::Category:0x007f081dc3ce78 @attrs={:name=>"Other Exempt", :product_tax_code=>99999, :description=>"Item is exempt"}>, #<Taxjar::Category:0x007f081dc3ca90 @attrs={:name=>"Software as a Service", :product_tax_code=>30070, :description=>"Pre-written software, delivered electronically, but access remotely."}>]
+[#<Taxjar::Category:0x007f081dc3e278 @attrs={:name=>"Digital Goods", 
+:product_tax_code=>31000, 
+:description=>"Digital products transferred electronically."}>, 
+#<Taxjar::Category:0x007f081dc3de90 @attrs={:name=>"Clothing", 
+:product_tax_code=>20010, 
+:description=>" All human wearing apparel suitable for general use"}>, 
+#<Taxjar::Category:0x007f081dc3da80 @attrs={:name=>"Non-Prescription", 
+:product_tax_code=>51010, 
+:description=>"Drugs for human use without a prescription"}>]
 ```
 
 ### List tax rates for a location (by zip/postal code)
