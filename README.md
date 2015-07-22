@@ -68,7 +68,7 @@ client.categories
 
 
 #### Example Response
-```ruby
+```
 [#<Taxjar::Category:0x007f081dc3e278 @attrs={:name=>"Digital Goods", 
 :product_tax_code=>31000, 
 :description=>"Digital products transferred electronically."}>, 
