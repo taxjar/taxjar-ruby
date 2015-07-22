@@ -453,7 +453,8 @@ client.delete_refund(321)
 #### Example Response
 ```
 #<Taxjar::Refund:0x007f6da40e33a0 @attrs={:transaction_id=>321, 
-:user_id=>11836, :transaction_date=>"2015-06-14T00:00:00Z", :transaction_reference_id=>123, 
+:user_id=>11836, :transaction_date=>"2015-06-14T00:00:00Z", 
+:transaction_reference_id=>123, 
 :from_country=>"US", :from_zip=>93107, :from_state=>"CA", 
 :from_city=>"SANTA BARBARA", :from_street=>"1218 State St", 
 :to_country=>"US", :to_zip=>90002, :to_state=>"CA", 
