@@ -11,7 +11,7 @@ which can get information on sales tax rates, categories or upload transactions.
 
 ## Supported Ruby Versions
 
-Ruby 2.0 or greater
+Ruby 1.9.3 or greater
 
 ## Gem Dependencies
 
