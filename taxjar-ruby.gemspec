@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["TaxJar"]
   spec.email         = ["support@taxjar.com"]
   spec.summary       = %q{Ruby wrapper for Taxjar API}
-  spec.description   = %q{Ruby wrapper for Taxjar API, more info at developer.taxjar.com}
+  spec.description   = %q{Ruby wrapper for Taxjar API, more info at developers.taxjar.com}
   spec.homepage      = "http://developers.taxjar.com"
   spec.license       = "MIT"
 
