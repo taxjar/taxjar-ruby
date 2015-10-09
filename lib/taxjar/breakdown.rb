@@ -10,7 +10,7 @@ module Taxjar
     object_attr_reader Taxjar::Shipping, :shipping
 
     def line_items
-      @line_items ||= map_collection(Taxjar::BreakdownLineItem, :line_items)
+      map_collection(Taxjar::BreakdownLineItem, :line_items)
     end
   end
 end
