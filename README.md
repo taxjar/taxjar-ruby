@@ -153,7 +153,6 @@ client.tax_for_order({
                           :city => 'Santa Barbara',
                           :street => '1218 State St.'}],
     :line_items => [{:quantity => 1,
-                     :product_identifier => '12-34243-9',
                      :unit_price => 15.0,
                      :product_tax_code => 31000}]
 })
