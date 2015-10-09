@@ -73,5 +73,10 @@ describe Taxjar::API do
       expect(tax).to be_a Taxjar::Tax
       expect(tax.tax_source).to eq('destination')
     end
+
+    it 'allows access to breakdown.line_items' do
+      tax = @client.tax_for_order(@order)
+      expect(tax.breakdown.line_items[0].id).to eq(1)
+    end
   end
 end
