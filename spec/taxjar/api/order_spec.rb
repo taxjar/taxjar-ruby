@@ -68,6 +68,11 @@ describe Taxjar::API::Order do
       expect(order).to be_an Taxjar::Order
       expect(order.transaction_id).to eq(123)
     end
+
+    it 'allows access to line_items' do
+      order = @client.show_order('123')
+      expect(order.line_items[0].quantity).to eq(1)
+    end
   end
 
   describe "#create_order" do

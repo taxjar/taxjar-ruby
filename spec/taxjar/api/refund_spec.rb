@@ -68,6 +68,11 @@ describe Taxjar::API::Refund do
       expect(refund).to be_an Taxjar::Refund
       expect(refund.transaction_id).to eq(321)
     end
+    
+    it 'allows access to line_items' do
+      refund = @client.show_refund('321')
+      expect(refund.line_items[0].quantity).to eq(1)
+    end
   end
 
   describe "#create_refund" do
