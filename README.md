@@ -103,7 +103,25 @@ client.rates_for_location
 require 'taxjar'
 client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
 
-client.rates_for_location('10001')
+# United States (ZIP+4)
+rates = client.rates_for_location('90404-3370')
+
+# United States (ZIP w/ Optional Params)
+rates = client.rates_for_location('90404', {
+  :city => 'SANTA MONICA',
+  :country => 'US'
+})
+
+# International Examples (Requires City and Country)
+rates = client.rates_for_location('V5K0A1', {
+  :city => 'VANCOUVER',
+  :country => 'CA'
+})
+
+rates = client.rates_for_location('00150', {
+  :city => 'HELSINKI',
+  :country => 'FI'
+})
 ```
 
 #### Example Response
