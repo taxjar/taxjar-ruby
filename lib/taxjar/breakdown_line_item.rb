@@ -2,9 +2,21 @@ require 'taxjar/base'
 
 module Taxjar
   class BreakdownLineItem < Taxjar::Base
-    attr_reader :id, :tax_collectable, :state_taxable_amount, :state_sales_tax_rate, :state_amount, 
-    :county_taxable_amount, :county_tax_rate, :county_amount, :city_taxable_amount, :city_tax_rate, :city_amount, 
-    :special_district_taxable_amount, :special_tax_rate, :special_district_amount
-
+    extend ModelAttribute
+      
+    attribute :id,                              :integer
+    attribute :tax_collectable,                 :float
+    attribute :state_taxable_amount,            :float
+    attribute :state_sales_tax_rate,            :float
+    attribute :state_amount,                    :float
+    attribute :county_taxable_amount,           :float
+    attribute :county_tax_rate,                 :float
+    attribute :county_amount,                   :float
+    attribute :city_taxable_amount,             :float
+    attribute :city_tax_rate,                   :float
+    attribute :city_amount,                     :float
+    attribute :special_district_taxable_amount, :float
+    attribute :special_tax_rate,                :float
+    attribute :special_district_amount,         :float
   end
 end

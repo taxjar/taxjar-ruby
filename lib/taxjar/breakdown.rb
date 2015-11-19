@@ -3,9 +3,16 @@ require 'taxjar/shipping'
 
 module Taxjar
   class Breakdown < Taxjar::Base
-    attr_reader :state_taxable_amount, :state_tax_collectable, :county_taxable_amount,
-                :county_tax_collectable, :city_taxable_amount, :city_tax_collectable, 
-                :special_district_taxable_amount, :special_district_tax_collectable
+    extend ModelAttribute
+    
+    attribute :state_taxable_amount, :float
+    attribute :state_tax_collectable, :float
+    attribute :county_taxable_amount, :float
+    attribute :county_tax_collectable, :float
+    attribute :city_taxable_amount, :float
+    attribute :city_tax_collectable, :float
+    attribute :special_district_taxable_amount, :float
+    attribute :special_district_tax_collectable, :float
 
     object_attr_reader Taxjar::Shipping, :shipping
 
