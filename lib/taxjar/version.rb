@@ -1,7 +1,6 @@
 module Taxjar
   module Version
   module_function
-
     def major
       1
     end

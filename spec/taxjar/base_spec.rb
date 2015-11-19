@@ -1,9 +1,6 @@
 require 'helper'
 
-require 'helper'
-
 describe Taxjar::Base do
-
   describe "#initialize" do
     before do
       @klass = Class.new(Taxjar::Base)

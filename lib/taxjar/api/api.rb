@@ -1,4 +1,5 @@
 require 'taxjar/api/utils'
+
 module Taxjar
   module API
     include Taxjar::API::Utils
@@ -14,6 +15,5 @@ module Taxjar
     def tax_for_order(options = {})
       perform_post_with_object("/v2/taxes", 'tax', options, Taxjar::Tax)
     end
-
   end
 end

@@ -1,7 +1,6 @@
 require 'helper'
 
 describe Taxjar::API do
-
   before do
     @client = Taxjar::Client.new(api_key: 'AK')
   end

@@ -6,6 +6,5 @@ module Taxjar
                 :has_nexus, :freight_taxable, :tax_source
 
     object_attr_reader Taxjar::Breakdown, :breakdown
-
   end
 end

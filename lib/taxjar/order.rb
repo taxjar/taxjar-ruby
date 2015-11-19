@@ -8,6 +8,5 @@ module Taxjar
     def line_items
       map_collection(Taxjar::LineItem, :line_items)
     end
-
   end
 end

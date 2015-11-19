@@ -4,6 +4,7 @@ require 'taxjar/api/refund'
 require 'taxjar/error'
 require 'taxjar/api/request'
 require 'taxjar/api/utils'
+
 module Taxjar
   class Client
     include Taxjar::API

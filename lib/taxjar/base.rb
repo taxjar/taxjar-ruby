@@ -104,6 +104,5 @@ module Taxjar
     def to_f_or_i_or_s(v)
         ((float = Float(v)) && (float % 1.0 == 0) ? float.to_i : float) rescue v
     end
-
   end
 end

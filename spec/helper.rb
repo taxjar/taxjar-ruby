@@ -10,7 +10,6 @@ RSpec.configure do |config|
   end
 end
 
-
 def a_get(path)
   a_request(:get, Taxjar::API::Request::BASE_URL + path)
 end
@@ -50,4 +49,3 @@ end
 def fixture(file)
     File.new(fixture_path + '/' + file)
 end
-

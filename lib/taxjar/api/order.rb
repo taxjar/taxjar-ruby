@@ -1,4 +1,5 @@
 require 'taxjar/api/utils'
+
 module Taxjar
   module API
     module Order
