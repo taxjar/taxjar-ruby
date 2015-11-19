@@ -41,7 +41,15 @@ describe Taxjar::API do
     it 'returns the requested rates' do
       rates = @client.rates_for_location(@postal_code)
       expect(rates).to be_a Taxjar::Rate
+      expect(rates.zip).to eq(90002)
+      expect(rates.state).to eq('CA')
+      expect(rates.state_rate).to eq(0.065)
       expect(rates.county).to eq('LOS ANGELES')
+      expect(rates.county_rate).to eq(0.01)
+      expect(rates.city).to eq('WATTS')
+      expect(rates.city_rate).to eq(0.0)
+      expect(rates.combined_district_rate).to eq(0.015)
+      expect(rates.combined_rate).to eq(0.09)
     end
   end
 
