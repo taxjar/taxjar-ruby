@@ -65,7 +65,7 @@ describe Taxjar::API::Refund do
     it 'returns the requested refund' do
       refund = @client.show_refund('321')
       expect(refund).to be_an Taxjar::Refund
-      expect(refund.transaction_id).to eq(321)
+      expect(refund.transaction_id).to eq('321')
     end
     
     it 'allows access to line_items' do
@@ -106,7 +106,7 @@ describe Taxjar::API::Refund do
     it 'returns the created refund' do
       refund  = @client.create_refund(@refund)
       expect(refund).to be_a Taxjar::Refund
-      expect(refund.transaction_id).to eq(321)
+      expect(refund.transaction_id).to eq('321')
     end
   end
 
@@ -136,7 +136,7 @@ describe Taxjar::API::Refund do
     it 'returns the updated refund' do
       refund = @client.update_refund(@refund)
       expect(refund).to be_a Taxjar::Refund
-      expect(refund.transaction_id).to eq(321)
+      expect(refund.transaction_id).to eq('321')
     end
   end
 
@@ -155,7 +155,7 @@ describe Taxjar::API::Refund do
     it 'returns the delete refund' do
       refund = @client.delete_refund('321')
       expect(refund).to be_an Taxjar::Refund
-      expect(refund.transaction_id).to eq(321)
+      expect(refund.transaction_id).to eq('321')
     end
   end
 end
