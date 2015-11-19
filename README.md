@@ -128,7 +128,7 @@ rates = client.rates_for_location('00150', {
 
 ```ruby
 #<Taxjar::Rate:0x007fc47056a928 @attrs={
-  :zip => 90002, 
+  :zip => "90002", 
   :state => "CA",
   :state_rate => 0.065,
   :county => "LOS ANGELES",
@@ -196,7 +196,7 @@ client.tax_for_order({
     :special_district_tax_collectable => 0.22,
     :line_items => [
       {
-        :id => "1",
+        :id => 1,
         :state_taxable_amount => 15.0,
         :state_sales_tax_rate => 0.065,
         :county_taxable_amount => 15.0,
@@ -256,7 +256,7 @@ client.show_order('123')
 
 ```ruby
 #<Taxjar::Order:0x007fd3e514a940 @attrs={
-  :transaction_id => 123,
+  :transaction_id => "123",
   :user_id => 11836,
   :transaction_date => "2015-05-14T00:00:00Z",
   :transaction_reference_id => nil,
@@ -330,7 +330,7 @@ client.create_order({
 
 ```ruby
 #<Taxjar::Order:0x007f6d65b252d0 @attrs={
-  :transaction_id => 20,
+  :transaction_id => "20",
   :user_id => 11836,
   :transaction_date => "2015-05-14T00:00:00Z",
   :transaction_reference_id => nil,
@@ -390,7 +390,7 @@ client.update_order({
 
 ```ruby
 #<Taxjar::Order:0x007f6d65b252d0 @attrs={
-  :transaction_id => 123,
+  :transaction_id => "123",
   :user_id => 11836,
   :transaction_date => "2015-05-14T00:00:00Z",
   :transaction_reference_id => nil,
@@ -443,7 +443,7 @@ client.delete_order(123)
 
 ```ruby
 #<Taxjar::Order:0x007f6d65b252d0 @attrs={
-  :transaction_id => 123,
+  :transaction_id => "123",
   :user_id => 11836,
   :transaction_date => "2015-05-14T00:00:00Z",
   :transaction_reference_id => nil,
@@ -520,7 +520,7 @@ client.show_refund('321')
 
 ```ruby
 #<Taxjar::Refund:0x007f6da40e33a0 @attrs={
-  :transaction_id => 321,
+  :transaction_id => "321",
   :user_id => 11836,
   :transaction_date => "2015-06-14T00:00:00Z",
   :transaction_reference_id => 123,
@@ -595,10 +595,10 @@ refund = client.create_refund({
 
 ```ruby
 #<Taxjar::Refund:0x007f6da40e33a0 @attrs={
-  :transaction_id => 321,
+  :transaction_id => "321",
   :user_id => 11836,
   :transaction_date => "2015-06-14T00:00:00Z",
-  :transaction_reference_id => 123,
+  :transaction_reference_id => "123",
   :from_country => "US",
   :from_zip => 93107,
   :from_state => "CA",
@@ -655,10 +655,10 @@ refund = client.update_refund{
 
 ```ruby
 #<Taxjar::Refund:0x007f6da40e33a0 @attrs={
-  :transaction_id => 321,
+  :transaction_id => "321",
   :user_id => 11836,
   :transaction_date => "2015-06-14T00:00:00Z",
-  :transaction_reference_id => 123,
+  :transaction_reference_id => "123",
   :from_country => "US",
   :from_zip => 93107,
   :from_state => "CA",
@@ -705,10 +705,10 @@ client.delete_refund(321)
 
 ```ruby
 #<Taxjar::Refund:0x007f6da40e33a0 @attrs={
-  :transaction_id => 321,
+  :transaction_id => "321",
   :user_id => 11836,
   :transaction_date => "2015-06-14T00:00:00Z",
-  :transaction_reference_id => 123,
+  :transaction_reference_id => "123",
   :from_country => "US",
   :from_zip => 93107,
   :from_state => "CA",
