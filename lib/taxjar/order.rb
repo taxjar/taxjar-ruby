@@ -6,7 +6,7 @@ module Taxjar
     
     attribute :transaction_id,   :string
     attribute :user_id,          :integer
-    attribute :transaction_date, :time
+    attribute :transaction_date, :string
     attribute :to_country,       :string
     attribute :to_zip,           :string
     attribute :to_state,         :string
