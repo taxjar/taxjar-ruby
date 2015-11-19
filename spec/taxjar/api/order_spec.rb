@@ -66,11 +66,26 @@ describe Taxjar::API::Order do
       order = @client.show_order('123')
       expect(order).to be_an Taxjar::Order
       expect(order.transaction_id).to eq('123')
+      expect(order.user_id).to eq(10649)
+      expect(order.transaction_date).to eq('2015-05-14T00:00:00Z')
+      expect(order.to_country).to eq('US')
+      expect(order.to_zip).to eq('90002')
+      expect(order.to_state).to eq('CA')
+      expect(order.to_city).to eq('LOS ANGELES')
+      expect(order.to_street).to eq('123 Palm Grove Ln')
+      expect(order.amount).to eq(17.45)
+      expect(order.shipping).to eq(1.5)
+      expect(order.sales_tax).to eq(0.95)
     end
 
     it 'allows access to line_items' do
       order = @client.show_order('123')
+      expect(order.line_items[0].id).to eq(1)
       expect(order.line_items[0].quantity).to eq(1)
+      expect(order.line_items[0].product_identifier).to eq('12-34243-9')
+      expect(order.line_items[0].description).to eq('Fuzzy Widget')
+      expect(order.line_items[0].unit_price).to eq(15.0)
+      expect(order.line_items[0].sales_tax).to eq(0.95)
     end
   end
 
@@ -88,9 +103,10 @@ describe Taxjar::API::Order do
                 :amount => 17.45,
                 :shipping => 1.5,
                 :sales_tax => 0.95,
-                :line_items => [{:quantity => 1,
+                :line_items => [{:id => 1,
+                                 :quantity => 1,
                                  :product_identifier => '12-34243-9',
-                                 :descriptiion => 'Fuzzy Widget',
+                                 :description => 'Fuzzy Widget',
                                  :unit_price => 15.0,
                                  :sales_tax => 0.95}]
       }
@@ -105,6 +121,26 @@ describe Taxjar::API::Order do
       order = @client.create_order(@order)
       expect(order).to be_a Taxjar::Order
       expect(order.transaction_id).to eq('123')
+      expect(order.user_id).to eq(10649)
+      expect(order.transaction_date).to eq("2015-05-14T00:00:00Z")
+      expect(order.to_country).to eq('US')
+      expect(order.to_zip).to eq('90002')
+      expect(order.to_state).to eq('CA')
+      expect(order.to_city).to eq('LOS ANGELES')
+      expect(order.to_street).to eq('123 Palm Grove Ln')
+      expect(order.amount).to eq(17.45)
+      expect(order.shipping).to eq(1.5)
+      expect(order.sales_tax).to eq(0.95)
+    end
+    
+    it 'allows access to line_items' do
+      order = @client.create_order(@order)
+      expect(order.line_items[0].id).to eq(1)
+      expect(order.line_items[0].quantity).to eq(1)
+      expect(order.line_items[0].product_identifier).to eq('12-34243-9')
+      expect(order.line_items[0].description).to eq('Fuzzy Widget')
+      expect(order.line_items[0].unit_price).to eq(15.0)
+      expect(order.line_items[0].sales_tax).to eq(0.95)
     end
   end
 
@@ -117,9 +153,10 @@ describe Taxjar::API::Order do
       @order = {:transaction_id => '123',
                 :amount => 17.95,
                 :shipping => 2.0,
-                :line_items => [{:quantity => 1,
+                :line_items => [{:id => 1,
+                                 :quantity => 1,
                                  :product_identifier => '12-34243-0',
-                                 :descriptiion => 'Heavy  Widget',
+                                 :description => 'Heavy  Widget',
                                  :unit_price => 15.0,
                                  :discount => 0.0,
                                  :sales_tax => 0.95}]
@@ -135,6 +172,26 @@ describe Taxjar::API::Order do
       order = @client.update_order(@order)
       expect(order).to be_a Taxjar::Order
       expect(order.transaction_id).to eq('123')
+      expect(order.user_id).to eq(10649)
+      expect(order.transaction_date).to eq("2015-05-14T00:00:00Z")
+      expect(order.to_country).to eq('US')
+      expect(order.to_zip).to eq('90002')
+      expect(order.to_state).to eq('CA')
+      expect(order.to_city).to eq('LOS ANGELES')
+      expect(order.to_street).to eq('123 Palm Grove Ln')
+      expect(order.amount).to eq(17.45)
+      expect(order.shipping).to eq(1.5)
+      expect(order.sales_tax).to eq(0.95)
+    end
+    
+    it 'allows access to line_items' do
+      order = @client.update_order(@order)
+      expect(order.line_items[0].id).to eq(1)
+      expect(order.line_items[0].quantity).to eq(1)
+      expect(order.line_items[0].product_identifier).to eq('12-34243-9')
+      expect(order.line_items[0].description).to eq('Fuzzy Widget')
+      expect(order.line_items[0].unit_price).to eq(15.0)
+      expect(order.line_items[0].sales_tax).to eq(0.95)
     end
   end
 
@@ -154,6 +211,26 @@ describe Taxjar::API::Order do
       order = @client.delete_order('123')
       expect(order).to be_an Taxjar::Order
       expect(order.transaction_id).to eq('123')
+      expect(order.user_id).to eq(10649)
+      expect(order.transaction_date).to eq("2015-05-14T00:00:00Z")
+      expect(order.to_country).to eq('US')
+      expect(order.to_zip).to eq('90002')
+      expect(order.to_state).to eq('CA')
+      expect(order.to_city).to eq('LOS ANGELES')
+      expect(order.to_street).to eq('123 Palm Grove Ln')
+      expect(order.amount).to eq(17.45)
+      expect(order.shipping).to eq(1.5)
+      expect(order.sales_tax).to eq(0.95)
+    end
+    
+    it 'allows access to line items' do
+      order = @client.delete_order('123')
+      expect(order.line_items[0].id).to eq(1)
+      expect(order.line_items[0].quantity).to eq(1)
+      expect(order.line_items[0].product_identifier).to eq('12-34243-9')
+      expect(order.line_items[0].description).to eq('Fuzzy Widget')
+      expect(order.line_items[0].unit_price).to eq(15.0)
+      expect(order.line_items[0].sales_tax).to eq(0.95)
     end
   end
 

@@ -66,11 +66,28 @@ describe Taxjar::API::Refund do
       refund = @client.show_refund('321')
       expect(refund).to be_an Taxjar::Refund
       expect(refund.transaction_id).to eq('321')
+      expect(refund.user_id).to eq(10649)
+      expect(refund.transaction_date).to eq("2015-05-14T00:00:00Z")
+      expect(refund.transaction_reference_id).to eq("123")
+      expect(refund.to_country).to eq('US')
+      expect(refund.to_zip).to eq('90002')
+      expect(refund.to_state).to eq('CA')
+      expect(refund.to_city).to eq('LOS ANGELES')
+      expect(refund.to_street).to eq('123 Palm Grove Ln')
+      expect(refund.amount).to eq(17.45)
+      expect(refund.shipping).to eq(1.5)
+      expect(refund.sales_tax).to eq(0.95)
     end
     
     it 'allows access to line_items' do
       refund = @client.show_refund('321')
+      expect(refund.line_items[0].id).to eq(1)
       expect(refund.line_items[0].quantity).to eq(1)
+      expect(refund.line_items[0].product_identifier).to eq('12-34243-9')
+      expect(refund.line_items[0].description).to eq('Fuzzy Widget')
+      expect(refund.line_items[0].unit_price).to eq(15.0)
+      expect(refund.line_items[0].discount).to eq(0.0)
+      expect(refund.line_items[0].sales_tax).to eq(0.95)
     end
   end
 
@@ -92,7 +109,7 @@ describe Taxjar::API::Refund do
                 :sales_tax => 0.95,
                 :line_items => [{:quantity => 1,
                                  :product_identifier => '12-34243-9',
-                                 :descriptiion => 'Fuzzy Widget',
+                                 :description => 'Fuzzy Widget',
                                  :unit_price => 15.0,
                                  :sales_tax => 0.95}]
       }
@@ -104,9 +121,31 @@ describe Taxjar::API::Refund do
     end
 
     it 'returns the created refund' do
-      refund  = @client.create_refund(@refund)
+      refund = @client.create_refund(@refund)
       expect(refund).to be_a Taxjar::Refund
       expect(refund.transaction_id).to eq('321')
+      expect(refund.user_id).to eq(10649)
+      expect(refund.transaction_date).to eq("2015-05-14T00:00:00Z")
+      expect(refund.transaction_reference_id).to eq("123")
+      expect(refund.to_country).to eq('US')
+      expect(refund.to_zip).to eq('90002')
+      expect(refund.to_state).to eq('CA')
+      expect(refund.to_city).to eq('LOS ANGELES')
+      expect(refund.to_street).to eq('123 Palm Grove Ln')
+      expect(refund.amount).to eq(17.45)
+      expect(refund.shipping).to eq(1.5)
+      expect(refund.sales_tax).to eq(0.95)
+    end
+    
+    it 'allows access to line_items' do
+      refund = @client.create_refund(@refund)
+      expect(refund.line_items[0].id).to eq(1)
+      expect(refund.line_items[0].quantity).to eq(1)
+      expect(refund.line_items[0].product_identifier).to eq('12-34243-9')
+      expect(refund.line_items[0].description).to eq('Fuzzy Widget')
+      expect(refund.line_items[0].unit_price).to eq(15.0)
+      expect(refund.line_items[0].discount).to eq(0.0)
+      expect(refund.line_items[0].sales_tax).to eq(0.95)
     end
   end
 
@@ -122,7 +161,7 @@ describe Taxjar::API::Refund do
                 :sales_tax => 0.95,
                 :line_items => [{:quantity => 1,
                                  :product_identifier => '12-34243-9',
-                                 :descriptiion => 'Heavy Widget',
+                                 :description => 'Heavy Widget',
                                  :unit_price => 15.0,
                                  :sales_tax => 0.95}]
       }
@@ -137,6 +176,28 @@ describe Taxjar::API::Refund do
       refund = @client.update_refund(@refund)
       expect(refund).to be_a Taxjar::Refund
       expect(refund.transaction_id).to eq('321')
+      expect(refund.user_id).to eq(10649)
+      expect(refund.transaction_date).to eq("2015-05-14T00:00:00Z")
+      expect(refund.transaction_reference_id).to eq("123")
+      expect(refund.to_country).to eq('US')
+      expect(refund.to_zip).to eq('90002')
+      expect(refund.to_state).to eq('CA')
+      expect(refund.to_city).to eq('LOS ANGELES')
+      expect(refund.to_street).to eq('123 Palm Grove Ln')
+      expect(refund.amount).to eq(17.45)
+      expect(refund.shipping).to eq(1.5)
+      expect(refund.sales_tax).to eq(0.95)
+    end
+    
+    it 'allows access to line_items' do
+      refund = @client.update_refund(@refund)
+      expect(refund.line_items[0].id).to eq(1)
+      expect(refund.line_items[0].quantity).to eq(1)
+      expect(refund.line_items[0].product_identifier).to eq('12-34243-9')
+      expect(refund.line_items[0].description).to eq('Fuzzy Widget')
+      expect(refund.line_items[0].unit_price).to eq(15.0)
+      expect(refund.line_items[0].discount).to eq(0.0)
+      expect(refund.line_items[0].sales_tax).to eq(0.95)
     end
   end
 
@@ -156,6 +217,28 @@ describe Taxjar::API::Refund do
       refund = @client.delete_refund('321')
       expect(refund).to be_an Taxjar::Refund
       expect(refund.transaction_id).to eq('321')
+      expect(refund.user_id).to eq(10649)
+      expect(refund.transaction_date).to eq("2015-05-14T00:00:00Z")
+      expect(refund.transaction_reference_id).to eq("123")
+      expect(refund.to_country).to eq('US')
+      expect(refund.to_zip).to eq('90002')
+      expect(refund.to_state).to eq('CA')
+      expect(refund.to_city).to eq('LOS ANGELES')
+      expect(refund.to_street).to eq('123 Palm Grove Ln')
+      expect(refund.amount).to eq(17.45)
+      expect(refund.shipping).to eq(1.5)
+      expect(refund.sales_tax).to eq(0.95)
+    end
+    
+    it 'allows access to line_items' do
+      refund = @client.delete_refund('321')
+      expect(refund.line_items[0].id).to eq(1)
+      expect(refund.line_items[0].quantity).to eq(1)
+      expect(refund.line_items[0].product_identifier).to eq('12-34243-9')
+      expect(refund.line_items[0].description).to eq('Fuzzy Widget')
+      expect(refund.line_items[0].unit_price).to eq(15.0)
+      expect(refund.line_items[0].discount).to eq(0.0)
+      expect(refund.line_items[0].sales_tax).to eq(0.95)
     end
   end
 end

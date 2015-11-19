@@ -78,7 +78,35 @@ describe Taxjar::API do
     it 'returns the requested taxes' do
       tax = @client.tax_for_order(@order)
       expect(tax).to be_a Taxjar::Tax
+      expect(tax.order_total_amount).to eq(16.5)
+      expect(tax.amount_to_collect).to eq(1.16)
+      expect(tax.has_nexus).to eq(true)
+      expect(tax.freight_taxable).to eq(true)
       expect(tax.tax_source).to eq('destination')
+    end
+    
+    it 'allows access to breakdown' do
+      tax = @client.tax_for_order(@order)
+      expect(tax.breakdown.state_taxable_amount).to eq(16.5)
+      expect(tax.breakdown.state_tax_collectable).to eq(1.16)
+      expect(tax.breakdown.county_taxable_amount).to eq(0)
+      expect(tax.breakdown.county_tax_collectable).to eq(0)
+      expect(tax.breakdown.city_taxable_amount).to eq(0)
+      expect(tax.breakdown.city_tax_collectable).to eq(0)
+      expect(tax.breakdown.special_district_taxable_amount).to eq(0)
+      expect(tax.breakdown.special_district_tax_collectable).to eq(0)
+    end
+    
+    it 'allows access to breakdown.shipping' do
+      tax = @client.tax_for_order(@order)
+      expect(tax.breakdown.shipping.state_amount).to eq(0.11)
+      expect(tax.breakdown.shipping.state_sales_tax_rate).to eq(0.07)
+      expect(tax.breakdown.shipping.county_amount).to eq(0)
+      expect(tax.breakdown.shipping.county_tax_rate).to eq(0)
+      expect(tax.breakdown.shipping.city_amount).to eq(0)
+      expect(tax.breakdown.shipping.city_tax_rate).to eq(0)
+      expect(tax.breakdown.shipping.special_district_amount).to eq(0)
+      expect(tax.breakdown.shipping.special_tax_rate).to eq(0)
     end
 
     it 'allows access to breakdown.line_items' do
