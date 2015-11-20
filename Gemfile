@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'model_attribute', :git => 'https://github.com/taxjar/model_attribute.git'
 gem 'yard'
 
 group :test do
