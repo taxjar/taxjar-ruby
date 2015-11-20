@@ -22,6 +22,8 @@ describe Taxjar::API do
       expect(categories).to be_an Array
       expect(categories.first).to be_a Taxjar::Category
       expect(categories.first.name).to eq('Digital Goods')
+      expect(categories.first.product_tax_code).to eq('31000')
+      expect(categories.first.description).to eq('Digital products transferred electronically, meaning obtained by the purchaser by means other than tangible storage media.')
     end
   end
 
@@ -112,6 +114,14 @@ describe Taxjar::API do
     it 'allows access to breakdown.line_items' do
       tax = @client.tax_for_order(@order)
       expect(tax.breakdown.line_items[0].id).to eq(1)
+      expect(tax.breakdown.line_items[0].state_taxable_amount).to eq(15)
+      expect(tax.breakdown.line_items[0].state_sales_tax_rate).to eq(0.07)
+      expect(tax.breakdown.line_items[0].county_taxable_amount).to eq(0)
+      expect(tax.breakdown.line_items[0].county_tax_rate).to eq(0)
+      expect(tax.breakdown.line_items[0].city_taxable_amount).to eq(0)
+      expect(tax.breakdown.line_items[0].city_tax_rate).to eq(0)
+      expect(tax.breakdown.line_items[0].special_district_taxable_amount).to eq(0)
+      expect(tax.breakdown.line_items[0].special_tax_rate).to eq(0)
     end
   end
 end
