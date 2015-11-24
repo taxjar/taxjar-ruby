@@ -14,5 +14,16 @@ module Taxjar
     attribute :city_tax_rate,           :float
     attribute :special_district_amount, :float
     attribute :special_tax_rate,        :float
+    
+    # Canada
+    attribute :pst,                     :float
+    attribute :pst_rate,                :float
+    attribute :pst_taxable_amount,      :float
+    attribute :gst,                     :float
+    attribute :gst_rate,                :float
+    attribute :gst_taxable_amount,      :float
+    attribute :qst,                     :float
+    attribute :qst_rate,                :float
+    attribute :qst_taxable_amount,      :float
   end
 end
