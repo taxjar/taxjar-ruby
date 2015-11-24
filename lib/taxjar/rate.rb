@@ -2,8 +2,16 @@ require 'taxjar/base'
 
 module Taxjar
   class Rate < Taxjar::Base
-    attr_reader :zip, :state, :state_rate, :county, :county_rate, :city, :city_rate,
-      :combined_district_rate, :combined_rate
+    extend ModelAttribute
 
+    attribute :zip,                    :string
+    attribute :state,                  :string
+    attribute :state_rate,             :float
+    attribute :county,                 :string
+    attribute :county_rate,            :float
+    attribute :city,                   :string
+    attribute :city_rate,              :float
+    attribute :combined_district_rate, :float
+    attribute :combined_rate,          :float
   end
 end

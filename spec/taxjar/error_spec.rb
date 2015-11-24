@@ -1,7 +1,6 @@
 require 'helper'
 
 describe Taxjar::Error do
-
   describe 'attributes' do
     let(:error) { Taxjar::Error.new('unprocessable entity', 422)}
 

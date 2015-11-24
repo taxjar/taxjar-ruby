@@ -3,7 +3,6 @@ require 'taxjar/api/request'
 module Taxjar
   module API
     module Utils
-
       def perform_request(request_method, path, object_key, options = {})
         Taxjar::API::Request.new(self, request_method, path, object_key, options).perform
       end

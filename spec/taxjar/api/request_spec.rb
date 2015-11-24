@@ -1,7 +1,6 @@
 require 'helper'
 
 describe Taxjar::API::Request do
-
   describe "#BASE_URL" do
     it 'should have taxjar api url' do
       expect(Taxjar::API::Request::BASE_URL).to eq('https://api.taxjar.com')
@@ -130,5 +129,4 @@ describe Taxjar::API::Request do
       end
     end
   end
-
 end

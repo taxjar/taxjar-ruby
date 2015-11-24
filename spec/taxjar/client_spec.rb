@@ -1,7 +1,6 @@
 require 'helper'
 
 describe Taxjar::Client do
-
   describe '#api_key?' do 
     it 'returns true if api_key is present' do
       client = Taxjar::Client.new(api_key: 'AK')

@@ -2,12 +2,22 @@ require 'taxjar/base'
 
 module Taxjar
   class Order < Taxjar::Base
-    attr_reader :transaction_id, :user_id, :transaction_date, :to_country, :to_zip,
-      :to_state, :to_city, :to_street, :amount, :shipping, :sales_tax
+    extend ModelAttribute
+    
+    attribute :transaction_id,   :string
+    attribute :user_id,          :integer
+    attribute :transaction_date, :string
+    attribute :to_country,       :string
+    attribute :to_zip,           :string
+    attribute :to_state,         :string
+    attribute :to_city,          :string
+    attribute :to_street,        :string
+    attribute :amount,           :float
+    attribute :shipping,         :float
+    attribute :sales_tax,        :float
 
     def line_items
       map_collection(Taxjar::LineItem, :line_items)
     end
-
   end
 end

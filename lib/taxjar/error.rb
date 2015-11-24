@@ -69,6 +69,5 @@ module Taxjar
     end
 
     ConfigurationError = Class.new(::ArgumentError)
-
   end
 end

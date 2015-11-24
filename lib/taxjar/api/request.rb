@@ -31,40 +31,37 @@ module Taxjar
 
       private
 
+        def set_request_headers
+          @headers = {}
+          @headers[:user_agent] = client.user_agent
+          @headers[:authorization] = "Bearer #{client.api_key}"
+        end
 
-      def set_request_headers
-        @headers = {}
-        @headers[:user_agent] = client.user_agent
-        @headers[:authorization] = "Bearer #{client.api_key}"
-      end
-
-      def symbolize_keys!(object)
-        if object.is_a?(Array)
-          object.each_with_index do |val, index|
-            object[index] = symbolize_keys!(val)
+        def symbolize_keys!(object)
+          if object.is_a?(Array)
+            object.each_with_index do |val, index|
+              object[index] = symbolize_keys!(val)
+            end
+          elsif object.is_a?(Hash)
+            object.keys.each do |key|
+              object[key.to_sym] = symbolize_keys!(object.delete(key))
+            end
           end
-        elsif object.is_a?(Hash)
-          object.keys.each do |key|
-            object[key.to_sym] = symbolize_keys!(object.delete(key))
+          object
+        end
+
+        def fail_or_return_response_body(code, body)
+          e = extract_error(code, body)
+          fail(e) if e
+          body[object_key.to_sym]
+        end
+
+        def extract_error(code, body)
+          klass = Taxjar::Error::ERRORS[code]
+          if !klass.nil?
+            klass.from_response(body)
           end
         end
-        object
-      end
-
-      def fail_or_return_response_body(code, body)
-        e = extract_error(code, body)
-        fail(e) if e
-        body[object_key.to_sym]
-      end
-
-      def extract_error(code, body)
-        klass = Taxjar::Error::ERRORS[code]
-        if !klass.nil?
-          klass.from_response(body)
-        end
-      end
-
-
     end
   end
 end

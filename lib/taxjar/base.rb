@@ -1,6 +1,7 @@
 require 'addressable/uri'
 require 'forwardable'
 require 'memoizable'
+require 'model_attribute'
 
 if !Array.new.respond_to?(:to_h)
   module Enumerable
@@ -70,9 +71,8 @@ module Taxjar
       end
     end
 
-    def initialize(attrs = {})
-      attrs = values_as_floats_where_possible(attrs)
-      @attrs = attrs || {}
+    def initialize(attributes = {})
+      @attrs = set_attributes(attributes)
     end
 
     def [](method)
@@ -96,14 +96,5 @@ module Taxjar
         attrs.delete(key1).merge(key2 => attrs)
       end
     end
-
-    def values_as_floats_where_possible(attrs)
-      attrs.map{|k, v| [k, to_f_or_i_or_s(v)]}.to_h
-    end
-
-    def to_f_or_i_or_s(v)
-        ((float = Float(v)) && (float % 1.0 == 0) ? float.to_i : float) rescue v
-    end
-
   end
 end

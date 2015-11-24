@@ -2,6 +2,10 @@ require 'taxjar/base'
 
 module Taxjar
   class Category < Taxjar::Base
-    attr_reader :name, :product_tax_code, :description
+    extend ModelAttribute
+    
+    attribute :name,             :string
+    attribute :product_tax_code, :string
+    attribute :description,      :string
   end
 end
