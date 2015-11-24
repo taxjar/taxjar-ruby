@@ -13,6 +13,17 @@ module Taxjar
     attribute :city_tax_collectable,             :float
     attribute :special_district_taxable_amount,  :float
     attribute :special_district_tax_collectable, :float
+    
+    # Canada
+    attribute :pst,                              :float
+    attribute :pst_rate,                         :float
+    attribute :pst_taxable_amount,               :float
+    attribute :gst,                              :float
+    attribute :gst_rate,                         :float
+    attribute :gst_taxable_amount,               :float
+    attribute :qst,                              :float
+    attribute :qst_rate,                         :float
+    attribute :qst_taxable_amount,               :float
 
     object_attr_reader Taxjar::Shipping, :shipping
 
