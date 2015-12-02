@@ -16,12 +16,7 @@ module Taxjar
 
     # International
     attribute :country,                 :string
-    
-    # Canada
-    attribute :hst,                     :float
-    attribute :pst,                     :float
-    attribute :gst,                     :float
-    attribute :qst,                     :float
+    attribute :name,                    :string
     
     # European Union
     attribute :standard_rate,           :float
