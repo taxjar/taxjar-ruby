@@ -8,6 +8,11 @@ module Taxjar
     attribute :user_id,                  :integer
     attribute :transaction_date,         :string
     attribute :transaction_reference_id, :string
+    attribute :from_country,             :string
+    attribute :from_zip,                 :string
+    attribute :from_state,               :string
+    attribute :from_city,                :string
+    attribute :from_street,              :string
     attribute :to_country,               :string
     attribute :to_zip,                   :string
     attribute :to_state,                 :string
