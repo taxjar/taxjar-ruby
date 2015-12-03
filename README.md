@@ -20,6 +20,7 @@ Installing this gem also installs the following gems:
 * [http](https://github.com/httprb/http.rb) Fast Ruby HTTP client with a chainable API and full streaming support.
 * [addressable](https://github.com/sporkmonger/addressable) Replacement for the URI implementation that is part of Ruby's standard library. It more closely conforms to the relevant RFCs and adds support for IRIs and URI templates.
 * [memoizable](https://github.com/dkubb/memoizable) Memoize method return values.
+* [model_attribute](https://github.com/yammer/model_attribute) Type casted attributes for non-ActiveRecord models. [Forked](https://github.com/taxjar/model_attribute) to handle floats and more types down the road.
 
 ## Installation
 
