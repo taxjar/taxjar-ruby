@@ -20,7 +20,7 @@ Installing this gem also installs the following gems:
 * [http](https://github.com/httprb/http.rb) Fast Ruby HTTP client with a chainable API and full streaming support.
 * [addressable](https://github.com/sporkmonger/addressable) Replacement for the URI implementation that is part of Ruby's standard library. It more closely conforms to the relevant RFCs and adds support for IRIs and URI templates.
 * [memoizable](https://github.com/dkubb/memoizable) Memoize method return values.
-* [model_attribute](https://github.com/yammer/model_attribute) Type casted attributes for non-ActiveRecord models. [Forked](https://github.com/taxjar/model_attribute) to handle floats and more types down the road.
+* [model_attribute](https://github.com/yammer/model_attribute) Type casted attributes for non-ActiveRecord models. [Forked](https://github.com/taxjar/model_attribute) to handle floats and more types.
 
 ## Installation
 
@@ -228,6 +228,17 @@ client.tax_for_order({
     ]
   }
 }>
+
+#<Taxjar::Tax:0x007f3945688fc8 @attrs={
+  :order_total_amount => 27.12,
+  :shipping => 1.5,
+  :taxable_amount => 27.12,
+  :amount_to_collect => 5.42,
+  :rate => 0.2,
+  :has_nexus => true,
+  :freight_taxable => true,
+  :tax_source => "origin"
+}>
 ```
 
 ### List order transactions
@@ -321,7 +332,7 @@ client.create_order
 require 'taxjar'
 client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
 
-client.create_order({
+order = client.create_order({
     :transaction_id => '123',
     :transaction_date => '2015/05/14',
     :from_state => 'CA',
@@ -392,7 +403,10 @@ client.update_order
 #### Example Request
 
 ```ruby
-client.update_order({
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+order = client.update_order({
     :transaction_id => '123',
     :amount => 17.95,
     :shipping => 2.0,
@@ -657,7 +671,10 @@ client.update_refund
 #### Example Request
 
 ```ruby
-refund = client.update_refund{
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+refund = client.update_refund({
     :transaction_id => '321',
     :amount => 17.95,
     :shipping => 2.0,
@@ -717,6 +734,9 @@ client.delete_refund
 #### Example Request
 
 ```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
 client.delete_refund(321)
 ```
 
