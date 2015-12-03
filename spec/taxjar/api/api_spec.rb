@@ -31,8 +31,7 @@ describe Taxjar::API do
     before do
       @postal_code = "90210"
       stub_get("/v2/rates/#{@postal_code}").to_return(body: fixture('rates.json'),
-                                                               headers: {content_type: 'application/json; charset=utf-8'})
-
+                                                      headers: { content_type: 'application/json; charset=utf-8' })
     end
 
     it 'requests the right resource' do
@@ -52,6 +51,39 @@ describe Taxjar::API do
       expect(rates.city_rate).to eq(0.0)
       expect(rates.combined_district_rate).to eq(0.015)
       expect(rates.combined_rate).to eq(0.09)
+    end
+  end
+  
+  describe '#rate_for_location (international)' do
+    before do
+      @postal_code = "00150"
+      @params = "city=Helsinki&country=FI"
+      stub_get("/v2/rates/#{@postal_code}?#{@params}").to_return(body: fixture('rates_intl.json'),
+                                      headers: { content_type: 'application/json; charset=utf-8' })
+    end
+
+    it 'requests the right resource' do
+      @client.rates_for_location('00150', {
+        :city => 'Helsinki',
+        :country => 'FI'
+      })
+      expect(a_get("/v2/rates/#{@postal_code}?#{@params}")).to have_been_made
+    end
+
+    it 'returns the requested rates' do
+      rates = @client.rates_for_location(@postal_code, {
+        :city => 'Helsinki',
+        :country => 'FI'
+      })
+      expect(rates).to be_a Taxjar::Rate
+      expect(rates.country).to eq('FI')
+      expect(rates.name).to eq('Finland')
+      expect(rates.standard_rate).to eq(0.24)
+      expect(rates.reduced_rate).to eq(0)
+      expect(rates.super_reduced_rate).to eq(0)
+      expect(rates.parking_rate).to eq(0)
+      expect(rates.distance_sale_threshold).to eq(0)
+      expect(rates.freight_taxable).to eq(true)
     end
   end
 
