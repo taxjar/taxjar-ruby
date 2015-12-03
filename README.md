@@ -45,7 +45,6 @@ $ gem install taxjar-ruby
 
 First, [get an API key from TaxJar](https://app.taxjar.com/api_sign_up/plus/). Copy and paste in your API key:
 
-
 You are now ready to use TaxJar!
 
 ## Usage
@@ -137,6 +136,25 @@ rates = client.rates_for_location('00150', {
   :city_rate => 0,
   :combined_district_rate => 0.015,
   :combined_rate => 0.09
+}>
+
+#<Taxjar::Rate:0x007fc47056a928 @attrs={
+  :zip => "V5K0A1",
+  :city => "Vancouver",
+  :state => "BC",
+  :country => "CA",
+  :combined_rate => "0.12"
+}>
+
+#<Taxjar::Rate:0x007fc47056a928 @attrs={
+  :country => "FI",
+  :name => "Finland",
+  :standard_rate => "0.24",
+  :reduced_rate => nil,
+  :super_reduced_rate => nil,
+  :parking_rate => nil,
+  :distance_sale_threshold => nil,
+  :freight_taxable => true
 }>
 ```
 
