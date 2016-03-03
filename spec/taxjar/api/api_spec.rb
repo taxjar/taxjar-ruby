@@ -156,4 +156,59 @@ describe Taxjar::API do
       expect(tax.breakdown.line_items[0].special_tax_rate).to eq(0)
     end
   end
+  
+  describe '#validate' do
+    before do
+      @params = 'vat=FR40303265045'
+      stub_get("/v2/validation?#{@params}").to_return(body: fixture('validation.json'),
+                                                    headers: {content_type: 'application/json; charset=utf-8'})
+      @validation = {
+        :vat => 'FR40303265045'
+      }
+    end
+
+    it 'requests the right resource' do
+      @client.validate(@validation)
+      expect(a_get("/v2/validation?#{@params}")).to have_been_made
+    end
+
+    it 'returns the requested validation' do
+      validation = @client.validate(@validation)
+      expect(validation).to be_a Taxjar::Validation
+      expect(validation.valid).to eq(true)
+      expect(validation.exists).to eq(true)
+      expect(validation.vies_available).to eq(true)
+      expect(validation.vies_response.vat_number).to eq('40303265045')
+      expect(validation.vies_response.request_date).to eq('2016-02-10')
+      expect(validation.vies_response.valid).to eq(true)
+      expect(validation.vies_response.name).to eq('SA SODIMAS')
+      expect(validation.vies_response.address).to eq("11 RUE AMPERE\n26600 PONT DE L ISERE")
+    end
+  end
+  
+  describe '#summary_rates' do
+    before do
+      stub_get('/v2/summary_rates').to_return(body: fixture('summary_rates.json'),
+                                                    headers: {content_type: 'application/json; charset=utf-8'})
+    end
+
+    it 'requests the right resource' do
+      @client.summary_rates
+      expect(a_get('/v2/summary_rates')).to have_been_made
+    end
+
+    it 'returns the requested summarized rates' do
+      summarized_rates = @client.summary_rates
+      expect(summarized_rates).to be_an Array
+      expect(summarized_rates.first).to be_a Taxjar::SummaryRate
+      expect(summarized_rates.first.country_code).to eq('US')
+      expect(summarized_rates.first.country).to eq('United States')
+      expect(summarized_rates.first.region_code).to eq('CA')
+      expect(summarized_rates.first.region).to eq('California')
+      expect(summarized_rates.first.minimum_rate.label).to eq('State Tax')
+      expect(summarized_rates.first.minimum_rate.rate).to eq(0.065)
+      expect(summarized_rates.first.average_rate.label).to eq('Tax')
+      expect(summarized_rates.first.average_rate.rate).to eq(0.0827)
+    end
+  end
 end

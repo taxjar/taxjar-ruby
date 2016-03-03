@@ -8,7 +8,9 @@ require "taxjar/order"
 require "taxjar/rate"
 require "taxjar/refund"
 require "taxjar/shipping"
+require "taxjar/summary_rate"
 require "taxjar/tax"
+require "taxjar/validation"
 require "taxjar/version"
 
 module Taxjar
