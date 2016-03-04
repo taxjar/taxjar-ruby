@@ -119,7 +119,7 @@ describe Taxjar::API::Request do
             with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
                               'Host'=>'api.taxjar.com',
                               'User-Agent'=>"TaxjarRubyGem/#{Taxjar::Version.to_s}"}).
-            to_return(:status => status, :body => '{}',
+            to_return(:status => status,
                       :body => '{"error": "Not Acceptable",
                                  "detail": "error explanation",
                                  "status": "'+ status.to_s + '"}',
