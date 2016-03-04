@@ -7,3 +7,6 @@ rvm:
  - "2.2"
 
 script: bundle exec rspec
+
+before_install:
+  - gem install bundler

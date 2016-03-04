@@ -776,6 +776,109 @@ client.delete_refund(321)
 }>
 ```
 
+### Validate a VAT number
+
+#### Definition
+
+```ruby
+client.validate
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '9e0cd62a22f451701f29c3bde214')
+
+validation = client.validate({
+  :vat => 'FR40303265045'
+})
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Validation @attrs={
+  :valid => true,
+  :exists => true,
+  :vies_available => true,
+  :vies_response => {
+    :country_code => "FR",
+    :vat_number => "40303265045",
+    :request_date => "2016-02-10",
+    :valid => true,
+    :name => "SA SODIMAS",
+    :address => "11 RUE AMPERE\n26600 PONT DE L ISERE"
+  }
+}>
+```
+
+### Summarize tax rates for all regions
+
+#### Definition
+
+```ruby
+client.summary_rates
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '9e0cd62a22f451701f29c3bde214')
+
+summarized_rates = client.summary_rates
+```
+
+#### Example Response
+
+```ruby
+[
+  {
+    :country_code => "US",
+    :country => "United States",
+    :region_code => "CA",
+    :region => "California",
+    :minimum_rate => {
+      :label => "State Tax",
+      :rate => 0.065
+    },
+    :average_rate => {
+      :label => "Tax",
+      :rate => 0.0827
+    }
+  },
+  {
+    :country_code => "CA",
+    :country => "Canada",
+    :region_code => "BC",
+    :region => "British Columbia",
+    :minimum_rate => {
+      :label => "GST",
+      :rate => 0.05
+    },
+    :average_rate => {
+      :label => "PST",
+      :rate => 0.12
+    }
+  },
+  {
+    :country_code => "UK",
+    :country => "United Kingdom",
+    :region_code => nil,
+    :region => nil,
+    :minimum_rate => {
+      :label => "VAT",
+      :rate => 0.2
+    },
+    :average_rate => {
+      :label => "VAT",
+      :rate => 0.2
+    }
+  }
+]
+```
+
 ## Tests
 
 An RSpec test suite is available to ensure API functionality:
