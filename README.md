@@ -879,6 +879,18 @@ summarized_rates = client.summary_rates
 ]
 ```
 
+### Custom Options
+
+Pass a hash to any API method above for the following options:
+
+#### Timeouts
+
+Set request timeout in seconds:
+
+```ruby
+client.tax_for_order({ timeout: 30 })
+```
+
 ## Tests
 
 An RSpec test suite is available to ensure API functionality:

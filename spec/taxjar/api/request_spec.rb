@@ -68,7 +68,7 @@ describe Taxjar::API::Request do
 
       context 'timeout' do
         it 'should initialize nil timeout if not set' do
-          client =  Taxjar::Client.new(api_key: 'AK')
+          client = Taxjar::Client.new(api_key: 'AK')
           subject = Taxjar::API::Request.new(client, :get, '/api_path', 'object', {})
 
           expect(subject.instance_variable_get(:@http_timeout)).to eq({write: nil, read: nil, connect: nil})
@@ -76,7 +76,7 @@ describe Taxjar::API::Request do
 
         it 'should take a timeout option and set timeout for request' do
           options = {timeout: 1}
-          client =  Taxjar::Client.new(api_key: 'AK')
+          client = Taxjar::Client.new(api_key: 'AK')
           subject = Taxjar::API::Request.new(client, :get, '/api_path', 'object', options)
 
           expect(subject.instance_variable_get(:@http_timeout)).to eq({write: 1, read: 1, connect: 1})
