@@ -181,7 +181,7 @@ client.tax_for_order({
     :from_country => 'US',
     :from_zip => '92093',
     :from_city => 'San Diego',                
-    :amount => 16.50,
+    :amount => 15.0,
     :shipping => 1.5,
     :nexus_addresses => [{:address_id => 1,
                           :country => 'US',
@@ -191,7 +191,7 @@ client.tax_for_order({
                           :street => '1218 State St.'}],
     :line_items => [{:quantity => 1,
                      :unit_price => 15.0,
-                     :product_tax_code => 31000}]
+                     :product_tax_code => 20010}]
 })
 ```
 
