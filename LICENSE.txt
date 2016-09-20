@@ -1,4 +1,4 @@
-Copyright (c) 2015 Tim Case
+Copyright (c) 2016 TaxJar, http://www.taxjar.com
 
 MIT License
 
