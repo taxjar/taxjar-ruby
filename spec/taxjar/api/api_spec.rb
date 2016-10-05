@@ -157,6 +157,27 @@ describe Taxjar::API do
     end
   end
   
+  describe '#nexus_regions' do
+    before do
+      stub_get('/v2/nexus/regions').to_return(body: fixture('nexus_regions.json'), headers: { content_type: 'application/json; charset=utf-8' })
+    end
+    
+    it 'requests the right resource' do
+      @client.nexus_regions
+      expect(a_get('/v2/nexus/regions')).to have_been_made
+    end
+
+    it 'returns the requested regions' do
+      regions = @client.nexus_regions
+      expect(regions).to be_an Array
+      expect(regions.first).to be_a Taxjar::NexusRegion
+      expect(regions.first.country_code).to eq('US')
+      expect(regions.first.country).to eq('United States')
+      expect(regions.first.region_code).to eq('CA')
+      expect(regions.first.region).to eq('California')
+    end
+  end
+  
   describe '#validate' do
     before do
       @params = 'vat=FR40303265045'
