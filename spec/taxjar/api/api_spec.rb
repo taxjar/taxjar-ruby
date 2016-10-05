@@ -7,9 +7,7 @@ describe Taxjar::API do
 
   describe '#categories' do
     before do
-      stub_get('/v2/categories').to_return(body: fixture('categories.json'),
-                                                    headers: {content_type: 'application/json; charset=utf-8'})
-
+      stub_get('/v2/categories').to_return(body: fixture('categories.json'), headers: { content_type: 'application/json; charset=utf-8' })
     end
 
     it 'requests the right resource' do
@@ -30,8 +28,7 @@ describe Taxjar::API do
   describe '#rate_for_location' do
     before do
       @postal_code = "90210"
-      stub_get("/v2/rates/#{@postal_code}").to_return(body: fixture('rates.json'),
-                                                      headers: { content_type: 'application/json; charset=utf-8' })
+      stub_get("/v2/rates/#{@postal_code}").to_return(body: fixture('rates.json'), headers: { content_type: 'application/json; charset=utf-8' })
     end
 
     it 'requests the right resource' do
@@ -58,8 +55,7 @@ describe Taxjar::API do
     before do
       @postal_code = "00150"
       @params = "city=Helsinki&country=FI"
-      stub_get("/v2/rates/#{@postal_code}?#{@params}").to_return(body: fixture('rates_intl.json'),
-                                      headers: { content_type: 'application/json; charset=utf-8' })
+      stub_get("/v2/rates/#{@postal_code}?#{@params}").to_return(body: fixture('rates_intl.json'), headers: { content_type: 'application/json; charset=utf-8' })
     end
 
     it 'requests the right resource' do
@@ -181,8 +177,7 @@ describe Taxjar::API do
   describe '#validate' do
     before do
       @params = 'vat=FR40303265045'
-      stub_get("/v2/validation?#{@params}").to_return(body: fixture('validation.json'),
-                                                    headers: {content_type: 'application/json; charset=utf-8'})
+      stub_get("/v2/validation?#{@params}").to_return(body: fixture('validation.json'), headers: { content_type: 'application/json; charset=utf-8' })
       @validation = {
         :vat => 'FR40303265045'
       }
@@ -209,8 +204,7 @@ describe Taxjar::API do
   
   describe '#summary_rates' do
     before do
-      stub_get('/v2/summary_rates').to_return(body: fixture('summary_rates.json'),
-                                                    headers: {content_type: 'application/json; charset=utf-8'})
+      stub_get('/v2/summary_rates').to_return(body: fixture('summary_rates.json'), headers: { content_type: 'application/json; charset=utf-8' })
     end
 
     it 'requests the right resource' do
