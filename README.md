@@ -775,6 +775,47 @@ client.delete_refund(321)
   ]
 }>
 ```
+### List nexus regions
+
+#### Definition
+
+```ruby
+client.nexus_regions
+```
+
+#### Example Request
+
+```ruby
+require "taxjar"
+client = Taxjar::Client.new(api_key: "9e0cd62a22f451701f29c3bde214")
+
+nexus_regions = client.nexus_regions
+```
+
+#### Example Response
+
+```ruby
+[
+  {
+    :country_code => "US",
+    :country => "United States",
+    :region_code => "CA",
+    :region => "California"
+  },
+  {
+    :country_code => "US",
+    :country => "United States",
+    :region_code => "NY",
+    :region => "New York"
+  },
+  {
+    :country_code => "US",
+    :country => "United States",
+    :region_code => "WA",
+    :region => "Washington"
+  }
+]
+```
 
 ### Validate a VAT number
 
