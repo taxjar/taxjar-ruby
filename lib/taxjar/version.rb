@@ -6,11 +6,11 @@ module Taxjar
     end
 
     def minor
-      3
+      4
     end
 
     def patch
-      2
+      0
     end
 
     def pre
