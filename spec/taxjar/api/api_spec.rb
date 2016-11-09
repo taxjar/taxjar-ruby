@@ -85,8 +85,7 @@ describe Taxjar::API do
 
   describe "#tax_for_order" do
     before do
-      stub_post("/v2/taxes").to_return(body: fixture('taxes.json'),
-                                                headers: {content_type: 'application/json; charset=utf-8'})
+      stub_post("/v2/taxes").to_return(body: fixture('taxes.json'), headers: {content_type: 'application/json; charset=utf-8'})
 
       @order = {:from_country => 'US',
                 :from_zip => '07001',
@@ -109,7 +108,10 @@ describe Taxjar::API do
       tax = @client.tax_for_order(@order)
       expect(tax).to be_a Taxjar::Tax
       expect(tax.order_total_amount).to eq(16.5)
+      expect(tax.shipping).to eq(1.5)
+      expect(tax.taxable_amount).to eq(16.5)
       expect(tax.amount_to_collect).to eq(1.16)
+      expect(tax.rate).to eq(0.07)
       expect(tax.has_nexus).to eq(true)
       expect(tax.freight_taxable).to eq(true)
       expect(tax.tax_source).to eq('destination')
@@ -119,37 +121,176 @@ describe Taxjar::API do
       tax = @client.tax_for_order(@order)
       expect(tax.breakdown.state_taxable_amount).to eq(16.5)
       expect(tax.breakdown.state_tax_collectable).to eq(1.16)
+      expect(tax.breakdown.combined_tax_rate).to eq(0.07)
+      expect(tax.breakdown.state_taxable_amount).to eq(16.5)
+      expect(tax.breakdown.state_tax_rate).to eq(0.07)
+      expect(tax.breakdown.state_tax_collectable).to eq(1.16)
       expect(tax.breakdown.county_taxable_amount).to eq(0)
+      expect(tax.breakdown.county_tax_rate).to eq(0)
       expect(tax.breakdown.county_tax_collectable).to eq(0)
       expect(tax.breakdown.city_taxable_amount).to eq(0)
+      expect(tax.breakdown.city_tax_rate).to eq(0)
       expect(tax.breakdown.city_tax_collectable).to eq(0)
       expect(tax.breakdown.special_district_taxable_amount).to eq(0)
+      expect(tax.breakdown.special_tax_rate).to eq(0)
       expect(tax.breakdown.special_district_tax_collectable).to eq(0)
     end
     
     it 'allows access to breakdown.shipping' do
       tax = @client.tax_for_order(@order)
+      expect(tax.breakdown.shipping.taxable_amount).to eq(1.5)
+      expect(tax.breakdown.shipping.tax_collectable).to eq(0.11)
+      expect(tax.breakdown.shipping.state_taxable_amount).to eq(1.5)
       expect(tax.breakdown.shipping.state_amount).to eq(0.11)
       expect(tax.breakdown.shipping.state_sales_tax_rate).to eq(0.07)
-      expect(tax.breakdown.shipping.county_amount).to eq(0)
+      expect(tax.breakdown.shipping.state_amount).to eq(0.11)
+      expect(tax.breakdown.shipping.county_taxable_amount).to eq(0)
       expect(tax.breakdown.shipping.county_tax_rate).to eq(0)
-      expect(tax.breakdown.shipping.city_amount).to eq(0)
+      expect(tax.breakdown.shipping.county_amount).to eq(0)
+      expect(tax.breakdown.shipping.city_taxable_amount).to eq(0)
       expect(tax.breakdown.shipping.city_tax_rate).to eq(0)
-      expect(tax.breakdown.shipping.special_district_amount).to eq(0)
+      expect(tax.breakdown.shipping.city_amount).to eq(0)
+      expect(tax.breakdown.shipping.special_taxable_amount).to eq(0)
       expect(tax.breakdown.shipping.special_tax_rate).to eq(0)
+      expect(tax.breakdown.shipping.special_district_amount).to eq(0)
     end
 
     it 'allows access to breakdown.line_items' do
       tax = @client.tax_for_order(@order)
       expect(tax.breakdown.line_items[0].id).to eq(1)
+      expect(tax.breakdown.line_items[0].taxable_amount).to eq(15)
+      expect(tax.breakdown.line_items[0].tax_collectable).to eq(1.05)
+      expect(tax.breakdown.line_items[0].combined_tax_rate).to eq(0.07)
       expect(tax.breakdown.line_items[0].state_taxable_amount).to eq(15)
       expect(tax.breakdown.line_items[0].state_sales_tax_rate).to eq(0.07)
+      expect(tax.breakdown.line_items[0].state_amount).to eq(1.05)
       expect(tax.breakdown.line_items[0].county_taxable_amount).to eq(0)
       expect(tax.breakdown.line_items[0].county_tax_rate).to eq(0)
+      expect(tax.breakdown.line_items[0].county_amount).to eq(0)
       expect(tax.breakdown.line_items[0].city_taxable_amount).to eq(0)
       expect(tax.breakdown.line_items[0].city_tax_rate).to eq(0)
+      expect(tax.breakdown.line_items[0].city_amount).to eq(0)
       expect(tax.breakdown.line_items[0].special_district_taxable_amount).to eq(0)
       expect(tax.breakdown.line_items[0].special_tax_rate).to eq(0)
+      expect(tax.breakdown.line_items[0].special_district_amount).to eq(0)
+    end
+
+    describe "international orders" do
+      before do
+        stub_post("/v2/taxes").to_return(body: fixture('taxes_international.json'), headers: {content_type: 'application/json; charset=utf-8'})
+      end
+
+      it 'returns the requested taxes' do
+        tax = @client.tax_for_order(@order)
+        expect(tax).to be_a Taxjar::Tax
+        expect(tax.order_total_amount).to eq(26.95)
+        expect(tax.shipping).to eq(10)
+        expect(tax.taxable_amount).to eq(26.95)
+        expect(tax.amount_to_collect).to eq(6.47)
+        expect(tax.rate).to eq(0.24)
+        expect(tax.has_nexus).to eq(true)
+        expect(tax.freight_taxable).to eq(true)
+        expect(tax.tax_source).to eq('destination')
+      end
+      
+      it 'allows access to breakdown' do
+        tax = @client.tax_for_order(@order)
+        expect(tax.breakdown.taxable_amount).to eq(26.95)
+        expect(tax.breakdown.tax_collectable).to eq(6.47)
+        expect(tax.breakdown.combined_tax_rate).to eq(0.24)
+        expect(tax.breakdown.country_taxable_amount).to eq(26.95)
+        expect(tax.breakdown.country_tax_rate).to eq(0.24)
+        expect(tax.breakdown.country_tax_collectable).to eq(6.47)
+      end
+      
+      it 'allows access to breakdown.shipping' do
+        tax = @client.tax_for_order(@order)
+        expect(tax.breakdown.shipping.taxable_amount).to eq(10)
+        expect(tax.breakdown.shipping.tax_collectable).to eq(2.4)
+        expect(tax.breakdown.shipping.combined_tax_rate).to eq(0.24)
+        expect(tax.breakdown.shipping.country_taxable_amount).to eq(10)
+        expect(tax.breakdown.shipping.country_tax_rate).to eq(0.24)
+        expect(tax.breakdown.shipping.country_tax_collectable).to eq(2.4)
+      end
+
+      it 'allows access to breakdown.line_items' do
+        tax = @client.tax_for_order(@order)
+        expect(tax.breakdown.line_items[0].id).to eq(1)
+        expect(tax.breakdown.line_items[0].taxable_amount).to eq(16.95)
+        expect(tax.breakdown.line_items[0].tax_collectable).to eq(4.07)
+        expect(tax.breakdown.line_items[0].combined_tax_rate).to eq(0.24)
+        expect(tax.breakdown.line_items[0].country_taxable_amount).to eq(16.95)
+        expect(tax.breakdown.line_items[0].country_tax_rate).to eq(0.24)
+        expect(tax.breakdown.line_items[0].country_tax_collectable).to eq(4.07)
+      end
+    end
+
+    describe "canadian orders" do
+      before do
+        stub_post("/v2/taxes").to_return(body: fixture('taxes_canada.json'), headers: {content_type: 'application/json; charset=utf-8'})
+      end
+
+      it 'returns the requested taxes' do
+        tax = @client.tax_for_order(@order)
+        expect(tax).to be_a Taxjar::Tax
+        expect(tax.order_total_amount).to eq(26.95)
+        expect(tax.shipping).to eq(10)
+        expect(tax.taxable_amount).to eq(26.95)
+        expect(tax.amount_to_collect).to eq(3.5)
+        expect(tax.rate).to eq(0.13)
+        expect(tax.has_nexus).to eq(true)
+        expect(tax.freight_taxable).to eq(true)
+        expect(tax.tax_source).to eq('destination')
+      end
+      
+      it 'allows access to breakdown' do
+        tax = @client.tax_for_order(@order)
+        expect(tax.breakdown.taxable_amount).to eq(26.95)
+        expect(tax.breakdown.tax_collectable).to eq(3.5)
+        expect(tax.breakdown.combined_tax_rate).to eq(0.13)
+        expect(tax.breakdown.gst_taxable_amount).to eq(26.95)
+        expect(tax.breakdown.gst_tax_rate).to eq(0.05)
+        expect(tax.breakdown.gst).to eq(1.35)
+        expect(tax.breakdown.pst_taxable_amount).to eq(26.95)
+        expect(tax.breakdown.pst_tax_rate).to eq(0.08)
+        expect(tax.breakdown.pst).to eq(2.16)
+        expect(tax.breakdown.qst_taxable_amount).to eq(0)
+        expect(tax.breakdown.qst_tax_rate).to eq(0)
+        expect(tax.breakdown.qst).to eq(0)
+      end
+      
+      it 'allows access to breakdown.shipping' do
+        tax = @client.tax_for_order(@order)
+        expect(tax.breakdown.shipping.taxable_amount).to eq(10)
+        expect(tax.breakdown.shipping.tax_collectable).to eq(1.3)
+        expect(tax.breakdown.shipping.combined_tax_rate).to eq(0.13)
+        expect(tax.breakdown.shipping.gst_taxable_amount).to eq(10)
+        expect(tax.breakdown.shipping.gst_tax_rate).to eq(0.05)
+        expect(tax.breakdown.shipping.gst).to eq(0.5)
+        expect(tax.breakdown.shipping.pst_taxable_amount).to eq(10)
+        expect(tax.breakdown.shipping.pst_tax_rate).to eq(0.08)
+        expect(tax.breakdown.shipping.pst).to eq(0.8)
+        expect(tax.breakdown.shipping.qst_taxable_amount).to eq(0)
+        expect(tax.breakdown.shipping.qst_tax_rate).to eq(0)
+        expect(tax.breakdown.shipping.qst).to eq(0)
+      end
+
+      it 'allows access to breakdown.line_items' do
+        tax = @client.tax_for_order(@order)
+        expect(tax.breakdown.line_items[0].id).to eq(1)
+        expect(tax.breakdown.line_items[0].taxable_amount).to eq(16.95)
+        expect(tax.breakdown.line_items[0].tax_collectable).to eq(2.2)
+        expect(tax.breakdown.line_items[0].combined_tax_rate).to eq(0.13)
+        expect(tax.breakdown.line_items[0].gst_taxable_amount).to eq(16.95)
+        expect(tax.breakdown.line_items[0].gst_tax_rate).to eq(0.05)
+        expect(tax.breakdown.line_items[0].gst).to eq(0.85)
+        expect(tax.breakdown.line_items[0].pst_taxable_amount).to eq(16.95)
+        expect(tax.breakdown.line_items[0].pst_tax_rate).to eq(0.08)
+        expect(tax.breakdown.line_items[0].pst).to eq(1.36)
+        expect(tax.breakdown.line_items[0].qst_taxable_amount).to eq(0)
+        expect(tax.breakdown.line_items[0].qst_tax_rate).to eq(0)
+        expect(tax.breakdown.line_items[0].qst).to eq(0)
+      end
     end
   end
   

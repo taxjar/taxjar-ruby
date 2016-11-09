@@ -1,0 +1,39 @@
+{
+  "tax": {
+    "order_total_amount": 26.95,
+    "shipping": 10,
+    "taxable_amount": 26.95,
+    "amount_to_collect": 6.47,
+    "rate": 0.24,
+    "has_nexus": true,
+    "freight_taxable": true,
+    "tax_source": "destination",
+    "breakdown": {
+      "taxable_amount": 26.95,
+      "tax_collectable": 6.47,
+      "combined_tax_rate": 0.24,
+      "country_taxable_amount": 26.95,
+      "country_tax_rate": 0.24,
+      "country_tax_collectable": 6.47,
+      "shipping": {
+        "taxable_amount": 10,
+        "tax_collectable": 2.4,
+        "combined_tax_rate": 0.24,
+        "country_taxable_amount": 10,
+        "country_tax_rate": 0.24,
+        "country_tax_collectable": 2.4
+      },
+      "line_items": [
+        {
+          "id": "1",
+          "taxable_amount": 16.95,
+          "tax_collectable": 4.07,
+          "combined_tax_rate": 0.24,
+          "country_taxable_amount": 16.95,
+          "country_tax_rate": 0.24,
+          "country_tax_collectable": 4.07
+        }
+      ]
+    }
+  }
+}

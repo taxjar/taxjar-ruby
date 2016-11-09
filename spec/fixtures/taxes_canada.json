@@ -1,0 +1,57 @@
+{
+  "tax": {
+    "order_total_amount": 26.95,
+    "shipping": 10,
+    "taxable_amount": 26.95,
+    "amount_to_collect": 3.5,
+    "rate": 0.13,
+    "has_nexus": true,
+    "freight_taxable": true,
+    "tax_source": "destination",
+    "breakdown": {
+      "taxable_amount": 26.95,
+      "tax_collectable": 3.5,
+      "combined_tax_rate": 0.13,
+      "gst_taxable_amount": 26.95,
+      "gst_tax_rate": 0.05,
+      "gst": 1.35,
+      "pst_taxable_amount": 26.95,
+      "pst_tax_rate": 0.08,
+      "pst": 2.16,
+      "qst_taxable_amount": 0,
+      "qst_tax_rate": 0,
+      "qst": 0,
+      "shipping": {
+        "taxable_amount": 10,
+        "tax_collectable": 1.3,
+        "combined_tax_rate": 0.13,
+        "gst_taxable_amount": 10,
+        "gst_tax_rate": 0.05,
+        "gst": 0.5,
+        "pst_taxable_amount": 10,
+        "pst_tax_rate": 0.08,
+        "pst": 0.8,
+        "qst_taxable_amount": 0,
+        "qst_tax_rate": 0,
+        "qst": 0
+      },
+      "line_items": [
+        {
+          "id": "1",
+          "taxable_amount": 16.95,
+          "tax_collectable": 2.2,
+          "combined_tax_rate": 0.13,
+          "gst_taxable_amount": 16.95,
+          "gst_tax_rate": 0.05,
+          "gst": 0.85,
+          "pst_taxable_amount": 16.95,
+          "pst_tax_rate": 0.08,
+          "pst": 1.36,
+          "qst_taxable_amount": 0,
+          "qst_tax_rate": 0,
+          "qst": 0
+        }
+      ]
+    }
+  }
+}
