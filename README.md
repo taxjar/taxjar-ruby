@@ -469,7 +469,7 @@ client.delete_order
 require 'taxjar'
 client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
 
-client.delete_order(123)
+client.delete_order('123')
 ```
 
 #### Example Response
@@ -737,7 +737,7 @@ client.delete_refund
 require 'taxjar'
 client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
 
-client.delete_refund(321)
+client.delete_refund('321')
 ```
 
 #### Example Response
