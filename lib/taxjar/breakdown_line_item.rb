@@ -3,8 +3,8 @@ require 'taxjar/base'
 module Taxjar
   class BreakdownLineItem < Taxjar::Base
     extend ModelAttribute
-      
-    attribute :id,                              :integer
+
+    attribute :id,                              :string
     attribute :taxable_amount,                  :float
     attribute :tax_collectable,                 :float
     attribute :combined_tax_rate,               :float
