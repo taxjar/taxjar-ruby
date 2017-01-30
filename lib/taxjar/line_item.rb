@@ -4,7 +4,7 @@ module Taxjar
   class LineItem < Taxjar::Base
     extend ModelAttribute
     
-    attribute :id,                 :integer
+    attribute :id,                 :string
     attribute :quantity,           :integer
     attribute :product_identifier, :string
     attribute :description,        :string
