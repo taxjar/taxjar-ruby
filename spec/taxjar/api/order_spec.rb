@@ -85,7 +85,7 @@ describe Taxjar::API::Order do
 
     it 'allows access to line_items' do
       order = @client.show_order('123')
-      expect(order.line_items[0].id).to eq(1)
+      expect(order.line_items[0].id).to eq('1')
       expect(order.line_items[0].quantity).to eq(1)
       expect(order.line_items[0].product_identifier).to eq('12-34243-9')
       expect(order.line_items[0].description).to eq('Fuzzy Widget')
@@ -145,7 +145,7 @@ describe Taxjar::API::Order do
     
     it 'allows access to line_items' do
       order = @client.create_order(@order)
-      expect(order.line_items[0].id).to eq(1)
+      expect(order.line_items[0].id).to eq('1')
       expect(order.line_items[0].quantity).to eq(1)
       expect(order.line_items[0].product_identifier).to eq('12-34243-9')
       expect(order.line_items[0].description).to eq('Fuzzy Widget')
@@ -201,7 +201,7 @@ describe Taxjar::API::Order do
     
     it 'allows access to line_items' do
       order = @client.update_order(@order)
-      expect(order.line_items[0].id).to eq(1)
+      expect(order.line_items[0].id).to eq('1')
       expect(order.line_items[0].quantity).to eq(1)
       expect(order.line_items[0].product_identifier).to eq('12-34243-9')
       expect(order.line_items[0].description).to eq('Fuzzy Widget')
@@ -245,7 +245,7 @@ describe Taxjar::API::Order do
     
     it 'allows access to line items' do
       order = @client.delete_order('123')
-      expect(order.line_items[0].id).to eq(1)
+      expect(order.line_items[0].id).to eq('1')
       expect(order.line_items[0].quantity).to eq(1)
       expect(order.line_items[0].product_identifier).to eq('12-34243-9')
       expect(order.line_items[0].description).to eq('Fuzzy Widget')

@@ -86,7 +86,7 @@ describe Taxjar::API::Refund do
     
     it 'allows access to line_items' do
       refund = @client.show_refund('321')
-      expect(refund.line_items[0].id).to eq(1)
+      expect(refund.line_items[0].id).to eq('1')
       expect(refund.line_items[0].quantity).to eq(1)
       expect(refund.line_items[0].product_identifier).to eq('12-34243-9')
       expect(refund.line_items[0].description).to eq('Fuzzy Widget')
@@ -149,7 +149,7 @@ describe Taxjar::API::Refund do
     
     it 'allows access to line_items' do
       refund = @client.create_refund(@refund)
-      expect(refund.line_items[0].id).to eq(1)
+      expect(refund.line_items[0].id).to eq('1')
       expect(refund.line_items[0].quantity).to eq(1)
       expect(refund.line_items[0].product_identifier).to eq('12-34243-9')
       expect(refund.line_items[0].description).to eq('Fuzzy Widget')
@@ -206,7 +206,7 @@ describe Taxjar::API::Refund do
     
     it 'allows access to line_items' do
       refund = @client.update_refund(@refund)
-      expect(refund.line_items[0].id).to eq(1)
+      expect(refund.line_items[0].id).to eq('1')
       expect(refund.line_items[0].quantity).to eq(1)
       expect(refund.line_items[0].product_identifier).to eq('12-34243-9')
       expect(refund.line_items[0].description).to eq('Fuzzy Widget')
@@ -252,7 +252,7 @@ describe Taxjar::API::Refund do
     
     it 'allows access to line_items' do
       refund = @client.delete_refund('321')
-      expect(refund.line_items[0].id).to eq(1)
+      expect(refund.line_items[0].id).to eq('1')
       expect(refund.line_items[0].quantity).to eq(1)
       expect(refund.line_items[0].product_identifier).to eq('12-34243-9')
       expect(refund.line_items[0].description).to eq('Fuzzy Widget')

@@ -93,7 +93,8 @@ describe Taxjar::API do
                 :to_zip => '07446',
                 :amount => 16.50,
                 :shipping => 1.5,
-                :line_items => [{:line_item => {:quantity => 1,
+                :line_items => [{:line_item => {:id => "1",
+                                                :quantity => 1,
                                                 :unit_price => 15.0,
                                                 :product_tax_code => '20010'}}]
       }
@@ -157,7 +158,7 @@ describe Taxjar::API do
 
     it 'allows access to breakdown.line_items' do
       tax = @client.tax_for_order(@order)
-      expect(tax.breakdown.line_items[0].id).to eq(1)
+      expect(tax.breakdown.line_items[0].id).to eq('1')
       expect(tax.breakdown.line_items[0].taxable_amount).to eq(15)
       expect(tax.breakdown.line_items[0].tax_collectable).to eq(1.05)
       expect(tax.breakdown.line_items[0].combined_tax_rate).to eq(0.07)
@@ -215,7 +216,7 @@ describe Taxjar::API do
 
       it 'allows access to breakdown.line_items' do
         tax = @client.tax_for_order(@order)
-        expect(tax.breakdown.line_items[0].id).to eq(1)
+        expect(tax.breakdown.line_items[0].id).to eq('1')
         expect(tax.breakdown.line_items[0].taxable_amount).to eq(16.95)
         expect(tax.breakdown.line_items[0].tax_collectable).to eq(4.07)
         expect(tax.breakdown.line_items[0].combined_tax_rate).to eq(0.24)
@@ -277,7 +278,7 @@ describe Taxjar::API do
 
       it 'allows access to breakdown.line_items' do
         tax = @client.tax_for_order(@order)
-        expect(tax.breakdown.line_items[0].id).to eq(1)
+        expect(tax.breakdown.line_items[0].id).to eq('1')
         expect(tax.breakdown.line_items[0].taxable_amount).to eq(16.95)
         expect(tax.breakdown.line_items[0].tax_collectable).to eq(2.2)
         expect(tax.breakdown.line_items[0].combined_tax_rate).to eq(0.13)
