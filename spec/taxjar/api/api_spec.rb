@@ -93,7 +93,7 @@ describe Taxjar::API do
                 :to_zip => '07446',
                 :amount => 16.50,
                 :shipping => 1.5,
-                :line_items => [{:line_item => {:id => "1",
+                :line_items => [{:line_item => {:id => '1',
                                                 :quantity => 1,
                                                 :unit_price => 15.0,
                                                 :product_tax_code => '20010'}}]

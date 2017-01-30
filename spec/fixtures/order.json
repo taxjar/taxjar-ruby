@@ -18,7 +18,7 @@
     "sales_tax": "0.95",
     "line_items": [
       {
-        "id": 1,
+        "id": "1",
         "quantity": 1,
         "product_identifier": "12-34243-9",
         "description": "Fuzzy Widget",
