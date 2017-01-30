@@ -215,7 +215,7 @@ client.tax_for_order({
     :special_district_tax_collectable => 0.22,
     :line_items => [
       {
-        :id => 1,
+        :id => '1',
         :state_taxable_amount => 15,
         :state_sales_tax_rate => 0.065,
         :county_taxable_amount => 15,
@@ -305,7 +305,7 @@ client.show_order('123')
   :sales_tax => 0.95,
   :line_items => [
     {
-      :id => 1,
+      :id => '1',
       :quantity => 1,
       :product_identifier => '12-34243-0',
       :product_tax_code => nil,
@@ -379,7 +379,7 @@ order = client.create_order({
   :sales_tax => 0.95,
   :line_items => [
     {
-      :id => 1,
+      :id => '1',
       :quantity => 1,
       :product_identifier => '12-34243-9',
       :product_tax_code => nil,
@@ -442,7 +442,7 @@ order = client.update_order({
   :sales_tax => 0.95,
   :line_items => [
     {
-      :id => 1,
+      :id => '1',
       :quantity => 1,
       :product_identifier => '12-34243-0',
       :product_tax_code => nil,
@@ -495,7 +495,7 @@ client.delete_order('123')
   :sales_tax => 0.95,
   :line_items => [
     {
-      :id => 1,
+      :id => '1',
       :quantity => 1,
       :product_identifier => '12-34243-0',
       :product_tax_code => nil,
@@ -572,7 +572,7 @@ client.show_refund('321')
   :sales_tax => 0.95,
   :line_items => [
     {
-      :id => 1,
+      :id => '1',
       :quantity => 1,
       :product_identifier => '12-34243-0',
       :product_tax_code => nil,
@@ -647,7 +647,7 @@ refund = client.create_refund({
   :sales_tax => 0.95,
   :line_items => [
     {
-      :id => 1,
+      :id => '1',
       :quantity => 1,
       :product_identifier => '12-34243-0',
       :product_tax_code => nil,
@@ -710,7 +710,7 @@ refund = client.update_refund({
   :sales_tax => 0.95,
   :line_items => [
     {
-      :id => 1,
+      :id => '1',
       :quantity => 1,
       :product_identifier => '12-34243-9',
       :product_tax_code => nil,
@@ -763,7 +763,7 @@ client.delete_refund('321')
   :sales_tax => 0.95,
   :line_items => [
     {
-      :id => 1,
+      :id => '1',
       :quantity => 1,
       :product_identifier => '12-34243-9',
       :product_tax_code => nil,
