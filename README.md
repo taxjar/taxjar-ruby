@@ -136,7 +136,8 @@ rates = client.rates_for_location('00150', {
   :city => 'WATTS',
   :city_rate => 0,
   :combined_district_rate => 0.015,
-  :combined_rate => 0.09
+  :combined_rate => 0.09,
+  :freight_taxable => false
 }>
 
 #<Taxjar::Rate:0x00000a @attrs={
@@ -144,13 +145,14 @@ rates = client.rates_for_location('00150', {
   :city => 'Vancouver',
   :state => 'BC',
   :country => 'CA',
-  :combined_rate => '0.12'
+  :combined_rate => 0.12,
+  :freight_taxable => true
 }>
 
 #<Taxjar::Rate:0x00000a @attrs={
   :country => 'FI',
   :name => 'Finland',
-  :standard_rate => '0.24',
+  :standard_rate => 0.24,
   :reduced_rate => nil,
   :super_reduced_rate => nil,
   :parking_rate => nil,

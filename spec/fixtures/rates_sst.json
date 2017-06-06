@@ -1,0 +1,16 @@
+{
+  "rate": {
+    "zip": "05495-2086",
+    "country": "US",
+    "country_rate": "0.0",
+    "state": "VT",
+    "state_rate": "0.06",
+    "county": "CHITTENDEN",
+    "county_rate": "0.0",
+    "city": "WILLISTON",
+    "city_rate": "0.0",
+    "combined_district_rate": "0.01",
+    "combined_rate": "0.07",
+    "freight_taxable": true
+  }
+}

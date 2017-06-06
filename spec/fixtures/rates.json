@@ -8,6 +8,7 @@
     "city": "WATTS",
     "city_rate": "0.0",
     "combined_district_rate": "0.015",
-    "combined_rate": "0.09"
+    "combined_rate": "0.09",
+    "freight_taxable": false
   }
 }

@@ -13,10 +13,14 @@ module Taxjar
     attribute :city_rate,               :float
     attribute :combined_district_rate,  :float
     attribute :combined_rate,           :float
+    attribute :freight_taxable,         :boolean
 
     # International
     attribute :country,                 :string
     attribute :name,                    :string
+
+    # Australia / SST States
+    attribute :country_rate,            :float
     
     # European Union
     attribute :standard_rate,           :float
@@ -24,6 +28,5 @@ module Taxjar
     attribute :super_reduced_rate,      :float
     attribute :parking_rate,            :float
     attribute :distance_sale_threshold, :float
-    attribute :freight_taxable,         :boolean
   end
 end
