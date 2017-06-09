@@ -1,0 +1,10 @@
+{
+  "rate": {
+    "zip": "V5K0A1",
+    "city": "Vancouver",
+    "state": "BC",
+    "country": "CA",
+    "combined_rate": "0.12",
+    "freight_taxable": true
+  }
+}

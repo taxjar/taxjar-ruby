@@ -1,0 +1,9 @@
+{
+  "rate": {
+    "zip": "2060",
+    "country": "AU",
+    "country_rate": "0.1",
+    "combined_rate": "0.1",
+    "freight_taxable": true
+  }
+}

@@ -71,17 +71,17 @@ client.categories
 
 ```ruby
 [
-  #<Taxjar::Category:0x007f081dc3e278 @attrs={
+  #<Taxjar::Category:0x00000a @attrs={
     :name => 'Digital Goods', 
     :product_tax_code => 31000, 
     :description => 'Digital products transferred electronically.'
   }>, 
-  #<Taxjar::Category:0x007f081dc3de90 @attrs={
+  #<Taxjar::Category:0x00000a @attrs={
     :name => 'Clothing', 
     :product_tax_code => 20010, 
     :description => 'All human wearing apparel suitable for general use'
   }>, 
-  #<Taxjar::Category:0x007f081dc3da80 @attrs={
+  #<Taxjar::Category:0x00000a @attrs={
     :name => 'Non-Prescription',
     :product_tax_code => 51010, 
     :description => 'Drugs for human use without a prescription'
@@ -127,7 +127,7 @@ rates = client.rates_for_location('00150', {
 #### Example Response
 
 ```ruby
-#<Taxjar::Rate:0x007fc47056a928 @attrs={
+#<Taxjar::Rate:0x00000a @attrs={
   :zip => '90002', 
   :state => 'CA',
   :state_rate => 0.065,
@@ -136,21 +136,23 @@ rates = client.rates_for_location('00150', {
   :city => 'WATTS',
   :city_rate => 0,
   :combined_district_rate => 0.015,
-  :combined_rate => 0.09
+  :combined_rate => 0.09,
+  :freight_taxable => false
 }>
 
-#<Taxjar::Rate:0x007fc47056a928 @attrs={
+#<Taxjar::Rate:0x00000a @attrs={
   :zip => 'V5K0A1',
   :city => 'Vancouver',
   :state => 'BC',
   :country => 'CA',
-  :combined_rate => '0.12'
+  :combined_rate => 0.12,
+  :freight_taxable => true
 }>
 
-#<Taxjar::Rate:0x007fc47056a928 @attrs={
+#<Taxjar::Rate:0x00000a @attrs={
   :country => 'FI',
   :name => 'Finland',
-  :standard_rate => '0.24',
+  :standard_rate => 0.24,
   :reduced_rate => nil,
   :super_reduced_rate => nil,
   :parking_rate => nil,
@@ -198,13 +200,13 @@ client.tax_for_order({
 #### Example Response
 
 ```ruby
-#<Taxjar::Tax:0x007f3945688fc8 @attrs={
+#<Taxjar::Tax:0x00000a @attrs={
   :order_total_amount => 16.5,
   :amount_to_collect => 1.35,
   :has_nexus => true,
   :freight_taxable => false,
   :tax_source => 'destination',
-  :breakdown => {
+  :breakdown => #<Taxjar::Breakdown:0x00000a @attrs={
     :state_taxable_amount => 15,
     :state_tax_collectable => 0.98,
     :county_taxable_amount => 15,
@@ -214,7 +216,7 @@ client.tax_for_order({
     :special_district_taxable_amount => 15,
     :special_district_tax_collectable => 0.22,
     :line_items => [
-      {
+      #<Taxjar::BreakdownLineItem:0x00000a @attrs={
         :id => '1',
         :state_taxable_amount => 15,
         :state_sales_tax_rate => 0.065,
@@ -224,12 +226,12 @@ client.tax_for_order({
         :city_tax_rate => 0,
         :special_district_taxable_amount => 15,
         :special_tax_rate => 0.015
-      }
+      }>
     ]
-  }
+  }>
 }>
 
-#<Taxjar::Tax:0x007f3945688fc8 @attrs={
+#<Taxjar::Tax:0x00000a @attrs={
   :order_total_amount => 27.12,
   :shipping => 1.5,
   :taxable_amount => 27.12,
@@ -285,7 +287,7 @@ client.show_order('123')
 #### Example Response
 
 ```ruby
-#<Taxjar::Order:0x007fd3e514a940 @attrs={
+#<Taxjar::Order:0x00000a @attrs={
   :transaction_id => '123',
   :user_id => 11836,
   :transaction_date => '2015-05-14T00:00:00Z',
@@ -359,7 +361,7 @@ order = client.create_order({
 #### Example Response
 
 ```ruby
-#<Taxjar::Order:0x007f6d65b252d0 @attrs={
+#<Taxjar::Order:0x00000a @attrs={
   :transaction_id => '20',
   :user_id => 11836,
   :transaction_date => '2015-05-14T00:00:00Z',
@@ -422,7 +424,7 @@ order = client.update_order({
 #### Example Response
 
 ```ruby
-#<Taxjar::Order:0x007f6d65b252d0 @attrs={
+#<Taxjar::Order:0x00000a @attrs={
   :transaction_id => '123',
   :user_id => 11836,
   :transaction_date => '2015-05-14T00:00:00Z',
@@ -475,7 +477,7 @@ client.delete_order('123')
 #### Example Response
 
 ```ruby
-#<Taxjar::Order:0x007f6d65b252d0 @attrs={
+#<Taxjar::Order:0x00000a @attrs={
   :transaction_id => '123',
   :user_id => 11836,
   :transaction_date => '2015-05-14T00:00:00Z',
@@ -552,7 +554,7 @@ client.show_refund('321')
 #### Example Response
 
 ```ruby
-#<Taxjar::Refund:0x007f6da40e33a0 @attrs={
+#<Taxjar::Refund:0x00000a @attrs={
   :transaction_id => '321',
   :user_id => 11836,
   :transaction_date => '2015-06-14T00:00:00Z',
@@ -627,7 +629,7 @@ refund = client.create_refund({
 #### Example Response
 
 ```ruby
-#<Taxjar::Refund:0x007f6da40e33a0 @attrs={
+#<Taxjar::Refund:0x00000a @attrs={
   :transaction_id => '321',
   :user_id => 11836,
   :transaction_date => '2015-06-14T00:00:00Z',
@@ -690,7 +692,7 @@ refund = client.update_refund({
 #### Example Response
 
 ```ruby
-#<Taxjar::Refund:0x007f6da40e33a0 @attrs={
+#<Taxjar::Refund:0x00000a @attrs={
   :transaction_id => '321',
   :user_id => 11836,
   :transaction_date => '2015-06-14T00:00:00Z',
@@ -743,7 +745,7 @@ client.delete_refund('321')
 #### Example Response
 
 ```ruby
-#<Taxjar::Refund:0x007f6da40e33a0 @attrs={
+#<Taxjar::Refund:0x00000a @attrs={
   :transaction_id => '321',
   :user_id => 11836,
   :transaction_date => '2015-06-14T00:00:00Z',
@@ -796,24 +798,24 @@ nexus_regions = client.nexus_regions
 
 ```ruby
 [
-  {
+  #<Taxjar::NexusRegion:0x00000a @attrs={
     :country_code => 'US',
     :country => 'United States',
     :region_code => 'CA',
     :region => 'California'
-  },
-  {
+  }>,
+  #<Taxjar::NexusRegion:0x00000a @attrs={
     :country_code => 'US',
     :country => 'United States',
     :region_code => 'NY',
     :region => 'New York'
-  },
-  {
+  }>,
+  #<Taxjar::NexusRegion:0x00000a @attrs={
     :country_code => 'US',
     :country => 'United States',
     :region_code => 'WA',
     :region => 'Washington'
-  }
+  }>
 ]
 ```
 
@@ -839,7 +841,7 @@ validation = client.validate({
 #### Example Response
 
 ```ruby
-#<Taxjar::Validation @attrs={
+#<Taxjar::Validation:0x00000a @attrs={
   :valid => true,
   :exists => true,
   :vies_available => true,
@@ -875,7 +877,7 @@ summarized_rates = client.summary_rates
 
 ```ruby
 [
-  {
+  #<Taxjar::SummaryRate:0x00000a @attrs={
     :country_code => 'US',
     :country => 'United States',
     :region_code => 'CA',
@@ -888,8 +890,8 @@ summarized_rates = client.summary_rates
       :label => 'Tax',
       :rate => 0.0827
     }
-  },
-  {
+  }>,
+  #<Taxjar::SummaryRate:0x00000a @attrs={
     :country_code => 'CA',
     :country => 'Canada',
     :region_code => 'BC',
@@ -902,8 +904,8 @@ summarized_rates = client.summary_rates
       :label => 'PST',
       :rate => 0.12
     }
-  },
-  {
+  }>,
+  #<Taxjar::SummaryRate:0x00000a @attrs={
     :country_code => 'UK',
     :country => 'United Kingdom',
     :region_code => nil,
@@ -916,7 +918,7 @@ summarized_rates = client.summary_rates
       :label => 'VAT',
       :rate => 0.2
     }
-  }
+  }>
 ]
 ```
 
