@@ -124,7 +124,6 @@ describe Taxjar::API::Request do
           to_return(:status => 200, :body => '{"object": {"id": "3"}}',
                     :headers => {content_type: 'application/json; charset utf-8'})
 
-
         expect(subject.perform).to eq({id: '3'})
       end
     end

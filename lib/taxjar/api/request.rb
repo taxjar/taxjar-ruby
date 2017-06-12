@@ -25,7 +25,8 @@ module Taxjar
 
       def perform
         options_key = @request_method == :get ? :params : :json
-        response = HTTP.timeout(@http_timeout).with(headers).public_send(request_method, uri.to_s, options_key =>  @options)
+        response = HTTP.timeout(@http_timeout).headers(headers)
+          .request(request_method, uri.to_s, options_key =>  @options)
         response_body = symbolize_keys!(response.parse)
         fail_or_return_response_body(response.code, response_body)
       end
