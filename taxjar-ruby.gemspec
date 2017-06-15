@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'addressable', '~> 2.3'
   spec.add_dependency 'http', '~> 1.0.4'
   spec.add_dependency 'memoizable', '~> 0.4.0'
-  spec.add_dependency 'taxjar-model_attribute', '~> 3.1'
+  spec.add_dependency 'model_attribute', '~> 3.2'
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 12.0"
 end
