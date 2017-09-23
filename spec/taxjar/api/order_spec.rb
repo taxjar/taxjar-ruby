@@ -89,7 +89,9 @@ describe Taxjar::API::Order do
       expect(order.line_items[0].quantity).to eq(1)
       expect(order.line_items[0].product_identifier).to eq('12-34243-9')
       expect(order.line_items[0].description).to eq('Fuzzy Widget')
+      expect(order.line_items[0].product_tax_code).to eq('20010')
       expect(order.line_items[0].unit_price).to eq(15.0)
+      expect(order.line_items[0].discount).to eq(0.0)
       expect(order.line_items[0].sales_tax).to eq(0.95)
     end
   end
@@ -112,7 +114,9 @@ describe Taxjar::API::Order do
                                  :quantity => 1,
                                  :product_identifier => '12-34243-9',
                                  :description => 'Fuzzy Widget',
+                                 :product_tax_code => '20010',
                                  :unit_price => 15.0,
+                                 :discount => 0.0,
                                  :sales_tax => 0.95}]
       }
     end
@@ -149,7 +153,9 @@ describe Taxjar::API::Order do
       expect(order.line_items[0].quantity).to eq(1)
       expect(order.line_items[0].product_identifier).to eq('12-34243-9')
       expect(order.line_items[0].description).to eq('Fuzzy Widget')
+      expect(order.line_items[0].product_tax_code).to eq('20010')
       expect(order.line_items[0].unit_price).to eq(15.0)
+      expect(order.line_items[0].discount).to eq(0.0)
       expect(order.line_items[0].sales_tax).to eq(0.95)
     end
   end
@@ -166,7 +172,8 @@ describe Taxjar::API::Order do
                 :line_items => [{:id => 1,
                                  :quantity => 1,
                                  :product_identifier => '12-34243-0',
-                                 :description => 'Heavy  Widget',
+                                 :description => 'Heavy Widget',
+                                 :product_tax_code => '20010',
                                  :unit_price => 15.0,
                                  :discount => 0.0,
                                  :sales_tax => 0.95}]
@@ -205,7 +212,9 @@ describe Taxjar::API::Order do
       expect(order.line_items[0].quantity).to eq(1)
       expect(order.line_items[0].product_identifier).to eq('12-34243-9')
       expect(order.line_items[0].description).to eq('Fuzzy Widget')
+      expect(order.line_items[0].product_tax_code).to eq('20010')
       expect(order.line_items[0].unit_price).to eq(15.0)
+      expect(order.line_items[0].discount).to eq(0.0)
       expect(order.line_items[0].sales_tax).to eq(0.95)
     end
   end
@@ -249,7 +258,9 @@ describe Taxjar::API::Order do
       expect(order.line_items[0].quantity).to eq(1)
       expect(order.line_items[0].product_identifier).to eq('12-34243-9')
       expect(order.line_items[0].description).to eq('Fuzzy Widget')
+      expect(order.line_items[0].product_tax_code).to eq('20010')
       expect(order.line_items[0].unit_price).to eq(15.0)
+      expect(order.line_items[0].discount).to eq(0.0)
       expect(order.line_items[0].sales_tax).to eq(0.95)
     end
   end

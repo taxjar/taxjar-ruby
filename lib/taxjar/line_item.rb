@@ -8,6 +8,7 @@ module Taxjar
     attribute :quantity,           :integer
     attribute :product_identifier, :string
     attribute :description,        :string
+    attribute :product_tax_code,   :string
     attribute :unit_price,         :float
     attribute :discount,           :float
     attribute :sales_tax,          :float

@@ -23,6 +23,7 @@
         "quantity": 1,
         "product_identifier": "12-34243-9",
         "description": "Fuzzy Widget",
+        "product_tax_code": "20010",
         "unit_price": "15.0",
         "discount": "0.0",
         "sales_tax": "0.95"
