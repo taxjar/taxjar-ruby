@@ -1,13 +1,12 @@
-# TaxJar Ruby Gem [![RubyGems](http://img.shields.io/gem/v/taxjar-ruby.svg?style=flat-square)](https://rubygems.org/gems/taxjar-ruby) [![Build Status](http://img.shields.io/travis/taxjar/taxjar-ruby.svg?style=flat-square)](https://travis-ci.org/taxjar/taxjar-ruby)
+# TaxJar Sales Tax API for Ruby [![RubyGems](http://img.shields.io/gem/v/taxjar-ruby.svg?style=flat-square)](https://rubygems.org/gems/taxjar-ruby) [![Build Status](http://img.shields.io/travis/taxjar/taxjar-ruby.svg?style=flat-square)](https://travis-ci.org/taxjar/taxjar-ruby)
 
 <a href="http://developers.taxjar.com"><img src="http://www.taxjar.com/img/TJ_logo_color_office_png.png" alt="TaxJar" width="220"></a>
 
-A Ruby interface to the TaxJar Sales Tax API. TaxJar makes sales tax filing easier for online sellers and merchants. 
-See local jurisdictional tax reports, get payment reminders, and more. You can use our API to access TaxJar API endpoints, 
-which can get information on sales tax rates, categories or upload transactions.
+A Ruby interface to the TaxJar [Sales Tax API](https://developers.taxjar.com/api/reference/). TaxJar makes sales tax filing easier for online sellers and merchants. 
+See local jurisdictional tax reports, get payment reminders, and more. You can use our API to access TaxJar API endpoints, which can get information on sales tax rates, categories or upload transactions.
 
-* This wrapper supports 100% of the [TaxJar API Version 2](http://developers.taxjar.com/api/#introduction)
-* Data returned from API calls are mapped into Ruby objects
+* This wrapper supports 100% of [SmartCalcs v2](http://developers.taxjar.com/api/#introduction)
+* Data returned from API calls are mapped to Ruby objects
 
 ## Supported Ruby Versions
 
@@ -15,12 +14,12 @@ Ruby 1.9.3 or greater
 
 ## Gem Dependencies
 
-Installing this gem also installs the following gems:
+Installing this gem also bundles the following dependencies:
 
-* [http](https://github.com/httprb/http.rb) Fast Ruby HTTP client with a chainable API and full streaming support.
-* [addressable](https://github.com/sporkmonger/addressable) Replacement for the URI implementation that is part of Ruby's standard library. It more closely conforms to the relevant RFCs and adds support for IRIs and URI templates.
-* [memoizable](https://github.com/dkubb/memoizable) Memoize method return values.
-* [model_attribute](https://github.com/yammer/model_attribute) Type casted attributes for non-ActiveRecord models. [Forked](https://github.com/taxjar/model_attribute) to handle floats and more types.
+* [http](https://github.com/httprb/http.rb) - Fast Ruby HTTP client with a chainable API and full streaming support.
+* [addressable](https://github.com/sporkmonger/addressable) - Replacement for the URI implementation that is part of Ruby's standard library. It more closely conforms to the relevant RFCs and adds support for IRIs and URI templates.
+* [memoizable](https://github.com/dkubb/memoizable) - Memoize method return values.
+* [model_attribute](https://github.com/yammer/model_attribute) - Type casted attributes for non-ActiveRecord models. [Forked](https://github.com/taxjar/model_attribute) to handle floats and more types.
 
 ## Installation
 
@@ -42,11 +41,16 @@ Or install it yourself as:
 $ gem install taxjar-ruby
 ```
 
-## Quick Start Guide
+## Authentication
 
-First, [get an API key from TaxJar](https://app.taxjar.com/api_sign_up/plus/). Copy and paste in your API key:
+[Generate an API token from TaxJar](https://app.taxjar.com/api_sign_up/). Copy and paste your API token when instantiating a new client:
 
-You are now ready to use TaxJar!
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: 'YOUR_API_TOKEN')
+```
+
+You're now ready to use TaxJar! [Check out our quickstart guide](https://developers.taxjar.com/api/guides/ruby/#ruby-quickstart) to get up and running quickly.
 
 ## Usage
 
@@ -946,7 +950,7 @@ $ rspec
 
 ## More Information
 
-More information can be found on the [TaxJar developer site](http://developers.taxjar.com).
+More information can be found on [TaxJar Developers](http://developers.taxjar.com).
 
 ## License
 
