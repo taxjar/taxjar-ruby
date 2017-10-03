@@ -100,7 +100,7 @@ describe Taxjar::API::Request do
                             'Host'=>'api.taxjar.com',
                             'User-Agent'=>"TaxjarRubyGem/#{Taxjar::Version.to_s}"}).
           to_return(:status => 200, :body => '{"object": {"id": "3"}}',
-                    :headers => {content_type: 'application/json; charset utf-8'})
+                    :headers => {content_type: 'application/json; charset=UTF-8'})
 
 
         expect(subject.perform).to eq({id: '3'})
@@ -118,11 +118,11 @@ describe Taxjar::API::Request do
          stub_request(:post, "https://api.taxjar.com/api_path").
                     with(:body => "{\"city\":\"New York\"}",
                          :headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
-                                      'Content-Type'=>'application/json',
+                                      'Content-Type'=>'application/json; charset=UTF-8',
                                       'Host'=>'api.taxjar.com',
                                       'User-Agent'=>"TaxjarRubyGem/#{Taxjar::Version.to_s}"}).
           to_return(:status => 200, :body => '{"object": {"id": "3"}}',
-                    :headers => {content_type: 'application/json; charset utf-8'})
+                    :headers => {content_type: 'application/json; charset=UTF-8'})
 
         expect(subject.perform).to eq({id: '3'})
       end
@@ -139,7 +139,7 @@ describe Taxjar::API::Request do
                       :body => '{"error": "Not Acceptable",
                                  "detail": "error explanation",
                                  "status": "'+ status.to_s + '"}',
-                      :headers => {content_type: 'application/json; charset utf-8'})
+                      :headers => {content_type: 'application/json; charset=UTF-8'})
           expect{subject.perform}.to raise_error(exception, 'error explanation')
         end
       end
