@@ -10,7 +10,7 @@ See local jurisdictional tax reports, get payment reminders, and more. You can u
 
 ## Supported Ruby Versions
 
-Ruby 1.9.3 or greater
+Ruby 2.0 or greater
 
 ## Gem Dependencies
 
