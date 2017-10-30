@@ -2,15 +2,15 @@ module Taxjar
   module Version
   module_function
     def major
-      1
+      2
     end
 
     def minor
-      7
+      0
     end
 
     def patch
-      1
+      0
     end
 
     def pre
