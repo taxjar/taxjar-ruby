@@ -938,6 +938,31 @@ Set request timeout in seconds:
 client.tax_for_order({ timeout: 30 })
 ```
 
+## Error Handling
+
+When invalid data is sent to TaxJar or we encounter an error, we’ll throw a `Taxjar::Error` with the HTTP status code and error message. To catch these exceptions, refer to the example below. [Click here](https://developers.taxjar.com/api/guides/ruby/#error-handling) for a list of common error response classes.
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '9e0cd62a22f451701f29c3bde214')
+
+begin
+  order = client.create_order({
+    :transaction_date => '2015/05/14',
+    :to_country => 'US',
+    :to_state => 'CA',
+    :to_zip => '90002',
+    :amount => 17.45,
+    :shipping => 1.5,
+    :sales_tax => 0.95
+  })
+rescue Taxjar::Error => e
+  # <Taxjar::Error::NotAcceptable: transaction_id is missing>
+  puts e.class.name
+  puts e.message
+end
+```
+
 ## Tests
 
 An RSpec test suite is available to ensure API functionality:
