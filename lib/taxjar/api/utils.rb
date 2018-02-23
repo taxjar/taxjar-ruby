@@ -4,7 +4,7 @@ module Taxjar
   module API
     module Utils
       def perform_request(request_method, path, object_key, options = {})
-        Taxjar::API::Request.new(self, request_method, path, object_key, options).perform
+        Taxjar::API::Request.new(request_method, path, object_key, options).perform
       end
 
       def perform_get_with_object(path, object_key, options, klass)

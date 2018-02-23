@@ -2,7 +2,7 @@
 
 <a href="http://developers.taxjar.com"><img src="http://www.taxjar.com/img/TJ_logo_color_office_png.png" alt="TaxJar" width="220"></a>
 
-A Ruby interface to the TaxJar [Sales Tax API](https://developers.taxjar.com/api/reference/). TaxJar makes sales tax filing easier for online sellers and merchants. 
+A Ruby interface to the TaxJar [Sales Tax API](https://developers.taxjar.com/api/reference/). TaxJar makes sales tax filing easier for online sellers and merchants.
 See local jurisdictional tax reports, get payment reminders, and more. You can use our API to access TaxJar API endpoints, which can get information on sales tax rates, categories or upload transactions.
 
 * This wrapper supports 100% of [SmartCalcs v2](http://developers.taxjar.com/api/#introduction)
@@ -43,11 +43,19 @@ $ gem install taxjar-ruby
 
 ## Authentication
 
-[Generate an API token from TaxJar](https://app.taxjar.com/api_sign_up/). Copy and paste your API token when instantiating a new client:
+[Generate an API token from TaxJar](https://app.taxjar.com/api_sign_up/). Copy and paste your API token when configuring your application:
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: 'YOUR_API_TOKEN')
+Taxjar.configure do |config|
+  config.api_key = '1234567890'
+  config.base_url = 'https://api.taxjar.com'
+end
+```
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new
 ```
 
 You're now ready to use TaxJar! [Check out our quickstart guide](https://developers.taxjar.com/api/guides/ruby/#ruby-quickstart) to get up and running quickly.
@@ -66,7 +74,7 @@ client.categories
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 client.categories
 ```
@@ -76,18 +84,18 @@ client.categories
 ```ruby
 [
   #<Taxjar::Category:0x00000a @attrs={
-    :name => 'Digital Goods', 
-    :product_tax_code => 31000, 
+    :name => 'Digital Goods',
+    :product_tax_code => 31000,
     :description => 'Digital products transferred electronically.'
-  }>, 
+  }>,
   #<Taxjar::Category:0x00000a @attrs={
-    :name => 'Clothing', 
-    :product_tax_code => 20010, 
+    :name => 'Clothing',
+    :product_tax_code => 20010,
     :description => 'All human wearing apparel suitable for general use'
-  }>, 
+  }>,
   #<Taxjar::Category:0x00000a @attrs={
     :name => 'Non-Prescription',
-    :product_tax_code => 51010, 
+    :product_tax_code => 51010,
     :description => 'Drugs for human use without a prescription'
   }>
 ]
@@ -105,7 +113,7 @@ client.rates_for_location
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 # United States (ZIP+4)
 rates = client.rates_for_location('90404-3370')
@@ -132,7 +140,7 @@ rates = client.rates_for_location('00150', {
 
 ```ruby
 #<Taxjar::Rate:0x00000a @attrs={
-  :zip => '90002', 
+  :zip => '90002',
   :state => 'CA',
   :state_rate => 0.065,
   :county => 'LOS ANGELES',
@@ -177,7 +185,7 @@ client.tax_for_order
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 client.tax_for_order({
     :to_country => 'US',
@@ -259,7 +267,7 @@ client.list_orders
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 client.list_orders({:from_transaction_date => '2014/01/01',
                     :to_transaction_date => '2015/05/30'})
@@ -283,7 +291,7 @@ client.show_order
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 client.show_order('123')
 ```
@@ -336,7 +344,7 @@ client.create_order
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 order = client.create_order({
     :transaction_id => '123',
@@ -410,7 +418,7 @@ client.update_order
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 order = client.update_order({
     :transaction_id => '123',
@@ -473,7 +481,7 @@ client.delete_order
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 client.delete_order('123')
 ```
@@ -526,7 +534,7 @@ client.list_refunds
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 client.list_refunds({:from_transaction_date => '2014/01/01',
                      :to_transaction_date => '2015/05/30'})
@@ -550,7 +558,7 @@ client.show_refund
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 client.show_refund('321')
 ```
@@ -603,7 +611,7 @@ client.create_refund
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 refund = client.create_refund({
     :transaction_id => '321',
@@ -678,7 +686,7 @@ client.update_refund
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 refund = client.update_refund({
     :transaction_id => '321',
@@ -741,7 +749,7 @@ client.delete_refund
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+client = Taxjar::Client.new
 
 client.delete_refund('321')
 ```
@@ -793,7 +801,7 @@ client.nexus_regions
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '9e0cd62a22f451701f29c3bde214')
+client = Taxjar::Client.new
 
 nexus_regions = client.nexus_regions
 ```
@@ -835,7 +843,7 @@ client.validate
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '9e0cd62a22f451701f29c3bde214')
+client = Taxjar::Client.new
 
 validation = client.validate({
   :vat => 'FR40303265045'
@@ -872,7 +880,7 @@ client.summary_rates
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '9e0cd62a22f451701f29c3bde214')
+client = Taxjar::Client.new
 
 summarized_rates = client.summary_rates
 ```
@@ -944,7 +952,7 @@ When invalid data is sent to TaxJar or we encounter an error, we’ll throw a `T
 
 ```ruby
 require 'taxjar'
-client = Taxjar::Client.new(api_key: '9e0cd62a22f451701f29c3bde214')
+client = Taxjar::Client.new
 
 begin
   order = client.create_order({
@@ -983,7 +991,7 @@ TaxJar is released under the [MIT License](https://github.com/taxjar/taxjar-ruby
 
 ## Support
 
-Bug reports and feature requests should be filed on the [GitHub issue tracking page](https://github.com/taxjar/taxjar-ruby/issues). 
+Bug reports and feature requests should be filed on the [GitHub issue tracking page](https://github.com/taxjar/taxjar-ruby/issues).
 
 ## Contributing
 

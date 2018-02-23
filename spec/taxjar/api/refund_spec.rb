@@ -2,7 +2,10 @@ require 'helper'
 
 describe Taxjar::API::Refund do
   before do
-    @client = Taxjar::Client.new(api_key: 'AK')
+    Taxjar.configure do |config|
+      config.api_key = 'AK'
+    end
+    @client = Taxjar::Client.new
   end
 
   describe "#list_refunds" do
@@ -83,7 +86,7 @@ describe Taxjar::API::Refund do
       expect(refund.shipping).to eq(1.5)
       expect(refund.sales_tax).to eq(0.95)
     end
-    
+
     it 'allows access to line_items' do
       refund = @client.show_refund('321')
       expect(refund.line_items[0].id).to eq('1')
@@ -149,7 +152,7 @@ describe Taxjar::API::Refund do
       expect(refund.shipping).to eq(1.5)
       expect(refund.sales_tax).to eq(0.95)
     end
-    
+
     it 'allows access to line_items' do
       refund = @client.create_refund(@refund)
       expect(refund.line_items[0].id).to eq('1')
@@ -209,7 +212,7 @@ describe Taxjar::API::Refund do
       expect(refund.shipping).to eq(1.5)
       expect(refund.sales_tax).to eq(0.95)
     end
-    
+
     it 'allows access to line_items' do
       refund = @client.update_refund(@refund)
       expect(refund.line_items[0].id).to eq('1')
@@ -256,7 +259,7 @@ describe Taxjar::API::Refund do
       expect(refund.shipping).to eq(1.5)
       expect(refund.sales_tax).to eq(0.95)
     end
-    
+
     it 'allows access to line_items' do
       refund = @client.delete_refund('321')
       expect(refund.line_items[0].id).to eq('1')

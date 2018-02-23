@@ -2,7 +2,10 @@ require 'helper'
 
 describe Taxjar::API do
   before do
-    @client = Taxjar::Client.new(api_key: 'AK')
+    Taxjar.configure do |config|
+      config.api_key = 'AK'
+    end
+    @client = Taxjar::Client.new
   end
 
   describe '#categories' do
@@ -125,7 +128,7 @@ describe Taxjar::API do
       expect(rates.freight_taxable).to eq(true)
     end
   end
-  
+
   describe '#rate_for_location (eu)' do
     before do
       @postal_code = "00150"
@@ -192,7 +195,7 @@ describe Taxjar::API do
       expect(tax.freight_taxable).to eq(true)
       expect(tax.tax_source).to eq('destination')
     end
-    
+
     it 'allows access to breakdown' do
       tax = @client.tax_for_order(@order)
       expect(tax.breakdown.state_taxable_amount).to eq(16.5)
@@ -211,7 +214,7 @@ describe Taxjar::API do
       expect(tax.breakdown.special_tax_rate).to eq(0)
       expect(tax.breakdown.special_district_tax_collectable).to eq(0)
     end
-    
+
     it 'allows access to breakdown.shipping' do
       tax = @client.tax_for_order(@order)
       expect(tax.breakdown.shipping.taxable_amount).to eq(1.5)
@@ -268,7 +271,7 @@ describe Taxjar::API do
         expect(tax.freight_taxable).to eq(true)
         expect(tax.tax_source).to eq('destination')
       end
-      
+
       it 'allows access to breakdown' do
         tax = @client.tax_for_order(@order)
         expect(tax.breakdown.taxable_amount).to eq(26.95)
@@ -278,7 +281,7 @@ describe Taxjar::API do
         expect(tax.breakdown.country_tax_rate).to eq(0.24)
         expect(tax.breakdown.country_tax_collectable).to eq(6.47)
       end
-      
+
       it 'allows access to breakdown.shipping' do
         tax = @client.tax_for_order(@order)
         expect(tax.breakdown.shipping.taxable_amount).to eq(10)
@@ -318,7 +321,7 @@ describe Taxjar::API do
         expect(tax.freight_taxable).to eq(true)
         expect(tax.tax_source).to eq('destination')
       end
-      
+
       it 'allows access to breakdown' do
         tax = @client.tax_for_order(@order)
         expect(tax.breakdown.taxable_amount).to eq(26.95)
@@ -334,7 +337,7 @@ describe Taxjar::API do
         expect(tax.breakdown.qst_tax_rate).to eq(0)
         expect(tax.breakdown.qst).to eq(0)
       end
-      
+
       it 'allows access to breakdown.shipping' do
         tax = @client.tax_for_order(@order)
         expect(tax.breakdown.shipping.taxable_amount).to eq(10)
@@ -369,12 +372,12 @@ describe Taxjar::API do
       end
     end
   end
-  
+
   describe '#nexus_regions' do
     before do
       stub_get('/v2/nexus/regions').to_return(body: fixture('nexus_regions.json'), headers: { content_type: 'application/json; charset=utf-8' })
     end
-    
+
     it 'requests the right resource' do
       @client.nexus_regions
       expect(a_get('/v2/nexus/regions')).to have_been_made
@@ -390,7 +393,7 @@ describe Taxjar::API do
       expect(regions.first.region).to eq('California')
     end
   end
-  
+
   describe '#validate' do
     before do
       @params = 'vat=FR40303265045'
@@ -418,7 +421,7 @@ describe Taxjar::API do
       expect(validation.vies_response.address).to eq("11 RUE AMPERE\n26600 PONT DE L ISERE")
     end
   end
-  
+
   describe '#summary_rates' do
     before do
       stub_get('/v2/summary_rates').to_return(body: fixture('summary_rates.json'), headers: { content_type: 'application/json; charset=utf-8' })
