@@ -12,6 +12,8 @@ module Taxjar
     include Taxjar::API::Refund
 
     attr_accessor :api_key
+    attr_accessor :api_url
+    attr_accessor :headers
 
     def initialize(options = {})
       options.each do |key, value|
@@ -22,6 +24,14 @@ module Taxjar
 
     def api_key?
       !!@api_key
+    end
+
+    def set_api_config(key, value)
+      instance_variable_set("@#{key}", value)
+    end
+
+    def get_api_config(key)
+      instance_variable_get("@#{key}")
     end
 
     def user_agent
