@@ -1,9 +1,15 @@
 require 'helper'
 
 describe Taxjar::API::Request do
-  describe "#BASE_URL" do
+  describe "#DEFAULT_API_URL" do
     it 'should have taxjar api url' do
-      expect(Taxjar::API::Request::BASE_URL).to eq('https://api.taxjar.com')
+      expect(Taxjar::API::Request::DEFAULT_API_URL).to eq('https://api.taxjar.com')
+    end
+  end
+
+  describe "#SANDBOX_API_URL" do
+    it 'should have sandbox taxjar api url' do
+      expect(Taxjar::API::Request::SANDBOX_API_URL).to eq('https://api.sandbox.taxjar.com')
     end
   end
 
@@ -24,11 +30,31 @@ describe Taxjar::API::Request do
       expect(subject.uri.to_s).to eq('https://api.taxjar.com/api_path')
     end
 
+    it 'should return a sandbox uri' do
+      client = Taxjar::Client.new(api_key: 'AK', api_url: Taxjar::API::Request::SANDBOX_API_URL)
+      subject = Taxjar::API::Request.new(client, :get, '/api_path', 'object')
+      expect(subject).to respond_to(:uri)
+      expect(subject.uri).to be_instance_of(Addressable::URI)
+      expect(subject.uri.to_s).to eq('https://api.sandbox.taxjar.com/api_path')
+    end
+
     it 'should return headers' do
       expect(subject).to respond_to(:headers)
       expect(subject.headers).to be_instance_of(Hash)
       expect(subject.headers[:user_agent]).to match('TaxjarRubyGem')
       expect(subject.headers[:authorization]).to eq('Bearer AK')
+    end
+
+    it 'should return custom headers' do
+      client = Taxjar::Client.new(api_key: 'AK', api_url: Taxjar::API::Request::SANDBOX_API_URL, headers: {
+        'X-TJ-Expected-Response' => 422
+      })
+      subject = Taxjar::API::Request.new(client, :get, '/api_path', 'object')
+      expect(subject).to respond_to(:headers)
+      expect(subject.headers).to be_instance_of(Hash)
+      expect(subject.headers[:user_agent]).to match('TaxjarRubyGem')
+      expect(subject.headers[:authorization]).to eq('Bearer AK')
+      expect(subject.headers['X-TJ-Expected-Response']).to eq(422)
     end
 
     it 'should return request method' do
@@ -102,7 +128,6 @@ describe Taxjar::API::Request do
           to_return(:status => 200, :body => '{"object": {"id": "3"}}',
                     :headers => {content_type: 'application/json; charset=UTF-8'})
 
-
         expect(subject.perform).to eq({id: '3'})
       end
     end
@@ -140,6 +165,7 @@ describe Taxjar::API::Request do
                                  "detail": "error explanation",
                                  "status": "'+ status.to_s + '"}',
                       :headers => {content_type: 'application/json; charset=UTF-8'})
+
           expect{subject.perform}.to raise_error(exception, 'error explanation')
         end
       end
