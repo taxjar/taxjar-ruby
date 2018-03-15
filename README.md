@@ -52,6 +52,23 @@ client = Taxjar::Client.new(api_key: 'YOUR_API_TOKEN')
 
 You're now ready to use TaxJar! [Check out our quickstart guide](https://developers.taxjar.com/api/guides/ruby/#ruby-quickstart) to get up and running quickly.
 
+## Sandbox Environment
+
+You can easily configure the client to use the TaxJar Sandbox:
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: 'YOUR_SANDBOX_API_TOKEN', api_url: 'https://api.sandbox.taxjar.com')
+```
+
+For testing specific [response codes](https://developers.taxjar.com/api/reference/#errors), pass the custom `X-TJ-Expected-Response` header:
+
+```ruby
+client.set_api_config('headers', {
+  'X-TJ-Expected-Response' => 422
+})
+```
+
 ## Usage
 
 ### List all tax categories
