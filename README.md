@@ -938,6 +938,23 @@ Set request timeout in seconds:
 client.tax_for_order({ timeout: 30 })
 ```
 
+## Sandbox Environment
+
+You can easily configure the client to use the [TaxJar Sandbox](https://developers.taxjar.com/api/reference/#sandbox-environment):
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: 'YOUR_SANDBOX_API_TOKEN', api_url: 'https://api.sandbox.taxjar.com')
+```
+
+For testing specific [error response codes](https://developers.taxjar.com/api/reference/#errors), pass the custom `X-TJ-Expected-Response` header:
+
+```ruby
+client.set_api_config('headers', {
+  'X-TJ-Expected-Response' => 422
+})
+```
+
 ## Error Handling
 
 When invalid data is sent to TaxJar or we encounter an error, we’ll throw a `Taxjar::Error` with the HTTP status code and error message. To catch these exceptions, refer to the example below. [Click here](https://developers.taxjar.com/api/guides/ruby/#error-handling) for a list of common error response classes.

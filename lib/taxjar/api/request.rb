@@ -4,7 +4,8 @@ require 'http'
 module Taxjar
   module API
     class Request
-      BASE_URL = 'https://api.taxjar.com'
+      DEFAULT_API_URL = 'https://api.taxjar.com'
+      SANDBOX_API_URL = 'https://api.sandbox.taxjar.com'
 
       attr_reader :client, :uri, :headers, :request_method, :path, :object_key, :options
 
@@ -16,8 +17,9 @@ module Taxjar
         @client = client
         @request_method = request_method
         @path = path
-        @uri = Addressable::URI.parse(BASE_URL + path)
-        set_request_headers
+        @base_url = client.api_url ? client.api_url : DEFAULT_API_URL
+        @uri = Addressable::URI.parse(@base_url + path)
+        set_request_headers(client.headers || {})
         @object_key = object_key
         @options = options
         set_http_timeout
@@ -33,10 +35,11 @@ module Taxjar
 
       private
 
-        def set_request_headers
+        def set_request_headers(custom_headers = {})
           @headers = {}
           @headers[:user_agent] = client.user_agent
           @headers[:authorization] = "Bearer #{client.api_key}"
+          @headers.merge!(custom_headers)
         end
 
         def set_http_timeout
