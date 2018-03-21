@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.0'
 
   spec.add_dependency 'addressable', '~> 2.3'
-  spec.add_dependency 'http', '~> 2.2.2'
+  spec.add_dependency 'http', '~> 2.2'
   spec.add_dependency 'memoizable', '~> 0.4.0'
   spec.add_dependency 'model_attribute', '~> 3.2'
   spec.add_development_dependency "bundler", "~> 1.7"
