@@ -1,4 +1,5 @@
 require 'taxjar/api/api'
+require 'taxjar/api/customer'
 require 'taxjar/api/order'
 require 'taxjar/api/refund'
 require 'taxjar/error'
@@ -8,6 +9,7 @@ require 'taxjar/api/utils'
 module Taxjar
   class Client
     include Taxjar::API
+    include Taxjar::API::Customer
     include Taxjar::API::Order
     include Taxjar::API::Refund
 
