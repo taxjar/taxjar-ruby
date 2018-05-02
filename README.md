@@ -781,6 +781,228 @@ client.delete_refund('321')
   ]
 }>
 ```
+
+### List customers
+
+#### Definition
+
+```ruby
+client.list_customers
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.list_customers
+```
+
+#### Example Response
+
+```ruby
+['123', '124', '125']
+```
+
+### Show customer
+
+#### Definition
+
+```ruby
+client.show_customer
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.show_customer('123')
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Customer @attrs={
+  :customer_id => "123",
+  :exemption_type => "wholesale",
+  :exempt_regions => [
+    [0] {
+      :country => "US",
+      :state => "FL"
+    },
+    [1] {
+      :country => "US",
+      :state => "PA"
+    }
+  ],
+  :name => "Dunder Mifflin Paper Company",
+  :country => "US",
+  :state => "PA",
+  :zip => "18504",
+  :city => "Scranton",
+  :street => "1725 Slough Avenue"
+}>
+```
+
+### Create customer
+
+#### Definition
+
+```ruby
+client.create_customer
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+customer = client.create_customer({
+  :customer_id => '123',
+  :exemption_type => 'wholesale',
+  :name => 'Dunder Mifflin Paper Company',
+  :exempt_regions => [
+    {
+      :country => 'US',
+      :state => 'FL'
+    },
+    {
+      :country => 'US',
+      :state => 'PA'
+    }
+  ],
+  :country => 'US',
+  :state => 'PA',
+  :zip => '18504',
+  :city => 'Scranton',
+  :street => '1725 Slough Avenue'
+})
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Customer @attrs={
+  :customer_id => "123",
+  :exemption_type => "wholesale",
+  :exempt_regions => [
+    [0] {
+      :country => "US",
+      :state => "FL"
+    },
+    [1] {
+      :country => "US",
+      :state => "PA"
+    }
+  ],
+  :name => "Dunder Mifflin Paper Company",
+  :country => "US",
+  :state => "PA",
+  :zip => "18504",
+  :city => "Scranton",
+  :street => "1725 Slough Avenue"
+}>
+```
+
+### Update customer
+
+#### Definition
+
+```ruby
+client.update_customer
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+customer = client.update_customer({
+  :customer_id => '123',
+  :exemption_type => 'wholesale',
+  :name => 'Sterling Cooper',
+  :exempt_regions => [
+    {
+      :country => 'US',
+      :state => 'NY'
+    }
+  ],
+  :country => 'US',
+  :state => 'NY',
+  :zip => '10010',
+  :city => 'New York',
+  :street => '405 Madison Ave'
+})
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Customer @attrs={
+  :customer_id => "123",
+  :exemption_type => "wholesale",
+  :exempt_regions => [
+    [0] {
+      :country => "US",
+      :state => "NY"
+    }
+  ],
+  :name => "Sterling Cooper",
+  :country => "US",
+  :state => "NY",
+  :zip => "10010",
+  :city => "New York",
+  :street => "405 Madison Ave"
+}>
+```
+
+### Delete customer
+
+#### Definition
+
+```ruby
+client.delete_customer
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.delete_customer('123')
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Customer @attrs={
+  :customer_id => "123",
+  :exemption_type => "wholesale",
+  :exempt_regions => [
+    [0] {
+      :country => "US",
+      :state => "FL"
+    },
+    [1] {
+      :country => "US",
+      :state => "PA"
+    }
+  ],
+  :name => "Dunder Mifflin Paper Company",
+  :country => "US",
+  :state => "PA",
+  :zip => "18504",
+  :city => "Scranton",
+  :street => "1725 Slough Avenue"
+}>
+```
+
 ### List nexus regions
 
 #### Definition
