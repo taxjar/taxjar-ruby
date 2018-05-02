@@ -6,7 +6,7 @@ module Taxjar
     end
 
     def minor
-      1
+      2
     end
 
     def patch
