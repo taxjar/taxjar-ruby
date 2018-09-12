@@ -13,6 +13,7 @@ module Taxjar
     attribute :freight_taxable,    :boolean
     attribute :tax_source,         :string
 
+    object_attr_reader Taxjar::Jurisdictions, :jurisdictions
     object_attr_reader Taxjar::Breakdown, :breakdown
   end
 end
