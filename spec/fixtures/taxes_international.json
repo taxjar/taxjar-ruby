@@ -8,6 +8,9 @@
     "has_nexus": true,
     "freight_taxable": true,
     "tax_source": "destination",
+    "jurisdictions": {
+      "country": "FI"
+    },
     "breakdown": {
       "taxable_amount": 26.95,
       "tax_collectable": 6.47,

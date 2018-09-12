@@ -192,7 +192,15 @@ describe Taxjar::API do
       expect(tax.freight_taxable).to eq(true)
       expect(tax.tax_source).to eq('destination')
     end
-    
+
+    it 'allows access to jurisdictions' do
+      tax = @client.tax_for_order(@order)
+      expect(tax.jurisdictions.country).to eq('US')
+      expect(tax.jurisdictions.state).to eq('NJ')
+      expect(tax.jurisdictions.county).to eq('BERGEN')
+      expect(tax.jurisdictions.city).to eq('RAMSEY')
+    end
+
     it 'allows access to breakdown' do
       tax = @client.tax_for_order(@order)
       expect(tax.breakdown.state_taxable_amount).to eq(16.5)
@@ -268,7 +276,12 @@ describe Taxjar::API do
         expect(tax.freight_taxable).to eq(true)
         expect(tax.tax_source).to eq('destination')
       end
-      
+
+      it 'allows access to jurisdictions' do
+        tax = @client.tax_for_order(@order)
+        expect(tax.jurisdictions.country).to eq('FI')
+      end
+
       it 'allows access to breakdown' do
         tax = @client.tax_for_order(@order)
         expect(tax.breakdown.taxable_amount).to eq(26.95)
@@ -318,7 +331,13 @@ describe Taxjar::API do
         expect(tax.freight_taxable).to eq(true)
         expect(tax.tax_source).to eq('destination')
       end
-      
+
+      it 'allows access to jurisdictions' do
+        tax = @client.tax_for_order(@order)
+        expect(tax.jurisdictions.country).to eq('CA')
+        expect(tax.jurisdictions.state).to eq('ON')
+      end
+
       it 'allows access to breakdown' do
         tax = @client.tax_for_order(@order)
         expect(tax.breakdown.taxable_amount).to eq(26.95)
