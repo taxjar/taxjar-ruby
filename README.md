@@ -239,17 +239,6 @@ client.tax_for_order({
     ]
   }>
 }>
-
-#<Taxjar::Tax:0x00000a @attrs={
-  :order_total_amount => 27.12,
-  :shipping => 1.5,
-  :taxable_amount => 27.12,
-  :amount_to_collect => 5.42,
-  :rate => 0.2,
-  :has_nexus => true,
-  :freight_taxable => true,
-  :tax_source => 'origin'
-}>
 ```
 
 ### List order transactions
