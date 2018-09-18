@@ -1142,7 +1142,7 @@ summarized_rates = client.summary_rates
 ]
 ```
 
-### Custom Options
+## Custom Options
 
 Pass a hash to any API method above for the following options:
 
