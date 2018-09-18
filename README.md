@@ -2,8 +2,7 @@
 
 <a href="http://developers.taxjar.com"><img src="http://www.taxjar.com/img/TJ_logo_color_office_png.png" alt="TaxJar" width="220"></a>
 
-A Ruby interface to the TaxJar [Sales Tax API](https://developers.taxjar.com/api/reference/). TaxJar makes sales tax filing easier for online sellers and merchants. 
-See local jurisdictional tax reports, get payment reminders, and more. You can use our API to access TaxJar API endpoints, which can get information on sales tax rates, categories or upload transactions.
+A Ruby interface to the TaxJar [Sales Tax API](https://developers.taxjar.com/api/reference/). TaxJar makes sales tax filing easier for online sellers and merchants. See local jurisdictional tax reports, get payment reminders, and more. You can use our API to access TaxJar API endpoints, which can get information on sales tax rates, categories or upload transactions.
 
 * This wrapper supports 100% of [SmartCalcs v2](http://developers.taxjar.com/api/#introduction)
 * Data returned from API calls are mapped to Ruby objects
@@ -76,18 +75,18 @@ client.categories
 ```ruby
 [
   #<Taxjar::Category:0x00000a @attrs={
-    :name => 'Digital Goods', 
-    :product_tax_code => 31000, 
+    :name => 'Digital Goods',
+    :product_tax_code => 31000,
     :description => 'Digital products transferred electronically.'
-  }>, 
+  }>,
   #<Taxjar::Category:0x00000a @attrs={
-    :name => 'Clothing', 
-    :product_tax_code => 20010, 
+    :name => 'Clothing',
+    :product_tax_code => 20010,
     :description => 'All human wearing apparel suitable for general use'
-  }>, 
+  }>,
   #<Taxjar::Category:0x00000a @attrs={
     :name => 'Non-Prescription',
-    :product_tax_code => 51010, 
+    :product_tax_code => 51010,
     :description => 'Drugs for human use without a prescription'
   }>
 ]
@@ -132,7 +131,7 @@ rates = client.rates_for_location('00150', {
 
 ```ruby
 #<Taxjar::Rate:0x00000a @attrs={
-  :zip => '90002', 
+  :zip => '90002',
   :state => 'CA',
   :state_rate => 0.065,
   :county => 'LOS ANGELES',
@@ -186,7 +185,7 @@ client.tax_for_order({
     :to_state => 'CA',
     :from_country => 'US',
     :from_zip => '92093',
-    :from_city => 'San Diego',                
+    :from_city => 'San Diego',
     :amount => 15,
     :shipping => 1.5,
     :nexus_addresses => [{:address_id => 1,
@@ -210,6 +209,12 @@ client.tax_for_order({
   :has_nexus => true,
   :freight_taxable => false,
   :tax_source => 'destination',
+  :jurisdictions => #<Taxjar::Jurisdictions:0x00000a @attrs={
+    :country => 'US',
+    :state => 'CA',
+    :county => 'LOS ANGELES',
+    :city => 'LOS ANGELES'
+  }>,
   :breakdown => #<Taxjar::Breakdown:0x00000a @attrs={
     :state_taxable_amount => 15,
     :state_tax_collectable => 0.98,
@@ -1222,7 +1227,7 @@ TaxJar is released under the [MIT License](https://github.com/taxjar/taxjar-ruby
 
 ## Support
 
-Bug reports and feature requests should be filed on the [GitHub issue tracking page](https://github.com/taxjar/taxjar-ruby/issues). 
+Bug reports and feature requests should be filed on the [GitHub issue tracking page](https://github.com/taxjar/taxjar-ruby/issues).
 
 ## Contributing
 
