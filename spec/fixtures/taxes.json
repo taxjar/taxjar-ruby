@@ -8,6 +8,12 @@
     "has_nexus": true,
     "freight_taxable": true,
     "tax_source": "destination",
+    "jurisdictions": {
+      "country": "US",
+      "state": "NJ",
+      "county": "BERGEN",
+      "city": "RAMSEY"
+    },
     "breakdown": {
       "taxable_amount": 16.5,
       "tax_collectable": 1.16,
