@@ -19,7 +19,11 @@ module Taxjar
     def nexus_regions(options = {})
       perform_get_with_objects("/v2/nexus/regions", 'regions', options, Taxjar::NexusRegion)
     end
-    
+
+    def validate_address(options = {})
+      perform_post_with_objects("/v2/addresses/validate", 'addresses', options, Taxjar::Address)
+    end
+
     def validate(options = {})
       perform_get_with_object("/v2/validation", 'validation', options, Taxjar::Validation)
     end
