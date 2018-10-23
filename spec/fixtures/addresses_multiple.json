@@ -1,0 +1,18 @@
+{
+    "addresses": [
+        {
+            "zip": "85007-3646",
+            "street": "1109 S 9th Ave",
+            "state": "AZ",
+            "country": "US",
+            "city": "Phoenix"
+        },
+        {
+            "zip": "85006-2734",
+            "street": "1109 N 9th St",
+            "state": "AZ",
+            "country": "US",
+            "city": "Phoenix"
+        }
+    ]
+}

@@ -409,7 +409,68 @@ describe Taxjar::API do
       expect(regions.first.region).to eq('California')
     end
   end
-  
+
+  describe '#validate_address' do
+    before do
+      stub_post('/v2/addresses/validate').to_return(body: fixture('addresses.json'), headers: { content_type: 'application/json; charset=utf-8' })
+    end
+
+    it 'requests the right resource' do
+      @client.validate_address({
+        :country => 'US',
+        :state => 'AZ',
+        :zip => '85297',
+        :city => 'Gilbert',
+        :street => '3301 South Greenfield Rd'
+      })
+      expect(a_post('/v2/addresses/validate')).to have_been_made
+    end
+
+    it 'returns the requested address' do
+      addresses = @client.validate_address({
+        :country => 'US',
+        :state => 'AZ',
+        :zip => '85297',
+        :city => 'Gilbert',
+        :street => '3301 South Greenfield Rd'
+      })
+      expect(addresses).to be_an Array
+      expect(addresses.first).to be_a Taxjar::Address
+      expect(addresses.first.country).to eq('US')
+      expect(addresses.first.state).to eq('AZ')
+      expect(addresses.first.zip).to eq('85297-2176')
+      expect(addresses.first.city).to eq('Gilbert')
+      expect(addresses.first.street).to eq('3301 S Greenfield Rd')
+    end
+
+    describe 'multiple address matches' do
+      before do
+        stub_post('/v2/addresses/validate').to_return(body: fixture('addresses_multiple.json'), headers: { content_type: 'application/json; charset=utf-8' })
+      end
+
+      it 'returns the requested addresses' do
+        addresses = @client.validate_address({
+          :state => 'AZ',
+          :city => 'Phoenix',
+          :street => '1109 9th'
+        })
+        expect(addresses).to be_an Array
+        expect(addresses[0]).to be_a Taxjar::Address
+        expect(addresses[0].country).to eq('US')
+        expect(addresses[0].state).to eq('AZ')
+        expect(addresses[0].zip).to eq('85007-3646')
+        expect(addresses[0].city).to eq('Phoenix')
+        expect(addresses[0].street).to eq('1109 S 9th Ave')
+        expect(addresses[1]).to be_a Taxjar::Address
+        expect(addresses[1].country).to eq('US')
+        expect(addresses[1].state).to eq('AZ')
+        expect(addresses[1].zip).to eq('85006-2734')
+        expect(addresses[1].city).to eq('Phoenix')
+        expect(addresses[1].street).to eq('1109 N 9th St')
+      end
+    end
+  end
+
   describe '#validate' do
     before do
       @params = 'vat=FR40303265045'
