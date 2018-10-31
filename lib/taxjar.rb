@@ -1,4 +1,5 @@
 require "taxjar/base"
+require "taxjar/address"
 require "taxjar/breakdown"
 require "taxjar/breakdown_line_item"
 require "taxjar/category"

@@ -23,6 +23,10 @@ module Taxjar
         perform_request_with_object(:post, path, object_key, options, klass)
       end
 
+      def perform_post_with_objects(path, object_key, options, klass)
+        perform_request_with_objects(:post, path, object_key, options, klass)
+      end
+
       def perform_put_with_object(path, object_key, options, klass)
         perform_request_with_object(:put, path, object_key, options, klass)
       end
