@@ -1,3 +1,6 @@
+# 2.4.0 (2018-10-31)
+* Address validation for TaxJar Plus customers
+
 # 2.3.0 (2018-09-17)
 * Provide access to new jurisdiction names via `tax_for_order`
 
