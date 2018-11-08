@@ -26,4 +26,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'model_attribute', '~> 3.2'
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 12.0"
+
+  if spec.respond_to?(:metadata)
+    spec.metadata['changelog_uri'] = 'https://github.com/taxjar/taxjar-ruby/blob/master/CHANGELOG.md'
+    spec.metadata['source_code_uri'] = 'https://github.com/taxjar/taxjar-ruby'
+    spec.metadata['bug_tracker_uri'] = 'https://github.com/taxjar/taxjar-ruby/issues'
+  end
 end
