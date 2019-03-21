@@ -16,6 +16,7 @@ module Taxjar
     attr_accessor :api_key
     attr_accessor :api_url
     attr_accessor :headers
+    attr_accessor :http_proxy
 
     def initialize(options = {})
       options.each do |key, value|
