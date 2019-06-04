@@ -28,7 +28,7 @@ describe Taxjar::API::Order do
 
     context "with parameters" do
       before do
-        stub_get('/v2/transactions/orders?from_transaction_date=2015/05/01&to_transaction_date=2015/05/31').
+        stub_get('/v2/transactions/orders?from_transaction_date=2015/05/01&to_transaction_date=2015/05/31&provider=api').
           to_return(body: fixture('orders.json'),
                     headers: {content_type: 'application/json; charset=utf-8'})
 
@@ -36,13 +36,15 @@ describe Taxjar::API::Order do
 
       it 'requests the right resource' do
         @client.list_orders(from_transaction_date: '2015/05/01',
-                                     to_transaction_date: '2015/05/31')
-        expect(a_get('/v2/transactions/orders?from_transaction_date=2015/05/01&to_transaction_date=2015/05/31')).to have_been_made
+                            to_transaction_date: '2015/05/31',
+                            provider: 'api')
+        expect(a_get('/v2/transactions/orders?from_transaction_date=2015/05/01&to_transaction_date=2015/05/31&provider=api')).to have_been_made
       end
 
       it 'returns the requested orders' do
         orders = @client.list_orders(from_transaction_date: '2015/05/01',
-                                     to_transaction_date: '2015/05/31')
+                                     to_transaction_date: '2015/05/31',
+                                     provider: 'api')
         expect(orders).to be_an Array
         expect(orders.first).to be_a String
         expect(orders.first).to eq('123')
@@ -52,22 +54,23 @@ describe Taxjar::API::Order do
 
   describe "#show_order" do
     before do
-        stub_get('/v2/transactions/orders/123').
+        stub_get('/v2/transactions/orders/123?provider=api').
           to_return(body: fixture('order.json'),
                     headers: {content_type: 'application/json; charset=utf-8'})
     end
 
     it 'requests the right resource' do
-      @client.show_order('123')
-      expect(a_get('/v2/transactions/orders/123')).to have_been_made
+      @client.show_order('123', provider: 'api')
+      expect(a_get('/v2/transactions/orders/123?provider=api')).to have_been_made
     end
 
     it 'returns the requested order' do
-      order = @client.show_order('123')
+      order = @client.show_order('123', provider: 'api')
       expect(order).to be_an Taxjar::Order
       expect(order.transaction_id).to eq('123')
       expect(order.user_id).to eq(10649)
       expect(order.transaction_date).to eq('2015-05-14T00:00:00Z')
+      expect(order.provider).to eq('api')
       expect(order.from_country).to eq('US')
       expect(order.from_zip).to eq('93107')
       expect(order.from_state).to eq('CA')
@@ -84,7 +87,7 @@ describe Taxjar::API::Order do
     end
 
     it 'allows access to line_items' do
-      order = @client.show_order('123')
+      order = @client.show_order('123', provider: 'api')
       expect(order.line_items[0].id).to eq('1')
       expect(order.line_items[0].quantity).to eq(1)
       expect(order.line_items[0].product_identifier).to eq('12-34243-9')
@@ -103,6 +106,7 @@ describe Taxjar::API::Order do
 
       @order = {:transaction_id => '123',
                 :transaction_date => '2015/05/14',
+                :provider => 'api',
                 :to_country => 'US',
                 :to_zip => '90002',
                 :to_city => 'Los Angeles',
@@ -132,6 +136,7 @@ describe Taxjar::API::Order do
       expect(order.transaction_id).to eq('123')
       expect(order.user_id).to eq(10649)
       expect(order.transaction_date).to eq("2015-05-14T00:00:00Z")
+      expect(order.provider).to eq('api')
       expect(order.from_country).to eq('US')
       expect(order.from_zip).to eq('93107')
       expect(order.from_state).to eq('CA')
@@ -146,7 +151,7 @@ describe Taxjar::API::Order do
       expect(order.shipping).to eq(1.5)
       expect(order.sales_tax).to eq(0.95)
     end
-    
+
     it 'allows access to line_items' do
       order = @client.create_order(@order)
       expect(order.line_items[0].id).to eq('1')
@@ -191,6 +196,7 @@ describe Taxjar::API::Order do
       expect(order.transaction_id).to eq('123')
       expect(order.user_id).to eq(10649)
       expect(order.transaction_date).to eq("2015-05-14T00:00:00Z")
+      expect(order.provider).to eq('api')
       expect(order.from_country).to eq('US')
       expect(order.from_zip).to eq('93107')
       expect(order.from_state).to eq('CA')
@@ -205,7 +211,7 @@ describe Taxjar::API::Order do
       expect(order.shipping).to eq(1.5)
       expect(order.sales_tax).to eq(0.95)
     end
-    
+
     it 'allows access to line_items' do
       order = @client.update_order(@order)
       expect(order.line_items[0].id).to eq('1')
@@ -221,22 +227,23 @@ describe Taxjar::API::Order do
 
   describe "#delete_order" do
     before do
-        stub_delete('/v2/transactions/orders/123').
+        stub_delete('/v2/transactions/orders/123?provider=api').
           to_return(body: fixture('order.json'),
                     headers: {content_type: 'application/json; charset=utf-8'})
     end
 
     it 'requests the right resource' do
-      @client.delete_order('123')
-      expect(a_delete('/v2/transactions/orders/123')).to have_been_made
+      @client.delete_order('123', provider: 'api')
+      expect(a_delete('/v2/transactions/orders/123?provider=api')).to have_been_made
     end
 
     it 'returns the deleted order' do
-      order = @client.delete_order('123')
+      order = @client.delete_order('123', provider: 'api')
       expect(order).to be_an Taxjar::Order
       expect(order.transaction_id).to eq('123')
       expect(order.user_id).to eq(10649)
       expect(order.transaction_date).to eq("2015-05-14T00:00:00Z")
+      expect(order.provider).to eq('api')
       expect(order.from_country).to eq('US')
       expect(order.from_zip).to eq('93107')
       expect(order.from_state).to eq('CA')
@@ -251,9 +258,9 @@ describe Taxjar::API::Order do
       expect(order.shipping).to eq(1.5)
       expect(order.sales_tax).to eq(0.95)
     end
-    
+
     it 'allows access to line items' do
-      order = @client.delete_order('123')
+      order = @client.delete_order('123', provider: 'api')
       expect(order.line_items[0].id).to eq('1')
       expect(order.line_items[0].quantity).to eq(1)
       expect(order.line_items[0].product_identifier).to eq('12-34243-9')

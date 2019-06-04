@@ -28,7 +28,7 @@ describe Taxjar::API::Refund do
 
     context "with parameters" do
       before do
-        stub_get('/v2/transactions/refunds?from_transaction_date=2015/05/01&to_transaction_date=2015/05/31').
+        stub_get('/v2/transactions/refunds?from_transaction_date=2015/05/01&to_transaction_date=2015/05/31&provider=api').
           to_return(body: fixture('refunds.json'),
                     headers: {content_type: 'application/json; charset=utf-8'})
 
@@ -36,13 +36,15 @@ describe Taxjar::API::Refund do
 
       it 'requests the right resource' do
         @client.list_refunds(from_transaction_date: '2015/05/01',
-                                     to_transaction_date: '2015/05/31')
-        expect(a_get('/v2/transactions/refunds?from_transaction_date=2015/05/01&to_transaction_date=2015/05/31')).to have_been_made
+                             to_transaction_date: '2015/05/31',
+                             provider: 'api')
+        expect(a_get('/v2/transactions/refunds?from_transaction_date=2015/05/01&to_transaction_date=2015/05/31&provider=api')).to have_been_made
       end
 
       it 'returns the requested refunds' do
         refunds = @client.list_refunds(from_transaction_date: '2015/05/01',
-                                     to_transaction_date: '2015/05/31')
+                                       to_transaction_date: '2015/05/31',
+                                       provider: 'api')
         expect(refunds).to be_an Array
         expect(refunds.first).to be_a String
         expect(refunds.first).to eq('321')
@@ -52,23 +54,24 @@ describe Taxjar::API::Refund do
 
   describe "#show_refund" do
     before do
-        stub_get('/v2/transactions/refunds/321').
+        stub_get('/v2/transactions/refunds/321?provider=api').
           to_return(body: fixture('refund.json'),
                     headers: {content_type: 'application/json; charset=utf-8'})
     end
 
     it 'requests the right resource' do
-      @client.show_refund('321')
-      expect(a_get('/v2/transactions/refunds/321')).to have_been_made
+      @client.show_refund('321', provider: 'api')
+      expect(a_get('/v2/transactions/refunds/321?provider=api')).to have_been_made
     end
 
     it 'returns the requested refund' do
-      refund = @client.show_refund('321')
+      refund = @client.show_refund('321', provider: 'api')
       expect(refund).to be_an Taxjar::Refund
       expect(refund.transaction_id).to eq('321')
       expect(refund.user_id).to eq(10649)
       expect(refund.transaction_date).to eq("2015-05-14T00:00:00Z")
       expect(refund.transaction_reference_id).to eq("123")
+      expect(refund.provider).to eql('api')
       expect(refund.from_country).to eq('US')
       expect(refund.from_zip).to eq('93107')
       expect(refund.from_state).to eq('CA')
@@ -83,9 +86,9 @@ describe Taxjar::API::Refund do
       expect(refund.shipping).to eq(1.5)
       expect(refund.sales_tax).to eq(0.95)
     end
-    
+
     it 'allows access to line_items' do
-      refund = @client.show_refund('321')
+      refund = @client.show_refund('321', provider: 'api')
       expect(refund.line_items[0].id).to eq('1')
       expect(refund.line_items[0].quantity).to eq(1)
       expect(refund.line_items[0].product_identifier).to eq('12-34243-9')
@@ -105,6 +108,7 @@ describe Taxjar::API::Refund do
       @refund = {:transaction_id => '321',
                 :transaction_date => '2015/05/14',
                 :transaction_reference_id => '123',
+                :provider => 'api',
                 :to_country => 'US',
                 :to_zip => '90002',
                 :to_state => 'CA',
@@ -135,6 +139,7 @@ describe Taxjar::API::Refund do
       expect(refund.user_id).to eq(10649)
       expect(refund.transaction_date).to eq("2015-05-14T00:00:00Z")
       expect(refund.transaction_reference_id).to eq("123")
+      expect(refund.provider).to eq('api')
       expect(refund.from_country).to eq('US')
       expect(refund.from_zip).to eq('93107')
       expect(refund.from_state).to eq('CA')
@@ -149,7 +154,7 @@ describe Taxjar::API::Refund do
       expect(refund.shipping).to eq(1.5)
       expect(refund.sales_tax).to eq(0.95)
     end
-    
+
     it 'allows access to line_items' do
       refund = @client.create_refund(@refund)
       expect(refund.line_items[0].id).to eq('1')
@@ -195,6 +200,7 @@ describe Taxjar::API::Refund do
       expect(refund.user_id).to eq(10649)
       expect(refund.transaction_date).to eq("2015-05-14T00:00:00Z")
       expect(refund.transaction_reference_id).to eq("123")
+      expect(refund.provider).to eq('api')
       expect(refund.from_country).to eq('US')
       expect(refund.from_zip).to eq('93107')
       expect(refund.from_state).to eq('CA')
@@ -209,7 +215,7 @@ describe Taxjar::API::Refund do
       expect(refund.shipping).to eq(1.5)
       expect(refund.sales_tax).to eq(0.95)
     end
-    
+
     it 'allows access to line_items' do
       refund = @client.update_refund(@refund)
       expect(refund.line_items[0].id).to eq('1')
@@ -225,23 +231,24 @@ describe Taxjar::API::Refund do
 
   describe "#delete_refund" do
     before do
-        stub_delete('/v2/transactions/refunds/321').
+        stub_delete('/v2/transactions/refunds/321?provider=api').
           to_return(body: fixture('refund.json'),
                     headers: {content_type: 'application/json; charset=utf-8'})
     end
 
     it 'requests the right resource' do
-      @client.delete_refund('321')
-      expect(a_delete('/v2/transactions/refunds/321')).to have_been_made
+      @client.delete_refund('321', provider: 'api')
+      expect(a_delete('/v2/transactions/refunds/321?provider=api')).to have_been_made
     end
 
-    it 'returns the delete refund' do
-      refund = @client.delete_refund('321')
+    it 'returns the deleted refund' do
+      refund = @client.delete_refund('321', provider: 'api')
       expect(refund).to be_an Taxjar::Refund
       expect(refund.transaction_id).to eq('321')
       expect(refund.user_id).to eq(10649)
       expect(refund.transaction_date).to eq("2015-05-14T00:00:00Z")
       expect(refund.transaction_reference_id).to eq("123")
+      expect(refund.provider).to eq('api')
       expect(refund.from_country).to eq('US')
       expect(refund.from_zip).to eq('93107')
       expect(refund.from_state).to eq('CA')
@@ -256,9 +263,9 @@ describe Taxjar::API::Refund do
       expect(refund.shipping).to eq(1.5)
       expect(refund.sales_tax).to eq(0.95)
     end
-    
+
     it 'allows access to line_items' do
-      refund = @client.delete_refund('321')
+      refund = @client.delete_refund('321', provider: 'api')
       expect(refund.line_items[0].id).to eq('1')
       expect(refund.line_items[0].quantity).to eq(1)
       expect(refund.line_items[0].product_identifier).to eq('12-34243-9')
