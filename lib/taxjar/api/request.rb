@@ -26,7 +26,7 @@ module Taxjar
       end
 
       def perform
-        options_key = @request_method == :get ? :params : :json
+        options_key = [:get, :delete].include?(@request_method) ? :params : :json
         response = build_http_client.request(request_method, uri.to_s, options_key => @options)
         response_body = symbolize_keys!(response.parse)
         fail_or_return_response_body(response.code, response_body)

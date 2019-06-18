@@ -3,6 +3,7 @@
     "transaction_id": "123",
     "user_id": 10649,
     "transaction_date": "2015-05-14T00:00:00Z",
+    "provider": "api",
     "from_country": "US",
     "from_zip": "93107",
     "from_state": "CA",
