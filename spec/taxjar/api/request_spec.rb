@@ -119,6 +119,21 @@ describe Taxjar::API::Request do
       Taxjar::API::Request.new(client, :get, '/api_path', 'object')
     end
 
+    context 'with a proxy' do
+      let(:client){ Taxjar::Client.new(api_key: 'AK', http_proxy: ["127.0.0.1", 8080])}
+      it "runs through the proxy" do
+        stub_request(:get, "https://api.taxjar.com/api_path").
+          with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
+                            'Host'=>'api.taxjar.com',
+                            'User-Agent'=>"TaxjarRubyGem/#{Taxjar::Version.to_s}"}).
+          to_return(:status => 200, :body => '{"object": {"id": "3"}}',
+                    :headers => {content_type: 'application/json; charset=UTF-8'})
+
+        expect(subject.perform).to eq({id: '3'})
+        expect(subject.send(:build_http_client).default_options.proxy).to eq({proxy_address: "127.0.0.1", proxy_port: 8080})
+      end
+    end
+
     context 'with get' do
       it 'should return a body if no errors' do
         stub_request(:get, "https://api.taxjar.com/api_path").

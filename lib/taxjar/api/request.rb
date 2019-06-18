@@ -27,13 +27,18 @@ module Taxjar
 
       def perform
         options_key = [:get, :delete].include?(@request_method) ? :params : :json
-        response = HTTP.timeout(@http_timeout).headers(headers)
-          .request(request_method, uri.to_s, options_key => @options)
+        response = build_http_client.request(request_method, uri.to_s, options_key => @options)
         response_body = symbolize_keys!(response.parse)
         fail_or_return_response_body(response.code, response_body)
       end
 
       private
+
+        def build_http_client
+          http_client = HTTP.timeout(@http_timeout).headers(headers)
+          http_client = http_client.via(*client.http_proxy) if client.http_proxy
+          http_client
+        end
 
         def set_request_headers(custom_headers = {})
           @headers = {}
