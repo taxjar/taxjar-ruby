@@ -12,6 +12,7 @@ module Taxjar
     attribute :has_nexus,          :boolean
     attribute :freight_taxable,    :boolean
     attribute :tax_source,         :string
+    attribute :exemption_type,     :string
 
     object_attr_reader Taxjar::Jurisdictions, :jurisdictions
     object_attr_reader Taxjar::Breakdown, :breakdown
