@@ -72,6 +72,7 @@ describe Taxjar::API::Refund do
       expect(refund.transaction_date).to eq("2015-05-14T00:00:00Z")
       expect(refund.transaction_reference_id).to eq("123")
       expect(refund.provider).to eql('api')
+      expect(refund.exemption_type).to eq('non_exempt')
       expect(refund.from_country).to eq('US')
       expect(refund.from_zip).to eq('93107')
       expect(refund.from_state).to eq('CA')
@@ -109,6 +110,7 @@ describe Taxjar::API::Refund do
                 :transaction_date => '2015/05/14',
                 :transaction_reference_id => '123',
                 :provider => 'api',
+                :exemption_type => 'non_exempt',
                 :to_country => 'US',
                 :to_zip => '90002',
                 :to_state => 'CA',
@@ -140,6 +142,7 @@ describe Taxjar::API::Refund do
       expect(refund.transaction_date).to eq("2015-05-14T00:00:00Z")
       expect(refund.transaction_reference_id).to eq("123")
       expect(refund.provider).to eq('api')
+      expect(refund.exemption_type).to eq('non_exempt')
       expect(refund.from_country).to eq('US')
       expect(refund.from_zip).to eq('93107')
       expect(refund.from_state).to eq('CA')
@@ -178,6 +181,7 @@ describe Taxjar::API::Refund do
                 :amount => 17.95,
                 :shipping => 2.0,
                 :sales_tax => 0.95,
+                :exemption_type => 'non_exempt',
                 :line_items => [{:quantity => 1,
                                  :product_identifier => '12-34243-9',
                                  :description => 'Heavy Widget',
@@ -201,6 +205,7 @@ describe Taxjar::API::Refund do
       expect(refund.transaction_date).to eq("2015-05-14T00:00:00Z")
       expect(refund.transaction_reference_id).to eq("123")
       expect(refund.provider).to eq('api')
+      expect(refund.exemption_type).to eq('non_exempt')
       expect(refund.from_country).to eq('US')
       expect(refund.from_zip).to eq('93107')
       expect(refund.from_state).to eq('CA')
@@ -249,6 +254,7 @@ describe Taxjar::API::Refund do
       expect(refund.transaction_date).to eq("2015-05-14T00:00:00Z")
       expect(refund.transaction_reference_id).to eq("123")
       expect(refund.provider).to eq('api')
+      expect(refund.exemption_type).to eq('non_exempt')
       expect(refund.from_country).to eq('US')
       expect(refund.from_zip).to eq('93107')
       expect(refund.from_state).to eq('CA')
