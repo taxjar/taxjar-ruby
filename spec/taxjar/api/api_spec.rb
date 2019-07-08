@@ -168,6 +168,7 @@ describe Taxjar::API do
                 :to_zip => '07446',
                 :amount => 16.50,
                 :shipping => 1.5,
+                :exemption_type => 'non_exempt',
                 :line_items => [{:line_item => {:id => '1',
                                                 :quantity => 1,
                                                 :unit_price => 15.0,
@@ -191,6 +192,7 @@ describe Taxjar::API do
       expect(tax.has_nexus).to eq(true)
       expect(tax.freight_taxable).to eq(true)
       expect(tax.tax_source).to eq('destination')
+      expect(tax.exemption_type).to eq('non_exempt')
     end
 
     it 'allows access to jurisdictions' do
@@ -275,6 +277,7 @@ describe Taxjar::API do
         expect(tax.has_nexus).to eq(true)
         expect(tax.freight_taxable).to eq(true)
         expect(tax.tax_source).to eq('destination')
+        expect(tax.exemption_type).to eq('non_exempt')
       end
 
       it 'allows access to jurisdictions' do
@@ -330,6 +333,7 @@ describe Taxjar::API do
         expect(tax.has_nexus).to eq(true)
         expect(tax.freight_taxable).to eq(true)
         expect(tax.tax_source).to eq('destination')
+        expect(tax.exemption_type).to eq('non_exempt')
       end
 
       it 'allows access to jurisdictions' do

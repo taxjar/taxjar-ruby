@@ -71,6 +71,7 @@ describe Taxjar::API::Order do
       expect(order.user_id).to eq(10649)
       expect(order.transaction_date).to eq('2015-05-14T00:00:00Z')
       expect(order.provider).to eq('api')
+      expect(order.exemption_type).to eq('non_exempt')
       expect(order.from_country).to eq('US')
       expect(order.from_zip).to eq('93107')
       expect(order.from_state).to eq('CA')
@@ -107,6 +108,7 @@ describe Taxjar::API::Order do
       @order = {:transaction_id => '123',
                 :transaction_date => '2015/05/14',
                 :provider => 'api',
+                :exemption_type => 'non_exempt',
                 :to_country => 'US',
                 :to_zip => '90002',
                 :to_city => 'Los Angeles',
@@ -137,6 +139,7 @@ describe Taxjar::API::Order do
       expect(order.user_id).to eq(10649)
       expect(order.transaction_date).to eq("2015-05-14T00:00:00Z")
       expect(order.provider).to eq('api')
+      expect(order.exemption_type).to eq('non_exempt')
       expect(order.from_country).to eq('US')
       expect(order.from_zip).to eq('93107')
       expect(order.from_state).to eq('CA')
@@ -174,6 +177,7 @@ describe Taxjar::API::Order do
       @order = {:transaction_id => '123',
                 :amount => 17.95,
                 :shipping => 2.0,
+                :exemption_type => 'non_exempt',
                 :line_items => [{:id => 1,
                                  :quantity => 1,
                                  :product_identifier => '12-34243-0',
@@ -197,6 +201,7 @@ describe Taxjar::API::Order do
       expect(order.user_id).to eq(10649)
       expect(order.transaction_date).to eq("2015-05-14T00:00:00Z")
       expect(order.provider).to eq('api')
+      expect(order.exemption_type).to eq('non_exempt')
       expect(order.from_country).to eq('US')
       expect(order.from_zip).to eq('93107')
       expect(order.from_state).to eq('CA')
@@ -244,6 +249,7 @@ describe Taxjar::API::Order do
       expect(order.user_id).to eq(10649)
       expect(order.transaction_date).to eq("2015-05-14T00:00:00Z")
       expect(order.provider).to eq('api')
+      expect(order.exemption_type).to eq('non_exempt')
       expect(order.from_country).to eq('US')
       expect(order.from_zip).to eq('93107')
       expect(order.from_state).to eq('CA')

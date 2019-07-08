@@ -9,6 +9,7 @@ module Taxjar
     attribute :transaction_date,         :string
     attribute :transaction_reference_id, :string
     attribute :provider,                 :string
+    attribute :exemption_type,           :string
     attribute :from_country,             :string
     attribute :from_zip,                 :string
     attribute :from_state,               :string

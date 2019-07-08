@@ -8,6 +8,7 @@
     "has_nexus": true,
     "freight_taxable": true,
     "tax_source": "destination",
+    "exemption_type": "non_exempt",
     "jurisdictions": {
       "country": "CA",
       "state": "ON"
