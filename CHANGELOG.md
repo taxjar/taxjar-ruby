@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.6.0] - 2019-07-09
+- Support `exemption_type` param for order-level exempt transactions
+
 ## [2.5.0] - 2019-06-19
 - Support `provider` param for marketplace exempt transactions
 - Add proxy support when instantiating client
@@ -31,7 +34,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update minimum required Ruby version to 2.0
 - Update HTTP (The Gem) to 2.2
 
-[Unreleased]: https://github.com/taxjar/taxjar-ruby/compare/v2.5.0...HEAD
+[Unreleased]: https://github.com/taxjar/taxjar-ruby/compare/v2.6.0...HEAD
+[2.6.0]: https://github.com/taxjar/taxjar-ruby/compare/v2.5.0...v2.6.0
 [2.5.0]: https://github.com/taxjar/taxjar-ruby/compare/v2.4.1...v2.5.0
 [2.4.1]: https://github.com/taxjar/taxjar-ruby/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/taxjar/taxjar-ruby/compare/v2.3.0...v2.4.0
