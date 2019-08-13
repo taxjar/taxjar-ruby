@@ -4,11 +4,17 @@ require 'http'
 module Taxjar
   module API
     class Request
+      extend Forwardable
+
       DEFAULT_API_URL = 'https://api.taxjar.com'
       SANDBOX_API_URL = 'https://api.sandbox.taxjar.com'
 
       class << self
         attr_accessor :logger
+
+        def http_logger_supported?
+          HTTP::Options.available_features.key?(:logging)
+        end
       end
 
       attr_reader :client, :uri, :headers, :request_method, :path, :object_key, :options
@@ -38,12 +44,14 @@ module Taxjar
 
       private
 
+        delegate %i[logger http_logger_supported?] => :'self.class'
+
         def build_http_client
           http_client = HTTP.timeout(@http_timeout).headers(headers)
           http_client = http_client.via(*client.http_proxy) if client.http_proxy
 
-          if self.class.logger
-            http_client.use(logging: { logger: self.class.logger })
+          if http_logger_supported? && logger
+            http_client.use(logging: { logger: logger })
           else
             http_client
           end

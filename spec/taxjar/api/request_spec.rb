@@ -209,13 +209,27 @@ describe Taxjar::API::Request do
         described_class.logger = nil
       end
 
-      it 'logs  both request and response' do
-        subject.perform
-        expect(logger).to have_received(:info)
-        expect(logger).to have_received(:debug)
+      if HTTP::Options.available_features.key?(:logging)
+        context 'when HTTP logging supported' do
+          it 'logs both request and response' do
+            allow(described_class).to receive(:http_logger_supported?).and_return(true)
+            subject.perform
+            expect(logger).to have_received(:info)
+            expect(logger).to have_received(:debug)
 
-        expect(logger).to have_received(:info)
-        expect(logger).to have_received(:debug)
+            expect(logger).to have_received(:info)
+            expect(logger).to have_received(:debug)
+          end
+        end
+      end
+
+      context 'when HTTP logging is unsupported' do
+        it "doesn't use the provided logger" do
+          allow(described_class).to receive(:http_logger_supported?).and_return(false)
+          subject.perform
+          expect(logger).not_to have_received(:info)
+          expect(logger).not_to have_received(:debug)
+        end
       end
     end
 
