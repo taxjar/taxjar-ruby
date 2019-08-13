@@ -13,6 +13,26 @@ describe Taxjar::API::Request do
     end
   end
 
+  describe '.logger' do
+    after do
+      described_class.logger = nil
+    end
+
+    it 'has no default logger' do
+      expect(described_class).to respond_to(:logger)
+      expect(described_class.logger).to be_nil
+    end
+
+    it 'allows setting a logger' do
+      logger = double('Logger')
+
+      expect(described_class).to respond_to(:logger=)
+
+      described_class.logger = logger
+      expect(described_class.logger).to eq(logger)
+    end
+  end
+
   describe "attr_accessors" do
     let(:client){ Taxjar::Client.new(api_key: 'AK')}
     let(:subject) do
@@ -165,6 +185,37 @@ describe Taxjar::API::Request do
                     :headers => {content_type: 'application/json; charset=UTF-8'})
 
         expect(subject.perform).to eq({id: '3'})
+      end
+    end
+
+    context 'with a logger' do
+      let(:logger) { double('Logger 2') }
+
+      before do
+        stub_request(:get, "https://api.taxjar.com/api_path").
+          with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
+                            'Host'=>'api.taxjar.com',
+                            'User-Agent'=>"TaxjarRubyGem/#{Taxjar::Version.to_s}"}).
+          to_return(:status => 200, :body => '{"object": {"id": "3"}}',
+                    :headers => {content_type: 'application/json; charset=UTF-8'})
+
+        allow(logger).to receive(:info)
+        allow(logger).to receive(:debug)
+
+        described_class.logger = logger
+      end
+
+      after do
+        described_class.logger = nil
+      end
+
+      it 'logs  both request and response' do
+        subject.perform
+        expect(logger).to have_received(:info)
+        expect(logger).to have_received(:debug)
+
+        expect(logger).to have_received(:info)
+        expect(logger).to have_received(:debug)
       end
     end
 

@@ -7,6 +7,10 @@ module Taxjar
       DEFAULT_API_URL = 'https://api.taxjar.com'
       SANDBOX_API_URL = 'https://api.sandbox.taxjar.com'
 
+      class << self
+        attr_accessor :logger
+      end
+
       attr_reader :client, :uri, :headers, :request_method, :path, :object_key, :options
 
       # @param client [Taxjar::Client]
@@ -37,7 +41,12 @@ module Taxjar
         def build_http_client
           http_client = HTTP.timeout(@http_timeout).headers(headers)
           http_client = http_client.via(*client.http_proxy) if client.http_proxy
-          http_client
+
+          if self.class.logger
+            http_client.use(logging: { logger: self.class.logger })
+          else
+            http_client
+          end
         end
 
         def set_request_headers(custom_headers = {})
