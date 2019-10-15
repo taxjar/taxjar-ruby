@@ -61,6 +61,10 @@ module Taxjar
         new(message, code)
       end
 
+      def for_json_parse_error(code)
+        ServerError.new("Couldn't parse response as JSON.", code)
+      end
+
     end
 
     def initialize(message = '', code = nil)
