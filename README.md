@@ -14,7 +14,7 @@ A Ruby interface to the TaxJar [Sales Tax API](https://developers.taxjar.com/api
 [Installation](#installation)<br>
 [Authentication](#authentication)<br>
 [Usage](#usage)<br>
-[Custom Options](#customer-options)<br>
+[Custom Options](#custom-options)<br>
 [Sandbox Environment](#sandbox-environment)<br>
 [Error Handling](#error-handling)<br>
 [Tests](#tests)<br>
@@ -71,28 +71,28 @@ You're now ready to use TaxJar! [Check out our quickstart guide](https://develop
 
 ## Usage
 
-[`categories` - List all tax categories](#list-all-tax-categories-smallapi-docssmall-smallapi-docssmall)<br>
-[`tax_for_order` - Calculate sales tax for an order](#calculate-sales-tax-for-an-order-smallapi-docssmall)<br>
-[`list_orders` - List order transactions](#list-order-transactions-smallapi-docssmall)<br>
-[`show_order` - Show order transaction](#show-order-transaction-smallapi-docssmall)<br>
-[`create_order` - Create order transaction](#create-order-transaction-smallapi-docssmall)<br>
-[`update_order` - Update order transaction](#update-order-transaction-smallapi-docssmall)<br>
-[`delete_order` - Delete order transaction](#delete-order-transaction-smallapi-docssmall)<br>
-[`list_refunds` - List refund transactions](#list-refund-transactions-smallapi-docssmall)<br>
-[`show_refund` - Show refund transaction](#show-refund-transaction-smallapi-docssmall)<br>
-[`create_refund` - Create refund transaction](#create-refund-transaction-smallapi-docssmall)<br>
-[`update_refund` - Update refund transaction](#update-refund-transaction-smallapi-docssmall)<br>
-[`delete_refund` - Delete refund transaction](#delete-refund-transaction-smallapi-docssmall)<br>
-[`list_customers` - List customers](#list-customers-smallapi-docssmall)<br>
-[`show_customer` - Show customer](#show-customer-smallapi-docssmall)<br>
-[`create_customer` - Create customer](#create-customer-smallapi-docssmall)<br>
-[`update_customer` - Update customer](#update-customer-smallapi-docssmall)<br>
-[`delete_customer` - Delete customer](#delete-customer-smallapi-docssmall)<br>
-[`rates_for_location` - List tax rates for a location (by zip/postal code)](#list-tax-rates-for-a-location-(by-zip/postal-code)-smallapi-docssmall)<br>
-[`nexus_regions` - List nexus regions](#list-nexus-regions-smallapi-docssmall)<br>
-[`validate_address` - Validate an address](#validate-an-address-smallapi-docssmall)<br>
-[`validate` - Validate a VAT number](#validate-a-vat-number-smallapi-docssmall)<br>
-[`summary_rates` - Summarize tax rates for all regions](#summarize-tax-rates-for-all-regions-smallapi-docssmall)
+[`categories` - List all tax categories](#list-all-tax-categories-api-docs)<br>
+[`tax_for_order` - Calculate sales tax for an order](#calculate-sales-tax-for-an-order-api-docs)<br>
+[`list_orders` - List order transactions](#list-order-transactions-api-docs)<br>
+[`show_order` - Show order transaction](#show-order-transaction-api-docs)<br>
+[`create_order` - Create order transaction](#create-order-transaction-api-docs)<br>
+[`update_order` - Update order transaction](#update-order-transaction-api-docs)<br>
+[`delete_order` - Delete order transaction](#delete-order-transaction-api-docs)<br>
+[`list_refunds` - List refund transactions](#list-refund-transactions-api-docs)<br>
+[`show_refund` - Show refund transaction](#show-refund-transaction-api-docs)<br>
+[`create_refund` - Create refund transaction](#create-refund-transaction-api-docs)<br>
+[`update_refund` - Update refund transaction](#update-refund-transaction-api-docs)<br>
+[`delete_refund` - Delete refund transaction](#delete-refund-transaction-api-docs)<br>
+[`list_customers` - List customers](#list-customers-api-docs)<br>
+[`show_customer` - Show customer](#show-customer-api-docs)<br>
+[`create_customer` - Create customer](#create-customer-api-docs)<br>
+[`update_customer` - Update customer](#update-customer-api-docs)<br>
+[`delete_customer` - Delete customer](#delete-customer-api-docs)<br>
+[`rates_for_location` - List tax rates for a location (by zip/postal code)](#list-tax-rates-for-a-location-by-zippostal-code-api-docs)<br>
+[`nexus_regions` - List nexus regions](#list-nexus-regions-api-docs)<br>
+[`validate_address` - Validate an address](#validate-an-address-api-docs)<br>
+[`validate` - Validate a VAT number](#validate-a-vat-number-api-docs)<br>
+[`summary_rates` - Summarize tax rates for all regions](#summarize-tax-rates-for-all-regions-api-docs)
 
 <hr>
 
@@ -1070,7 +1070,7 @@ client.delete_customer('123')
 
 > Shows the sales tax rates for a given location.
 >
-> **Please note this method only returns the full combined rate for a given location.** It does not support nexus determination, sourcing based on a ship from and ship to address, shipping taxability, product exemptions, customer exemptions, or sales tax holidays. We recommend using [`tax_for_order` to accurately calculate sales tax for an order](#calculate-sales-tax-for-an-order-smallAPI-docssmall).
+> **Please note this method only returns the full combined rate for a given location.** It does not support nexus determination, sourcing based on a ship from and ship to address, shipping taxability, product exemptions, customer exemptions, or sales tax holidays. We recommend using [`tax_for_order` to accurately calculate sales tax for an order](#calculate-sales-tax-for-an-order-api-docs).
 
 #### Definition
 
@@ -1268,7 +1268,7 @@ validation = client.validate({
 
 > Retrieve minimum and average sales tax rates by region as a backup.
 >
-> This method is useful for periodically pulling down rates to use if the SmartCalcs API is unavailable. However, it does not support nexus determination, sourcing based on a ship from and ship to address, shipping taxability, product exemptions, customer exemptions, or sales tax holidays. We recommend using [`TaxForOrder` to accurately calculate sales tax for an order](#calculate-sales-tax-for-an-order-smallAPI-docssmall).
+> This method is useful for periodically pulling down rates to use if the SmartCalcs API is unavailable. However, it does not support nexus determination, sourcing based on a ship from and ship to address, shipping taxability, product exemptions, customer exemptions, or sales tax holidays. We recommend using [`TaxForOrder` to accurately calculate sales tax for an order](#calculate-sales-tax-for-an-order-api-docs).
 
 #### Definition
 
