@@ -232,6 +232,16 @@ describe Taxjar::API::Request do
         end
       end
     end
+    it 'handles unexpected Content-Type responses' do
+      stub_request(:get, "https://api.taxjar.com/api_path").
+        with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
+                          'Host'=>'api.taxjar.com',
+                          'User-Agent'=>"TaxjarRubyGem/#{Taxjar::Version.to_s}"}).
+        to_return(:status => 200, :body => 'Something unexpected',
+                  :headers => {content_type: 'text/html; charset=UTF-8'})
+
+      expect{subject.perform}.to raise_error(Taxjar::Error::ServerError)
+    end
 
     Taxjar::Error::ERRORS.each do |status, exception|
       context "when HTTP status is #{status}" do

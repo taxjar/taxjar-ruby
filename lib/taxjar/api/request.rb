@@ -38,7 +38,12 @@ module Taxjar
       def perform
         options_key = [:get, :delete].include?(@request_method) ? :params : :json
         response = build_http_client.request(request_method, uri.to_s, options_key => @options)
-        response_body = symbolize_keys!(response.parse)
+        response_body =
+          begin
+            symbolize_keys!(response.parse(:json))
+          rescue JSON::ParserError
+            nil
+          end
         fail_or_return_response_body(response.code, response_body)
       end
 
@@ -91,6 +96,7 @@ module Taxjar
         end
 
         def extract_error(code, body)
+          return Taxjar::Error.for_json_parse_error(code) if body.nil?
           klass = Taxjar::Error::ERRORS[code]
           if !klass.nil?
             klass.from_response(body)
