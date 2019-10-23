@@ -2,10 +2,28 @@
 
 <a href="http://developers.taxjar.com"><img src="http://www.taxjar.com/img/TJ_logo_color_office_png.png" alt="TaxJar" width="220"></a>
 
-A Ruby interface to the TaxJar [Sales Tax API](https://developers.taxjar.com/api/reference/). TaxJar makes sales tax filing easier for online sellers and merchants. See local jurisdictional tax reports, get payment reminders, and more. You can use our API to access TaxJar API endpoints, which can get information on sales tax rates, categories or upload transactions.
+A Ruby interface to the TaxJar [Sales Tax API](https://developers.taxjar.com/api/reference/?ruby). TaxJar makes sales tax filing easier for online sellers and merchants. See local jurisdictional tax reports, get payment reminders, and more. You can use our API to access TaxJar API endpoints, which can get information on sales tax rates, categories or upload transactions.
 
 * This wrapper supports 100% of [SmartCalcs v2](http://developers.taxjar.com/api/#introduction)
 * Data returned from API calls are mapped to Ruby objects
+
+<hr>
+
+[Supported Ruby Versions](#supported-ruby-versions)<br>
+[Gem Dependencies](#gem-dependencies)<br>
+[Installation](#installation)<br>
+[Authentication](#authentication)<br>
+[Usage](#usage)<br>
+[Custom Options](#customer-options)<br>
+[Sandbox Environment](#sandbox-environment)<br>
+[Error Handling](#error-handling)<br>
+[Tests](#tests)<br>
+[More Information](#more-information)<br>
+[License](#license)<br>
+[Support](#support)<br>
+[Contributing](#contributing)
+
+<hr>
 
 ## Supported Ruby Versions
 
@@ -53,7 +71,35 @@ You're now ready to use TaxJar! [Check out our quickstart guide](https://develop
 
 ## Usage
 
-### List all tax categories
+[`categories` - List all tax categories](#list-all-tax-categories-smallapi-docssmall-smallapi-docssmall)<br>
+[`tax_for_order` - Calculate sales tax for an order](#calculate-sales-tax-for-an-order-smallapi-docssmall)<br>
+[`list_orders` - List order transactions](#list-order-transactions-smallapi-docssmall)<br>
+[`show_order` - Show order transaction](#show-order-transaction-smallapi-docssmall)<br>
+[`create_order` - Create order transaction](#create-order-transaction-smallapi-docssmall)<br>
+[`update_order` - Update order transaction](#update-order-transaction-smallapi-docssmall)<br>
+[`delete_order` - Delete order transaction](#delete-order-transaction-smallapi-docssmall)<br>
+[`list_refunds` - List refund transactions](#list-refund-transactions-smallapi-docssmall)<br>
+[`show_refund` - Show refund transaction](#show-refund-transaction-smallapi-docssmall)<br>
+[`create_refund` - Create refund transaction](#create-refund-transaction-smallapi-docssmall)<br>
+[`update_refund` - Update refund transaction](#update-refund-transaction-smallapi-docssmall)<br>
+[`delete_refund` - Delete refund transaction](#delete-refund-transaction-smallapi-docssmall)<br>
+[`list_customers` - List customers](#list-customers-smallapi-docssmall)<br>
+[`show_customer` - Show customer](#show-customer-smallapi-docssmall)<br>
+[`create_customer` - Create customer](#create-customer-smallapi-docssmall)<br>
+[`update_customer` - Update customer](#update-customer-smallapi-docssmall)<br>
+[`delete_customer` - Delete customer](#delete-customer-smallapi-docssmall)<br>
+[`rates_for_location` - List tax rates for a location (by zip/postal code)](#list-tax-rates-for-a-location-(by-zip/postal-code)-smallapi-docssmall)<br>
+[`nexus_regions` - List nexus regions](#list-nexus-regions-smallapi-docssmall)<br>
+[`validate_address` - Validate an address](#validate-an-address-smallapi-docssmall)<br>
+[`validate` - Validate a VAT number](#validate-a-vat-number-smallapi-docssmall)<br>
+[`summary_rates` - Summarize tax rates for all regions](#summarize-tax-rates-for-all-regions-smallapi-docssmall)
+
+<hr>
+
+
+### List all tax categories <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#get-list-tax-categories))_</small>
+
+> The TaxJar API provides product-level tax rules for a subset of product categories. These categories are to be used for products that are either exempt from sales tax in some jurisdictions or are taxed at reduced rates. You need not pass in a product tax code for sales tax calculations on product that is fully taxable. Simply leave that parameter out.
 
 #### Definition
 
@@ -92,7 +138,939 @@ client.categories
 ]
 ```
 
-### List tax rates for a location (by zip/postal code)
+### Calculate sales tax for an order <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#post-calculate-sales-tax-for-an-order))_</small>
+
+> Shows the sales tax that should be collected for a given order.
+
+#### Definition
+
+```ruby
+client.tax_for_order
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.tax_for_order({
+    :from_country => 'US',
+    :from_zip => '94025',
+    :from_state => 'CA',
+    :from_city => 'Menlo Park',
+    :from_street => '2825 Sand Hill Rd',
+    :to_country => 'US',
+    :to_zip => '94303',
+    :to_state => 'CA',
+    :to_city => 'Palo Alto',
+    :to_street => '5230 Newell Road',
+    :amount => 267.9,
+    :shipping => 0,
+    :nexus_addresses => [{:country => 'US',
+                          :state => 'CA'}],
+    :line_items => [{:id => '1',
+                     :quantity => 1,
+                     :product_tax_code => '19005',
+                     :unit_price => 535.8,
+                     :discount => 267.9}]
+})
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Tax:0x00000a @attrs={
+  :taxable_amount => 0,
+  :tax_source => 'destination',
+  :shipping => 0,
+  :rate => 0,
+  :order_total_amount => 267.9
+  :jurisdictions => #<Taxjar::Jurisdictions:0x00000a @attrs={
+    :state => 'CA',
+    :county => 'SAN MATEO',
+    :country => 'US',
+    :city => 'EAST PALO ALTO'
+  }>,
+  :has_nexus => true,
+  :freight_taxable => false,
+  :breakdown => #<Taxjar::Breakdown:0x00000a @attrs={
+    :taxable_amount => 0,
+    :tax_collectable => 0,
+    :state_taxable_amount => 0,
+    :state_tax_rate => 0,
+    :state_tax_collectable => 0,
+    :special_tax_rate => 0,
+    :special_district_taxable_amount => 0,
+    :special_district_tax_collectable => 0,
+    :line_items => [
+      #<Taxjar::BreakdownLineItem:0x00000a @attrs={
+        :taxable_amount => 0,
+        :tax_collectable => 0,
+        :state_taxable_amount => 0,
+        :state_sales_tax_rate => 0,
+        :state_amount => 0,
+        :special_tax_rate => 0,
+        :special_district_taxable_amount => 0,
+        :special_district_amount => 0,
+        :id => '1',
+        :county_taxable_amount => 0,
+        :county_tax_rate => 0,
+        :county_amount => 0,
+        :combined_tax_rate => 0,
+        :city_taxable_amount => 0,
+        :city_tax_rate => 0,
+        :city_amount => 0,
+      }>
+    ],
+    :county_taxable_amount => 0,
+    :county_tax_rate => 0,
+    :county_tax_collectable => 0,
+    :combined_tax_rate => 0,
+    :city_taxable_amount => 0,
+    :city_tax_rate => 0,
+    :city_tax_collectable => 0
+  }>
+  :amount_to_collect => 0
+}>
+```
+
+### List order transactions <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#get-list-order-transactions))_</small>
+
+> Lists existing order transactions created through the API.
+
+#### Definition
+
+```ruby
+client.list_orders
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.list_orders({:from_transaction_date => '2015/05/01',
+                    :to_transaction_date => '2015/05/31'})
+```
+
+#### Example Response
+
+```ruby
+['20', '21', '22']
+```
+
+### Show order transaction <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#get-show-an-order-transaction))_</small>
+
+> Shows an existing order transaction created through the API.
+
+#### Definition
+
+```ruby
+client.show_order
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.show_order('123')
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Order:0x00000a @attrs={
+  :transaction_id => '123',
+  :user_id => 11836,
+  :transaction_date => '2015-05-14T00:00:00Z',
+  :transaction_reference_id => nil,
+  :from_country => 'US',
+  :from_zip => 93107,
+  :from_state => 'CA',
+  :from_city => 'SANTA BARBARA',
+  :from_street => '1281 State St',
+  :to_country => 'US',
+  :to_zip => 90002,
+  :to_state => 'CA',
+  :to_city => 'LOS ANGELES',
+  :to_street => '123 Palm Grove Ln',
+  :amount => 17,
+  :shipping => 2,
+  :sales_tax => 0.95,
+  :line_items => [
+    {
+      :id => '1',
+      :quantity => 1,
+      :product_identifier => '12-34243-0',
+      :product_tax_code => nil,
+      :description => 'Heavy Widget',
+      :unit_price => 15,
+      :discount => 0,
+      :sales_tax => 0.95
+    }
+  ]
+}>
+```
+
+### Create order transaction <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#post-create-an-order-transaction))_</small>
+
+> Creates a new order transaction.
+
+#### Definition
+
+```ruby
+client.create_order
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+order = client.create_order({
+    :transaction_id => '123',
+    :transaction_date => '2015/05/15',
+    :from_country => 'US',
+    :from_zip => '94025',
+    :from_state => 'CA',
+    :from_city => 'Menlo Park',
+    :from_street => '2825 Sand Hill Rd',
+    :to_country => 'US',
+    :to_zip => '94303',
+    :to_state => 'CA',
+    :to_city => 'Palo Alto',
+    :to_street => '5230 Newell Road',
+    :amount => 267.9,
+    :shipping => 0,
+    :sales_tax => 0,
+    :line_items => [{:id => '1',
+                     :quantity => 1,
+                     :description => 'Legal Services',
+                     :product_tax_code => '19005',
+                     :unit_price => 535.8,
+                     :discount => 267.9,
+                     :sales_tax => 0}]
+})
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Order:0x00000a @attrs={
+  :transaction_id => '123',
+  :user_id => 11836,
+  :provider => 'api',
+  :transaction_date => '2015-05-15T00:00:00Z',
+  :transaction_reference_id => nil,
+  :customer_id => nil,
+  :exemption_type => nil,
+  :from_country => 'US',
+  :from_zip => '94025',
+  :from_state => 'CA',
+  :from_city => 'MENLO PARK',
+  :from_street => '2825 Sand Hill Rd',
+  :to_country => 'US',
+  :to_zip => '94303',
+  :to_state => 'CA',
+  :to_city => 'PALO ALTO',
+  :to_street => '5230 Newell Rd',
+  :amount => 267.9,
+  :shipping => 0,
+  :sales_tax => 0,
+  :line_items => [
+    {
+      :id => '1',
+      :quantity => 1,
+      :product_identifier => nil,
+      :product_tax_code => '19005',
+      :description => 'Legal Services',
+      :unit_price => 535.8,
+      :discount => 267.9,
+      :sales_tax => 0
+    }
+  ]
+}>
+```
+
+### Update order transaction <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#put-update-an-order-transaction))_</small>
+
+> Updates an existing order transaction created through the API.
+
+#### Definition
+
+```ruby
+client.update_order
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+order = client.update_order({
+    :transaction_id => '123',
+    :amount => 283.6,
+    :shipping => 5,
+    :sales_tax => 1.04,
+    :line_items => [
+      {
+        :id => '1',
+        :quantity => 1,
+        :description => 'Legal Services',
+        :product_tax_code => '19005',
+        :unit_price => 535.8,
+        :discount => 267.9,
+        :sales_tax => 0
+      },
+      {
+        :id => '2',
+        :quantity => 2,
+        :description => 'Hoberman Switch Pitch',
+        :unit_price => 10.7,
+        :discount => 10.7,
+        :sales_tax => 1.04
+      }
+    ]
+})
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Order:0x00000a @attrs={
+  :transaction_id => '123',
+  :user_id => 11836,
+  :provider => 'api',
+  :transaction_date => '2015-05-15T00:00:00Z',
+  :transaction_reference_id => nil,
+  :customer_id => nil,
+  :exemption_type => nil,
+  :from_country => 'US',
+  :from_zip => '94025',
+  :from_state => 'CA',
+  :from_city => 'MENLO PARK',
+  :from_street => '2825 Sand Hill Rd',
+  :to_country => 'US',
+  :to_zip => '94303',
+  :to_state => 'CA',
+  :to_city => 'PALO ALTO',
+  :to_street => '5230 Newell Road',
+  :amount => 283.6,
+  :shipping => 5,
+  :sales_tax => 1.04,
+  :line_items => [
+    {
+      :id => '1',
+      :quantity => 1,
+      :product_identifier => nil,
+      :product_tax_code => '19005',
+      :description => 'Legal Services',
+      :unit_price => 535.8,
+      :discount => 267.9,
+      :sales_tax => 0
+    },
+    {
+      :id => '2',
+      :quantity => 2,
+      :product_identifier => nil,
+      :product_tax_code => nil,
+      :description => 'Hoberman Switch Pitch',
+      :unit_price => 10.7,
+      :discount => 10.7,
+      :sales_tax => 1.04
+    }
+  ]
+}>
+```
+
+### Delete order transaction <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#delete-delete-an-order-transaction))_</small>
+
+> Deletes an existing order transaction created through the API.
+
+#### Definition
+
+```ruby
+client.delete_order
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.delete_order('123')
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Order:0x00000a @attrs={
+  :transaction_id => '123',
+  :user_id => 11836,
+  :provider => 'api',
+  :transaction_date => nil,
+  :transaction_reference_id => nil,
+  :customer_id => nil,
+  :exemption_type => nil,
+  :from_country => nil,
+  :from_zip => nil,
+  :from_state => nil,
+  :from_city => nil,
+  :from_street => nil,
+  :to_country => nil,
+  :to_zip => nil,
+  :to_state => nil,
+  :to_city => nil,
+  :to_street => nil,
+  :amount => nil,
+  :shipping => nil,
+  :sales_tax => nil,
+  :line_items => []
+}>
+```
+
+### List refund transactions <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#get-list-refund-transactions))_</small>
+
+> Lists existing refund transactions created through the API.
+
+#### Definition
+
+```ruby
+client.list_refunds
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.list_refunds({:from_transaction_date => '2015/05/01',
+                     :to_transaction_date => '2015/05/31'})
+```
+
+#### Example Response
+
+```ruby
+['20-refund', '21-refund', '22-refund']
+```
+
+### Show refund transaction <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#get-show-a-refund-transaction))_</small>
+
+> Shows an existing refund transaction created through the API.
+
+#### Definition
+
+```ruby
+client.show_refund
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.show_refund('20-refund')
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Refund:0x00000a @attrs={
+  :transaction_id => '20-refund',
+  :user_id => 11836,
+  :provider => 'api',
+  :transaction_date => '2015-05-15T00:00:00Z',
+  :transaction_reference_id => '20',
+  :customer_id => nil,
+  :exemption_type => nil,
+  :from_country => 'US',
+  :from_zip => 93107,
+  :from_state => 'CA',
+  :from_city => 'SANTA BARBARA',
+  :from_street => '1218 State St',
+  :to_country => 'US',
+  :to_zip => 90002,
+  :to_state => 'CA',
+  :to_city => 'LOS ANGELES',
+  :to_street => '123 Palm Grove Ln',
+  :amount => -17,
+  :shipping => -2,
+  :sales_tax => -0.95,
+  :line_items => [
+    {
+      :id => '1',
+      :quantity => 1,
+      :product_identifier => '12-34243-0',
+      :product_tax_code => nil,
+      :description => 'Heavy Widget',
+      :unit_price => -15,
+      :discount => 0,
+      :sales_tax => -0.95
+    }
+  ]
+}>
+```
+
+### Create refund transaction <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#post-create-a-refund-transaction))_</small>
+
+> Creates a new refund transaction.
+
+#### Definition
+
+```ruby
+client.create_refund
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+refund = client.create_refund({
+    :transaction_id => '123-refund',
+    :transaction_reference_id => '123',
+    :transaction_date => '2015/05/15',
+    :from_country => 'US',
+    :from_zip => '94025',
+    :from_state => 'CA',
+    :from_city => 'Menlo Park',
+    :from_street => '2825 Sand Hill Rd',
+    :to_country => 'US',
+    :to_zip => '94303',
+    :to_state => 'CA',
+    :to_city => 'Palo Alto',
+    :to_street => '5230 Newell Road',
+    :amount => -5.35,
+    :shipping => -0,
+    :sales_tax => -0.52,
+    :line_items => [
+      {
+        :id => '1',
+        :quantity => 1,
+        :description => 'Legal Services',
+        :product_tax_code => '19005',
+        :unit_price => -0,
+        :discount => -0,
+        :sales_tax => -0
+      },
+      {
+        :id => '2',
+        :quantity => 1,
+        :description => 'Hoberman Switch Pitch',
+        :unit_price => -0,
+        :discount => -5.35,
+        :sales_tax => -0.52
+      }
+    ]
+})
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Refund:0x00000a @attrs={
+  :transaction_id => '123-refund',
+  :user_id => 11836,
+  :provider => 'api',
+  :transaction_date => '2015-05-15T00:00:00Z',
+  :transaction_reference_id => '123',
+  :customer_id => nil,
+  :exemption_type => nil,
+  :from_country => 'US',
+  :from_zip => '94025',
+  :from_state => 'CA',
+  :from_city => 'MENLO PARK',
+  :from_street => '2825 Sand Hill Rd',
+  :to_country => 'US',
+  :to_zip => '94303',
+  :to_state => 'CA',
+  :to_city => 'PALO ALTO',
+  :to_street => '5230 Newell Road',
+  :amount => -5.35,
+  :shipping => -0,
+  :sales_tax => -0.52,
+  :line_items => [
+    {
+      :id => '1',
+      :quantity => 1,
+      :product_identifier => nil,
+      :product_tax_code => '19005',
+      :description => 'Legal Services',
+      :unit_price => 0,
+      :discount => 0,
+      :sales_tax => 0
+    },
+    {
+      :id => '2',
+      :quantity => 1,
+      :product_identifier => nil,
+      :product_tax_code => nil,
+      :description => 'Hoberman Switch Pitch',
+      :unit_price => 0,
+      :discount => -5.35,
+      :sales_tax => -0.52
+    }
+  ]
+}>
+```
+
+### Update refund transaction <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#put-update-a-refund-transaction))_</small>
+
+> Updates an existing refund transaction created through the API.
+
+#### Definition
+
+```ruby
+client.update_refund
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+refund = client.update_refund({
+  :transaction_id => '123-refund',
+  :transaction_reference_id => '123',
+  :amount => -10.35,
+  :shipping => -5
+})
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Refund:0x00000a @attrs={
+  :transaction_id => '123-refund',
+  :user_id => 11836,
+  :provider => 'api',
+  :transaction_date => '2015-05-15T00:00:00Z',
+  :transaction_reference_id => '123',
+  :customer_id => nil,
+  :exemption_type => nil,
+  :from_country => 'US',
+  :from_zip => '94025',
+  :from_state => 'CA',
+  :from_city => 'MENLO PARK',
+  :from_street => '2825 Sand Hill Rd',
+  :to_country => 'US',
+  :to_zip => '94303',
+  :to_state => 'CA',
+  :to_city => 'PALO ALTO',
+  :to_street => '5230 Newell Road',
+  :amount => -10.35,
+  :shipping => -5,
+  :sales_tax => 0,
+  :line_items => [
+    {
+      :id => '1',
+      :quantity => 1,
+      :product_identifier => nil,
+      :product_tax_code => '19005',
+      :description => 'Legal Services',
+      :unit_price => 0,
+      :discount => 0,
+      :sales_tax => 0
+    },
+    {
+      :id => '2',
+      :quantity => 1,
+      :product_identifier => nil,
+      :product_tax_code => nil,
+      :description => 'Hoberman Switch Pitch',
+      :unit_price => 0,
+      :discount => -5.35,
+      :sales_tax => -0.52
+    }
+  ]
+}>
+```
+
+### Delete refund transaction <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#delete-delete-a-refund-transaction))_</small>
+
+> Deletes an existing refund transaction created through the API.
+
+#### Definition
+
+```ruby
+client.delete_refund
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.delete_refund('123-refund')
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Refund:0x00000a @attrs={
+  :transaction_id => '123-refund',
+  :user_id => 11836,
+  :provider => 'api',
+  :transaction_date => nil,
+  :transaction_reference_id => nil,
+  :customer_id => nil,
+  :exemption_type => nil,
+  :from_country => nil,
+  :from_zip => nil,
+  :from_state => nil,
+  :from_city => nil,
+  :from_street => nil,
+  :to_country => nil,
+  :to_zip => nil,
+  :to_state => nil,
+  :to_city => nil,
+  :to_street => nil,
+  :amount => nil,
+  :shipping => nil,
+  :sales_tax => nil,
+  :line_items => []
+}>
+```
+
+### List customers <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#get-list-customers))_</small>
+
+> Lists existing customers created through the API.
+
+#### Definition
+
+```ruby
+client.list_customers
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.list_customers
+```
+
+#### Example Response
+
+```ruby
+['123', '124', '125']
+```
+
+### Show customer <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#get-show-a-customer))_</small>
+
+> Shows an existing customer created through the API.
+
+#### Definition
+
+```ruby
+client.show_customer
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.show_customer('123')
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Customer @attrs={
+  :customer_id => "123",
+  :exemption_type => "wholesale",
+  :exempt_regions => [
+    [0] {
+      :country => "US",
+      :state => "FL"
+    },
+    [1] {
+      :country => "US",
+      :state => "PA"
+    }
+  ],
+  :name => "Dunder Mifflin Paper Company",
+  :country => "US",
+  :state => "PA",
+  :zip => "18504",
+  :city => "Scranton",
+  :street => "1725 Slough Avenue"
+}>
+```
+
+### Create customer <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#post-create-a-customer))_</small>
+
+> Creates a new customer.
+
+#### Definition
+
+```ruby
+client.create_customer
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+customer = client.create_customer({
+  :customer_id => '123',
+  :exemption_type => 'wholesale',
+  :name => 'Dunder Mifflin Paper Company',
+  :exempt_regions => [
+    {
+      :country => 'US',
+      :state => 'FL'
+    },
+    {
+      :country => 'US',
+      :state => 'PA'
+    }
+  ],
+  :country => 'US',
+  :state => 'PA',
+  :zip => '18504',
+  :city => 'Scranton',
+  :street => '1725 Slough Avenue'
+})
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Customer @attrs={
+  :customer_id => "123",
+  :exemption_type => "wholesale",
+  :exempt_regions => [
+    [0] {
+      :country => "US",
+      :state => "FL"
+    },
+    [1] {
+      :country => "US",
+      :state => "PA"
+    }
+  ],
+  :name => "Dunder Mifflin Paper Company",
+  :country => "US",
+  :state => "PA",
+  :zip => "18504",
+  :city => "Scranton",
+  :street => "1725 Slough Avenue"
+}>
+```
+
+### Update customer <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#put-update-a-customer))_</small>
+
+> Updates an existing customer created through the API.
+
+#### Definition
+
+```ruby
+client.update_customer
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+customer = client.update_customer({
+  :customer_id => '123',
+  :exemption_type => 'wholesale',
+  :name => 'Sterling Cooper',
+  :exempt_regions => [
+    {
+      :country => 'US',
+      :state => 'NY'
+    }
+  ],
+  :country => 'US',
+  :state => 'NY',
+  :zip => '10010',
+  :city => 'New York',
+  :street => '405 Madison Ave'
+})
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Customer @attrs={
+  :customer_id => "123",
+  :exemption_type => "wholesale",
+  :exempt_regions => [
+    [0] {
+      :country => "US",
+      :state => "NY"
+    }
+  ],
+  :name => "Sterling Cooper",
+  :country => "US",
+  :state => "NY",
+  :zip => "10010",
+  :city => "New York",
+  :street => "405 Madison Ave"
+}>
+```
+
+### Delete customer <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#delete-delete-a-customer))_</small>
+
+> Deletes an existing customer created through the API.
+
+#### Definition
+
+```ruby
+client.delete_customer
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
+
+client.delete_customer('123')
+```
+
+#### Example Response
+
+```ruby
+#<Taxjar::Customer @attrs={
+  :customer_id => "123",
+  :exemption_type => "wholesale",
+  :exempt_regions => [],
+  :name => "Dunder Mifflin Paper Company",
+  :country => "US",
+  :state => "PA",
+  :zip => "18504",
+  :city => "Scranton",
+  :street => "1725 Slough Avenue"
+}>
+```
+
+### List tax rates for a location (by zip/postal code) <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#get-show-tax-rates-for-a-location))_</small>
+
+> Shows the sales tax rates for a given location.
+>
+> **Please note this method only returns the full combined rate for a given location.** It does not support nexus determination, sourcing based on a ship from and ship to address, shipping taxability, product exemptions, customer exemptions, or sales tax holidays. We recommend using [`tax_for_order` to accurately calculate sales tax for an order](#calculate-sales-tax-for-an-order-smallAPI-docssmall).
 
 #### Definition
 
@@ -164,840 +1142,9 @@ rates = client.rates_for_location('00150', {
 }>
 ```
 
-### Calculate Sales tax for an order
+### List nexus regions <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#get-list-nexus-regions))_</small>
 
-#### Definition
-
-```ruby
-client.tax_for_order
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-client.tax_for_order({
-    :to_country => 'US',
-    :to_zip => '90002',
-    :to_city => 'Los Angeles',
-    :to_state => 'CA',
-    :from_country => 'US',
-    :from_zip => '92093',
-    :from_city => 'San Diego',
-    :amount => 15,
-    :shipping => 1.5,
-    :nexus_addresses => [{:address_id => 1,
-                          :country => 'US',
-                          :zip => '93101',
-                          :state => 'CA',
-                          :city => 'Santa Barbara',
-                          :street => '1218 State St.'}],
-    :line_items => [{:quantity => 1,
-                     :unit_price => 15,
-                     :product_tax_code => 20010}]
-})
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Tax:0x00000a @attrs={
-  :order_total_amount => 16.5,
-  :amount_to_collect => 1.35,
-  :has_nexus => true,
-  :freight_taxable => false,
-  :tax_source => 'destination',
-  :jurisdictions => #<Taxjar::Jurisdictions:0x00000a @attrs={
-    :country => 'US',
-    :state => 'CA',
-    :county => 'LOS ANGELES',
-    :city => 'LOS ANGELES'
-  }>,
-  :breakdown => #<Taxjar::Breakdown:0x00000a @attrs={
-    :state_taxable_amount => 15,
-    :state_tax_collectable => 0.98,
-    :county_taxable_amount => 15,
-    :county_tax_collectable => 0.15,
-    :city_taxable_amount => 0,
-    :city_tax_collectable => 0,
-    :special_district_taxable_amount => 15,
-    :special_district_tax_collectable => 0.22,
-    :line_items => [
-      #<Taxjar::BreakdownLineItem:0x00000a @attrs={
-        :id => '1',
-        :state_taxable_amount => 15,
-        :state_sales_tax_rate => 0.065,
-        :county_taxable_amount => 15,
-        :county_tax_rate => 0.01,
-        :city_taxable_amount => 0,
-        :city_tax_rate => 0,
-        :special_district_taxable_amount => 15,
-        :special_tax_rate => 0.015
-      }>
-    ]
-  }>
-}>
-```
-
-### List order transactions
-
-#### Definition
-
-```ruby
-client.list_orders
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-client.list_orders({:from_transaction_date => '2014/01/01',
-                    :to_transaction_date => '2015/05/30'})
-```
-
-#### Example Response
-
-```ruby
-['20', '21', '22']
-```
-
-### Show order transaction
-
-#### Definition
-
-```ruby
-client.show_order
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-client.show_order('123')
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Order:0x00000a @attrs={
-  :transaction_id => '123',
-  :user_id => 11836,
-  :transaction_date => '2015-05-14T00:00:00Z',
-  :transaction_reference_id => nil,
-  :from_country => 'US',
-  :from_zip => 93107,
-  :from_state => 'CA',
-  :from_city => 'SANTA BARBARA',
-  :from_street => '1281 State St',
-  :to_country => 'US',
-  :to_zip => 90002,
-  :to_state => 'CA',
-  :to_city => 'LOS ANGELES',
-  :to_street => '123 Palm Grove Ln',
-  :amount => 17,
-  :shipping => 2,
-  :sales_tax => 0.95,
-  :line_items => [
-    {
-      :id => '1',
-      :quantity => 1,
-      :product_identifier => '12-34243-0',
-      :product_tax_code => nil,
-      :description => 'Heavy Widget',
-      :unit_price => 15,
-      :discount => 0,
-      :sales_tax => 0.95
-    }
-  ]
-}>
-```
-
-### Create order transaction
-
-#### Definition
-
-```ruby
-client.create_order
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-order = client.create_order({
-    :transaction_id => '123',
-    :transaction_date => '2015/05/14',
-    :from_state => 'CA',
-    :from_city => 'Santa Barbara',
-    :from_street => '1218 State St',
-    :from_country => 'US',
-    :from_zip => '93101',
-    :to_country => 'US',
-    :to_state => 'CA',
-    :to_city => 'Los Angeles',
-    :to_street => '123 Palm Grove Ln',
-    :to_zip => '90002',
-    :amount => 16.5,
-    :shipping => 1.5,
-    :sales_tax => 0.95,
-    :line_items => [{:quantity => 1,
-                     :product_identifier => '12-34243-9',
-                     :description => 'Fuzzy Widget',
-                     :unit_price => 15,
-                     :sales_tax => 0.95}]
-})
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Order:0x00000a @attrs={
-  :transaction_id => '20',
-  :user_id => 11836,
-  :transaction_date => '2015-05-14T00:00:00Z',
-  :transaction_reference_id => nil,
-  :from_country => 'US',
-  :from_zip => 93101,
-  :from_state => 'CA',
-  :from_city => 'SANTA BARBARA',
-  :from_street => '1218 State St',
-  :to_country => 'US',
-  :to_zip => 90002,
-  :to_state => 'CA',
-  :to_city => 'LOS ANGELES',
-  :to_street => '123 Palm Grove Ln',
-  :amount => 16.5,
-  :shipping => 1.5,
-  :sales_tax => 0.95,
-  :line_items => [
-    {
-      :id => '1',
-      :quantity => 1,
-      :product_identifier => '12-34243-9',
-      :product_tax_code => nil,
-      :description => 'Fuzzy Widget',
-      :unit_price => 15,
-      :discount => 0,
-      :sales_tax => 0.95
-    }
-  ]
-}>
-```
-
-### Update order transaction
-
-#### Definition
-
-```ruby
-client.update_order
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-order = client.update_order({
-    :transaction_id => '123',
-    :amount => 17,
-    :shipping => 2,
-    :line_items => [{:quantity => 1,
-                     :product_identifier => '12-34243-0',
-                     :description => 'Heavy Widget',
-                     :unit_price => 15,
-                     :discount => 0,
-                     :sales_tax => 0.95}]
-})
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Order:0x00000a @attrs={
-  :transaction_id => '123',
-  :user_id => 11836,
-  :transaction_date => '2015-05-14T00:00:00Z',
-  :transaction_reference_id => nil,
-  :from_country => 'US',
-  :from_zip => 93101,
-  :from_state => 'CA',
-  :from_city => 'SANTA BARBARA',
-  :from_street => '1218 State St',
-  :to_country => 'US',
-  :to_zip => 90002,
-  :to_state => 'CA',
-  :to_city => 'LOS ANGELES',
-  :to_street => '123 Palm Grove Ln',
-  :amount => 17,
-  :shipping => 2,
-  :sales_tax => 0.95,
-  :line_items => [
-    {
-      :id => '1',
-      :quantity => 1,
-      :product_identifier => '12-34243-0',
-      :product_tax_code => nil,
-      :description => 'Heavy Widget',
-      :unit_price => 15,
-      :discount => 0,
-      :sales_tax => 0.95
-    }
-  ]
-}>
-```
-
-### Delete order transaction
-
-#### Definition
-
-```ruby
-client.delete_order
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-client.delete_order('123')
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Order:0x00000a @attrs={
-  :transaction_id => '123',
-  :user_id => 11836,
-  :transaction_date => '2015-05-14T00:00:00Z',
-  :transaction_reference_id => nil,
-  :from_country => 'US',
-  :from_zip => 93101,
-  :from_state => 'CA',
-  :from_city => 'SANTA BARBARA',
-  :from_street => '1218 State St',
-  :to_country => 'US',
-  :to_zip => 90002,
-  :to_state => 'CA',
-  :to_city => 'LOS ANGELES',
-  :to_street => '123 Palm Grove Ln',
-  :amount => 17,
-  :shipping => 2,
-  :sales_tax => 0.95,
-  :line_items => [
-    {
-      :id => '1',
-      :quantity => 1,
-      :product_identifier => '12-34243-0',
-      :product_tax_code => nil,
-      :description => 'Heavy Widget',
-      :unit_price => 15,
-      :discount => 0,
-      :sales_tax => 0.95
-    }
-  ]
-}>
-```
-
-### Listing refund transactions
-
-#### Definition
-
-```ruby
-client.list_refunds
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-client.list_refunds({:from_transaction_date => '2014/01/01',
-                     :to_transaction_date => '2015/05/30'})
-```
-
-#### Example Response
-
-```ruby
-['203', '204', '205']
-```
-
-### Show refund transaction
-
-#### Definition
-
-```ruby
-client.show_refund
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-client.show_refund('321')
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Refund:0x00000a @attrs={
-  :transaction_id => '321',
-  :user_id => 11836,
-  :transaction_date => '2015-06-14T00:00:00Z',
-  :transaction_reference_id => 123,
-  :from_country => 'US',
-  :from_zip => 93107,
-  :from_state => 'CA',
-  :from_city => 'SANTA BARBARA',
-  :from_street => '1218 State St',
-  :to_country => 'US',
-  :to_zip => 90002,
-  :to_state => 'CA',
-  :to_city => 'LOS ANGELES',
-  :to_street => '123 Palm Grove Ln',
-  :amount => 17,
-  :shipping => 2,
-  :sales_tax => 0.95,
-  :line_items => [
-    {
-      :id => '1',
-      :quantity => 1,
-      :product_identifier => '12-34243-0',
-      :product_tax_code => nil,
-      :description => 'Heavy Widget',
-      :unit_price => 15,
-      :discount => 0,
-      :sales_tax => 0.95
-    }
-  ]
-}>
-```
-
-### Create refund transaction
-
-#### Definition
-
-```ruby
-client.create_refund
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-refund = client.create_refund({
-    :transaction_id => '321',
-    :transaction_date => '2015/05/14',
-    :transaction_reference_id => '123',
-    :from_country => 'US',
-    :from_zip => '93107',
-    :from_state => 'CA',
-    :from_city => 'Santa Barbara',
-    :from_street => '1218 State St',
-    :to_country => 'US',
-    :to_zip => '90002',
-    :to_state => 'CA',
-    :to_city => 'Los Angeles',
-    :to_street => '123 Palm Grove Ln',
-    :amount => 16.5,
-    :shipping => 1.5,
-    :sales_tax => 0.95,
-    :line_items => [{:quantity => 1,
-                     :product_identifier => '12-34243-9',
-                     :description => 'Fuzzy Widget',
-                     :unit_price => 15,
-                     :sales_tax => 0.95}]
-})
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Refund:0x00000a @attrs={
-  :transaction_id => '321',
-  :user_id => 11836,
-  :transaction_date => '2015-06-14T00:00:00Z',
-  :transaction_reference_id => '123',
-  :from_country => 'US',
-  :from_zip => 93107,
-  :from_state => 'CA',
-  :from_city => 'SANTA BARBARA',
-  :from_street => '1218 State St',
-  :to_country => 'US',
-  :to_zip => 90002,
-  :to_state => 'CA',
-  :to_city => 'LOS ANGELES',
-  :to_street => '123 Palm Grove Ln',
-  :amount => 16.5,
-  :shipping => 1.5,
-  :sales_tax => 0.95,
-  :line_items => [
-    {
-      :id => '1',
-      :quantity => 1,
-      :product_identifier => '12-34243-0',
-      :product_tax_code => nil,
-      :description => 'Heavy Widget',
-      :unit_price => 15,
-      :discount => 0,
-      :sales_tax => 0.95
-    }
-  ]
-}>
-```
-
-### Update refund transaction
-
-#### Definition
-
-```ruby
-client.update_refund
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-refund = client.update_refund({
-    :transaction_id => '321',
-    :amount => 17,
-    :shipping => 2,
-    :sales_tax => 0.95,
-    :line_items => [{:quantity => 1,
-                     :product_identifier => '12-34243-9',
-                     :description => 'Heavy Widget',
-                     :unit_price => 15,
-                     :sales_tax => 0.95}]
-})
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Refund:0x00000a @attrs={
-  :transaction_id => '321',
-  :user_id => 11836,
-  :transaction_date => '2015-06-14T00:00:00Z',
-  :transaction_reference_id => '123',
-  :from_country => 'US',
-  :from_zip => 93107,
-  :from_state => 'CA',
-  :from_city => 'SANTA BARBARA',
-  :from_street => '1218 State St',
-  :to_country => 'US',
-  :to_zip => 90002,
-  :to_state => 'CA',
-  :to_city => 'LOS ANGELES',
-  :to_street => '123 Palm Grove Ln',
-  :amount => 17.95,
-  :shipping => 2,
-  :sales_tax => 0.95,
-  :line_items => [
-    {
-      :id => '1',
-      :quantity => 1,
-      :product_identifier => '12-34243-9',
-      :product_tax_code => nil,
-      :description => 'Heavy Widget',
-      :unit_price => 15,
-      :discount => 0,
-      :sales_tax => 0.95
-    }
-  ]
-}>
-```
-
-### Delete refund transaction
-
-#### Definition
-
-```ruby
-client.delete_refund
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-client.delete_refund('321')
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Refund:0x00000a @attrs={
-  :transaction_id => '321',
-  :user_id => 11836,
-  :transaction_date => '2015-06-14T00:00:00Z',
-  :transaction_reference_id => '123',
-  :from_country => 'US',
-  :from_zip => 93107,
-  :from_state => 'CA',
-  :from_city => 'SANTA BARBARA',
-  :from_street => '1218 State St',
-  :to_country => 'US',
-  :to_zip => 90002,
-  :to_state => 'CA',
-  :to_city => 'LOS ANGELES',
-  :to_street => '123 Palm Grove Ln',
-  :amount => 17.95,
-  :shipping => 2,
-  :sales_tax => 0.95,
-  :line_items => [
-    {
-      :id => '1',
-      :quantity => 1,
-      :product_identifier => '12-34243-9',
-      :product_tax_code => nil,
-      :description => 'Heavy Widget',
-      :unit_price => 15,
-      :discount => 0,
-      :sales_tax => 0.95
-    }
-  ]
-}>
-```
-
-### List customers
-
-#### Definition
-
-```ruby
-client.list_customers
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-client.list_customers
-```
-
-#### Example Response
-
-```ruby
-['123', '124', '125']
-```
-
-### Show customer
-
-#### Definition
-
-```ruby
-client.show_customer
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-client.show_customer('123')
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Customer @attrs={
-  :customer_id => "123",
-  :exemption_type => "wholesale",
-  :exempt_regions => [
-    [0] {
-      :country => "US",
-      :state => "FL"
-    },
-    [1] {
-      :country => "US",
-      :state => "PA"
-    }
-  ],
-  :name => "Dunder Mifflin Paper Company",
-  :country => "US",
-  :state => "PA",
-  :zip => "18504",
-  :city => "Scranton",
-  :street => "1725 Slough Avenue"
-}>
-```
-
-### Create customer
-
-#### Definition
-
-```ruby
-client.create_customer
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-customer = client.create_customer({
-  :customer_id => '123',
-  :exemption_type => 'wholesale',
-  :name => 'Dunder Mifflin Paper Company',
-  :exempt_regions => [
-    {
-      :country => 'US',
-      :state => 'FL'
-    },
-    {
-      :country => 'US',
-      :state => 'PA'
-    }
-  ],
-  :country => 'US',
-  :state => 'PA',
-  :zip => '18504',
-  :city => 'Scranton',
-  :street => '1725 Slough Avenue'
-})
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Customer @attrs={
-  :customer_id => "123",
-  :exemption_type => "wholesale",
-  :exempt_regions => [
-    [0] {
-      :country => "US",
-      :state => "FL"
-    },
-    [1] {
-      :country => "US",
-      :state => "PA"
-    }
-  ],
-  :name => "Dunder Mifflin Paper Company",
-  :country => "US",
-  :state => "PA",
-  :zip => "18504",
-  :city => "Scranton",
-  :street => "1725 Slough Avenue"
-}>
-```
-
-### Update customer
-
-#### Definition
-
-```ruby
-client.update_customer
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-customer = client.update_customer({
-  :customer_id => '123',
-  :exemption_type => 'wholesale',
-  :name => 'Sterling Cooper',
-  :exempt_regions => [
-    {
-      :country => 'US',
-      :state => 'NY'
-    }
-  ],
-  :country => 'US',
-  :state => 'NY',
-  :zip => '10010',
-  :city => 'New York',
-  :street => '405 Madison Ave'
-})
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Customer @attrs={
-  :customer_id => "123",
-  :exemption_type => "wholesale",
-  :exempt_regions => [
-    [0] {
-      :country => "US",
-      :state => "NY"
-    }
-  ],
-  :name => "Sterling Cooper",
-  :country => "US",
-  :state => "NY",
-  :zip => "10010",
-  :city => "New York",
-  :street => "405 Madison Ave"
-}>
-```
-
-### Delete customer
-
-#### Definition
-
-```ruby
-client.delete_customer
-```
-
-#### Example Request
-
-```ruby
-require 'taxjar'
-client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78')
-
-client.delete_customer('123')
-```
-
-#### Example Response
-
-```ruby
-#<Taxjar::Customer @attrs={
-  :customer_id => "123",
-  :exemption_type => "wholesale",
-  :exempt_regions => [
-    [0] {
-      :country => "US",
-      :state => "FL"
-    },
-    [1] {
-      :country => "US",
-      :state => "PA"
-    }
-  ],
-  :name => "Dunder Mifflin Paper Company",
-  :country => "US",
-  :state => "PA",
-  :zip => "18504",
-  :city => "Scranton",
-  :street => "1725 Slough Avenue"
-}>
-```
-
-### List nexus regions
+> Lists existing nexus locations for a TaxJar account.
 
 #### Definition
 
@@ -1039,7 +1186,48 @@ nexus_regions = client.nexus_regions
 ]
 ```
 
-### Validate a VAT number
+### Validate an address <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#post-validate-an-address))_</small>
+
+> Validates a customer address and returns back a collection of address matches. **Address validation requires a [TaxJar Plus](https://www.taxjar.com/plus/) subscription.**
+
+#### Definition
+
+```ruby
+client.validate_address
+```
+
+#### Example Request
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '9e0cd62a22f451701f29c3bde214')
+
+addresses = client.validate_address({
+  :country => 'US',
+  :state => 'AZ',
+  :zip => '85297',
+  :city => 'Gilbert',
+  :street => '3301 Greenfield Rd'
+})
+```
+
+#### Example Response
+
+```ruby
+[
+  #<Taxjar::Address:0x00000a @attrs={
+    :zip => '85297-2176',
+    :street => '3301 S Greenfield Rd',
+    :state => 'AZ',
+    :country => 'US',
+    :city => 'Gilbert'
+  }>
+]
+```
+
+### Validate a VAT number <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#get-validate-a-vat-number))_</small>
+
+> Validates an existing VAT identification number against [VIES](http://ec.europa.eu/taxation_customs/vies/).
 
 #### Definition
 
@@ -1076,7 +1264,11 @@ validation = client.validate({
 }>
 ```
 
-### Summarize tax rates for all regions
+### Summarize tax rates for all regions <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#get-summarize-tax-rates-for-all-regions))_</small>
+
+> Retrieve minimum and average sales tax rates by region as a backup.
+>
+> This method is useful for periodically pulling down rates to use if the SmartCalcs API is unavailable. However, it does not support nexus determination, sourcing based on a ship from and ship to address, shipping taxability, product exemptions, customer exemptions, or sales tax holidays. We recommend using [`TaxForOrder` to accurately calculate sales tax for an order](#calculate-sales-tax-for-an-order-smallAPI-docssmall).
 
 #### Definition
 
