@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.6.1] - 2019-10-23
+- Parse all responses as JSON and improve error handling for non-JSON [#51](https://github.com/taxjar/taxjar-ruby/pull/51)
+
 ## [2.6.0] - 2019-07-09
 - Support `exemption_type` param for order-level exempt transactions
 
@@ -34,7 +37,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update minimum required Ruby version to 2.0
 - Update HTTP (The Gem) to 2.2
 
-[Unreleased]: https://github.com/taxjar/taxjar-ruby/compare/v2.6.0...HEAD
+[Unreleased]: https://github.com/taxjar/taxjar-ruby/compare/v2.6.1...HEAD
+[2.6.1]: https://github.com/taxjar/taxjar-ruby/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/taxjar/taxjar-ruby/compare/v2.5.0...v2.6.0
 [2.5.0]: https://github.com/taxjar/taxjar-ruby/compare/v2.4.1...v2.5.0
 [2.4.1]: https://github.com/taxjar/taxjar-ruby/compare/v2.4.0...v2.4.1
