@@ -41,7 +41,7 @@ describe Taxjar::API::Request do
     it 'should return headers' do
       expect(subject).to respond_to(:headers)
       expect(subject.headers).to be_instance_of(Hash)
-      expect(subject.headers[:user_agent]).to match('TaxjarRubyGem')
+      expect(subject.headers[:user_agent]).to match(/^TaxJar\/Ruby \(.+\) taxjar-ruby\/\d+\.\d+\.\d+$/)
       expect(subject.headers[:authorization]).to eq('Bearer AK')
     end
 
@@ -52,7 +52,7 @@ describe Taxjar::API::Request do
       subject = Taxjar::API::Request.new(client, :get, '/api_path', 'object')
       expect(subject).to respond_to(:headers)
       expect(subject.headers).to be_instance_of(Hash)
-      expect(subject.headers[:user_agent]).to match('TaxjarRubyGem')
+      expect(subject.headers[:user_agent]).to match(/^TaxJar\/Ruby \(.+\) taxjar-ruby\/\d+\.\d+\.\d+$/)
       expect(subject.headers[:authorization]).to eq('Bearer AK')
       expect(subject.headers['X-TJ-Expected-Response']).to eq(422)
     end
@@ -124,8 +124,7 @@ describe Taxjar::API::Request do
       it "runs through the proxy" do
         stub_request(:get, "https://api.taxjar.com/api_path").
           with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
-                            'Host'=>'api.taxjar.com',
-                            'User-Agent'=>"TaxjarRubyGem/#{Taxjar::Version.to_s}"}).
+                            'Host'=>'api.taxjar.com'}).
           to_return(:status => 200, :body => '{"object": {"id": "3"}}',
                     :headers => {content_type: 'application/json; charset=UTF-8'})
 
@@ -138,8 +137,7 @@ describe Taxjar::API::Request do
       it 'should return a body if no errors' do
         stub_request(:get, "https://api.taxjar.com/api_path").
           with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
-                            'Host'=>'api.taxjar.com',
-                            'User-Agent'=>"TaxjarRubyGem/#{Taxjar::Version.to_s}"}).
+                            'Host'=>'api.taxjar.com'}).
           to_return(:status => 200, :body => '{"object": {"id": "3"}}',
                     :headers => {content_type: 'application/json; charset=UTF-8'})
 
@@ -159,8 +157,7 @@ describe Taxjar::API::Request do
                     with(:body => "{\"city\":\"New York\"}",
                          :headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
                                       'Content-Type'=>'application/json; charset=UTF-8',
-                                      'Host'=>'api.taxjar.com',
-                                      'User-Agent'=>"TaxjarRubyGem/#{Taxjar::Version.to_s}"}).
+                                      'Host'=>'api.taxjar.com'}).
           to_return(:status => 200, :body => '{"object": {"id": "3"}}',
                     :headers => {content_type: 'application/json; charset=UTF-8'})
 
@@ -171,8 +168,7 @@ describe Taxjar::API::Request do
     it 'handles unexpected Content-Type responses' do
       stub_request(:get, "https://api.taxjar.com/api_path").
         with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
-                          'Host'=>'api.taxjar.com',
-                          'User-Agent'=>"TaxjarRubyGem/#{Taxjar::Version.to_s}"}).
+                          'Host'=>'api.taxjar.com'}).
         to_return(:status => 200, :body => 'Something unexpected',
                   :headers => {content_type: 'text/html; charset=UTF-8'})
 
@@ -184,8 +180,7 @@ describe Taxjar::API::Request do
         it "raises #{exception}" do
           stub_request(:get, "https://api.taxjar.com/api_path").
             with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
-                              'Host'=>'api.taxjar.com',
-                              'User-Agent'=>"TaxjarRubyGem/#{Taxjar::Version.to_s}"}).
+                              'Host'=>'api.taxjar.com'}).
             to_return(:status => status,
                       :body => '{"error": "Not Acceptable",
                                  "detail": "error explanation",

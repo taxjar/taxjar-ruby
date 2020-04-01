@@ -1,7 +1,7 @@
 require 'helper'
 
 describe Taxjar::Client do
-  describe '#api_key?' do 
+  describe '#api_key?' do
     it 'returns true if api_key is present' do
       client = Taxjar::Client.new(api_key: 'AK')
       expect(client.api_key?).to be true
@@ -25,14 +25,14 @@ describe Taxjar::Client do
       client.set_api_config('api_url', 'https://api.sandbox.taxjar.com')
       expect(client.api_url).to eq('https://api.sandbox.taxjar.com')
     end
-    
+
     it 'sets new custom headers' do
       client = Taxjar::Client.new(api_key: 'AK')
       client.set_api_config('headers', { 'X-TJ-Expected-Response' => 422 })
       expect(client.headers).to eq({ 'X-TJ-Expected-Response' => 422 })
     end
   end
-  
+
   describe "#get_api_config" do
     it 'gets a config value' do
       client = Taxjar::Client.new(api_key: 'AK')
@@ -44,7 +44,7 @@ describe Taxjar::Client do
   describe '#user_agent' do
     it 'returns string with version' do
       client = Taxjar::Client.new(api_key: 'AK')
-      expect(client.user_agent).to eq("TaxjarRubyGem/#{Taxjar::Version}")
+      expect(client.user_agent).to match(/^TaxJar\/Ruby \(.+\) taxjar-ruby\/\d+\.\d+\.\d+$/)
     end
   end
 end

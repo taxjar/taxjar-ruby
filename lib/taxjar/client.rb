@@ -38,7 +38,14 @@ module Taxjar
     end
 
     def user_agent
-      "TaxjarRubyGem/#{Taxjar::Version}"
+      def platform
+        (`uname -a` || '').strip
+      rescue Errno::ENOENT, Errno::ENOMEM
+        ''
+      end
+      ruby_version = "ruby #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}"
+      openSSL_version = OpenSSL::OPENSSL_LIBRARY_VERSION
+      "TaxJar/Ruby (#{platform}; #{ruby_version}; #{openSSL_version}) taxjar-ruby/#{Taxjar::Version}"
     end
   end
 end
