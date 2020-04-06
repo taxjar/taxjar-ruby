@@ -27,7 +27,7 @@ A Ruby interface to the TaxJar [Sales Tax API](https://developers.taxjar.com/api
 
 ## Supported Ruby Versions
 
-Ruby 2.0 or greater
+Ruby 2.3 or greater
 
 ## Gem Dependencies
 
