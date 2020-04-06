@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0] - 2020-04-03
+- Add information to custom user agent for debugging and informational purposes
+- Update required Ruby version from 2.0 to 2.3 or higher
+- Update HTTP (The Gem) to version 4.3
+- Relax bundler (development dependency) version requirements
+
 ## [2.6.1] - 2019-10-23
 - Parse all responses as JSON and improve error handling for non-JSON [#51](https://github.com/taxjar/taxjar-ruby/pull/51)
 
@@ -37,7 +43,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update minimum required Ruby version to 2.0
 - Update HTTP (The Gem) to 2.2
 
-[Unreleased]: https://github.com/taxjar/taxjar-ruby/compare/v2.6.1...HEAD
+[Unreleased]: https://github.com/taxjar/taxjar-ruby/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/taxjar/taxjar-ruby/compare/v2.6.1...v3.0.0
 [2.6.1]: https://github.com/taxjar/taxjar-ruby/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/taxjar/taxjar-ruby/compare/v2.5.0...v2.6.0
 [2.5.0]: https://github.com/taxjar/taxjar-ruby/compare/v2.4.1...v2.5.0
