@@ -4,7 +4,7 @@
 
 A Ruby interface to the TaxJar [Sales Tax API](https://developers.taxjar.com/api/reference/?ruby). TaxJar makes sales tax filing easier for online sellers and merchants. See local jurisdictional tax reports, get payment reminders, and more. You can use our API to access TaxJar API endpoints, which can get information on sales tax rates, categories or upload transactions.
 
-* This wrapper supports 100% of [SmartCalcs v2](https://developers.taxjar.com/api/#introduction)
+* This wrapper supports 100% of the [TaxJar API](https://developers.taxjar.com/api/#introduction)
 * Data returned from API calls are mapped to Ruby objects
 
 <hr>
@@ -1268,7 +1268,7 @@ validation = client.validate({
 
 > Retrieve minimum and average sales tax rates by region as a backup.
 >
-> This method is useful for periodically pulling down rates to use if the SmartCalcs API is unavailable. However, it does not support nexus determination, sourcing based on a ship from and ship to address, shipping taxability, product exemptions, customer exemptions, or sales tax holidays. We recommend using [`tax_for_order` to accurately calculate sales tax for an order](#calculate-sales-tax-for-an-order-api-docs).
+> This method is useful for periodically pulling down rates to use if the TaxJar API is unavailable. However, it does not support nexus determination, sourcing based on a ship from and ship to address, shipping taxability, product exemptions, customer exemptions, or sales tax holidays. We recommend using [`tax_for_order` to accurately calculate sales tax for an order](#calculate-sales-tax-for-an-order-api-docs).
 
 #### Definition
 
