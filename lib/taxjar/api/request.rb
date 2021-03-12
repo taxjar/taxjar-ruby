@@ -34,7 +34,7 @@ module Taxjar
           rescue JSON::ParserError
             nil
           end
-        fail_or_return_response_body(response.code, response_body)
+        fail_or_return_response_body(response, response_body)
       end
 
       private
@@ -72,17 +72,16 @@ module Taxjar
           object
         end
 
-        def fail_or_return_response_body(code, body)
-          e = extract_error(code, body)
-          fail(e) if e
-          body[object_key.to_sym]
-        end
-
-        def extract_error(code, body)
-          return Taxjar::Error.for_json_parse_error(code) if body.nil?
-          klass = Taxjar::Error::ERRORS[code]
-          if !klass.nil?
-            klass.from_response(body)
+        def fail_or_return_response_body(response, body)
+          if body.nil?
+            fail(Taxjar::Error.for_json_parse_error(response.code))
+          elsif response.status.success?
+            body[object_key.to_sym]
+          elsif !(klass = Taxjar::Error::ERRORS[response.code]).nil?
+            fail(klass.from_response(body))
+          else
+            message = HTTP::Response::Status::REASONS[response.code] || "Unknown Error"
+            fail(HTTP::Error, message)
           end
         end
     end

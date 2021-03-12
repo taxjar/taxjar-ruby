@@ -191,5 +191,31 @@ describe Taxjar::API::Request do
         end
       end
     end
+
+    context "when HTTP status is 502" do
+      it "raises HTTP::Error" do
+        stub_request(:get, "https://api.taxjar.com/api_path").
+          with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
+                            'Host'=>'api.taxjar.com'}).
+          to_return(:status => 502,
+                    :body => '{}',
+                    :headers => {content_type: 'application/json; charset=UTF-8'})
+
+        expect{subject.perform}.to raise_error(HTTP::Error, "Bad Gateway")
+      end
+    end
+
+    context "when HTTP status is 5xx" do
+      it "raises HTTP::Error" do
+        stub_request(:get, "https://api.taxjar.com/api_path").
+          with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
+                            'Host'=>'api.taxjar.com'}).
+          to_return(:status => 509,
+                    :body => '{}',
+                    :headers => {content_type: 'application/json; charset=UTF-8'})
+
+        expect{subject.perform}.to raise_error(HTTP::Error, "Unknown Error")
+      end
+    end
   end
 end
