@@ -81,7 +81,7 @@ module Taxjar
             fail(klass.from_response(body))
           else
             message = HTTP::Response::Status::REASONS[response.code] || "Unknown Error"
-            fail(HTTP::Error, message)
+            fail(Taxjar::Error, message)
           end
         end
     end
