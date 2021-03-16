@@ -201,7 +201,12 @@ describe Taxjar::API::Request do
                     :body => '{}',
                     :headers => {content_type: 'application/json; charset=UTF-8'})
 
-        expect{subject.perform}.to raise_error(Taxjar::Error, "Bad Gateway")
+        expect{subject.perform}.to raise_error(
+          an_instance_of(Taxjar::Error).and having_attributes({
+            "message" => "Bad Gateway",
+            "code" => 502
+          })
+        )
       end
     end
 
@@ -214,7 +219,12 @@ describe Taxjar::API::Request do
                     :body => '{}',
                     :headers => {content_type: 'application/json; charset=UTF-8'})
 
-        expect{subject.perform}.to raise_error(Taxjar::Error, "Unknown Error")
+        expect{subject.perform}.to raise_error(
+          an_instance_of(Taxjar::Error).and having_attributes({
+            "message" => "Unknown Error",
+            "code" => 509
+          })
+        )
       end
     end
   end
