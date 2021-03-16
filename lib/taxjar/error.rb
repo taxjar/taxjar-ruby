@@ -61,6 +61,11 @@ module Taxjar
         new(message, code)
       end
 
+      def from_response_code(code)
+        message = HTTP::Response::Status::REASONS[code] || "Unknown Error"
+        new(message, code)
+      end
+
       def for_json_parse_error(code)
         ServerError.new("Couldn't parse response as JSON.", code)
       end
