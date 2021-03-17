@@ -35,6 +35,8 @@ module Taxjar
             nil
           end
         fail_or_return_response_body(response, response_body)
+      rescue HTTP::Error => e
+        raise Taxjar::Error, e
       end
 
       private

@@ -175,6 +175,24 @@ describe Taxjar::API::Request do
       expect{subject.perform}.to raise_error(Taxjar::Error::ServerError)
     end
 
+    [
+      HTTP::Error,
+      HTTP::ConnectionError,
+      HTTP::RequestError,
+      HTTP::ResponseError,
+      HTTP::StateError,
+      HTTP::TimeoutError,
+      HTTP::HeaderError
+    ].each do |http_error_class|
+      context "#{http_error_class}" do
+        it "is classified as a Taxjar::Error" do
+          stub_request(:get, "https://api.taxjar.com/api_path").to_raise(http_error_class)
+
+          expect{subject.perform}.to raise_error(Taxjar::Error)
+        end
+      end
+    end
+
     Taxjar::Error::ERRORS.each do |status, exception|
       context "when HTTP status is #{status}" do
         it "raises #{exception}" do
