@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+- Support request logging
+
 ## [3.0.2] - 2021-03-18
 - Re-classify `HTTP::ConnectionError` and other `HTTP::Error` types as `Taxjar::Error`
 

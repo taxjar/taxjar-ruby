@@ -1388,6 +1388,15 @@ rescue Taxjar::Error => e
 end
 ```
 
+## Request Logging
+
+To enable logging, pass an instance of a logger to `Client`. This will be passed to the underlying HTTP client, so these are request logs.
+
+```ruby
+require 'taxjar'
+client = Taxjar::Client.new(api_key: '48ceecccc8af930bd02597aec0f84a78', logger: Logger.new(STDOUT))
+```
+
 ## Tests
 
 An RSpec test suite is available to ensure API functionality:
