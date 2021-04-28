@@ -133,6 +133,25 @@ describe Taxjar::API::Request do
       end
     end
 
+    context 'with logger' do
+      let(:client) { Taxjar::Client.new(api_key: 'AK', logger: logger) }
+      let(:logger) { double }
+
+      before do
+        stub_request(:get, "https://api.taxjar.com/api_path").
+          with(:headers => {'Authorization'=>'Bearer AK', 'Connection'=>'close',
+                            'Host'=>'api.taxjar.com'}).
+          to_return(:status => 200, :body => '{"object": {"id": "3"}}',
+                    :headers => {content_type: 'application/json; charset=UTF-8'})
+      end
+
+      it "calls the logger" do
+        expect(logger).to receive(:info).at_least(:once)
+        expect(logger).to receive(:debug).at_least(:once)
+        subject.perform
+      end
+    end
+
     context 'with get' do
       it 'should return a body if no errors' do
         stub_request(:get, "https://api.taxjar.com/api_path").

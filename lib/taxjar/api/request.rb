@@ -43,6 +43,9 @@ module Taxjar
 
         def build_http_client
           http_client = HTTP.timeout(@http_timeout).headers(headers)
+          if client.logger
+            http_client = http_client.use(logging: {logger: client.logger})
+          end
           http_client = http_client.via(*client.http_proxy) if client.http_proxy
           http_client
         end
