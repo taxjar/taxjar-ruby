@@ -1,6 +1,6 @@
 # TaxJar Sales Tax API for Ruby [![RubyGems](https://img.shields.io/gem/v/taxjar-ruby.svg?style=flat-square)](https://rubygems.org/gems/taxjar-ruby) [![Build Status](https://img.shields.io/travis/taxjar/taxjar-ruby.svg?style=flat-square)](https://travis-ci.org/taxjar/taxjar-ruby)
 
-<a href="https://developers.taxjar.com"><img src="https://www.taxjar.com/img/TJ_logo_color_office_png.png" alt="TaxJar" width="220"></a>
+<a href="https://developers.taxjar.com"><img src="https://www.taxjar.com/wp-content/uploads/TaxJar__Wordmark_Black.svg" alt="TaxJar" width="220"></a>
 
 A Ruby interface to the TaxJar [Sales Tax API](https://developers.taxjar.com/api/reference/?ruby). TaxJar makes sales tax filing easier for online sellers and merchants. See local jurisdictional tax reports, get payment reminders, and more. You can use our API to access TaxJar API endpoints, which can get information on sales tax rates, categories or upload transactions.
 
