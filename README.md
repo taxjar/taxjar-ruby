@@ -1188,7 +1188,7 @@ nexus_regions = client.nexus_regions
 
 ### Validate an address <small>_([API docs](https://developers.taxjar.com/api/reference/?ruby#post-validate-an-address))_</small>
 
-> Validates a customer address and returns back a collection of address matches. **Address validation requires a [TaxJar Plus](https://www.taxjar.com/plus/) subscription.**
+> Validates a customer address and returns back a collection of address matches. **Address validation requires a [TaxJar Professional](https://www.taxjar.com/pricing) subscription.**
 
 #### Definition
 
