@@ -39,6 +39,9 @@ module Taxjar
     # Raised when Taxjar endpoint returns the HTTP status code 503
     ServiceUnavailable = Class.new(ServerError)
 
+    # Raised when Taxjar endpoint returns the HTTP status code 504
+    GatewayTimeout = Class.new(ServerError)
+
     ERRORS = {
       400 => Taxjar::Error::BadRequest,
       401 => Taxjar::Error::Unauthorized,
@@ -50,7 +53,8 @@ module Taxjar
       422 => Taxjar::Error::UnprocessableEntity,
       429 => Taxjar::Error::TooManyRequests,
       500 => Taxjar::Error::InternalServerError,
-      503 => Taxjar::Error::ServiceUnavailable
+      503 => Taxjar::Error::ServiceUnavailable,
+      504 => Taxjar::Error::GatewayTimeout
     }
 
     class << self
