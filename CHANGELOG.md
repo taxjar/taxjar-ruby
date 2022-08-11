@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Update required Ruby version from 2.3 to 2.7 or higher
+- Update HTTP (The Gem) to version 5.x
 
 ## [3.0.3] - 2022-02-07
 - Throw a `Taxjar::Error::GatewayTimeout` exception when receiving a 504 HTTP status code
