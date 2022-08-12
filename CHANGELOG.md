@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 - Relaxes `http` version to allow >= 5
+- Encodes client user agent using ISO-8859-1 character set
 
 ## [3.0.3] - 2022-02-07
 - Throw a `Taxjar::Error::GatewayTimeout` exception when receiving a 504 HTTP status code
