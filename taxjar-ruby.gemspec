@@ -21,11 +21,11 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.3'
 
   spec.add_dependency 'addressable', '~> 2.3'
-  spec.add_dependency 'http', '>= 4.3', '< 5.0'
+  spec.add_dependency 'http', '>= 4.3'
   spec.add_dependency 'memoizable', '~> 0.4.0'
   spec.add_dependency 'model_attribute', '~> 3.2'
   spec.add_development_dependency "bundler", ">= 1.7", "< 3.0"
-  spec.add_development_dependency "rake", "~> 12.0"
+  spec.add_development_dependency "rake", "~> 13.0"
 
   if spec.respond_to?(:metadata)
     spec.metadata['changelog_uri'] = 'https://github.com/taxjar/taxjar-ruby/blob/master/CHANGELOG.md'
