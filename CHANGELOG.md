@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [3.0.4] - 2022-08-22
 - Relaxes `http` version to allow >= 5
 - Encodes client user agent using ISO-8859-1 character set
 
