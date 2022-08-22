@@ -46,5 +46,11 @@ describe Taxjar::Client do
       client = Taxjar::Client.new(api_key: 'AK')
       expect(client.user_agent).to match(/^TaxJar\/Ruby \(.+\) taxjar-ruby\/\d+\.\d+\.\d+$/)
     end
+
+    it 'encodes using the ISO-8859-1 character set' do
+      client = Taxjar::Client.new(api_key: 'AK')
+      allow(client).to receive(:platform).and_return("Curly’s MacBook Pro")
+      expect(client.user_agent).to match(/Curly\?s MacBook Pro/)
+    end
   end
 end

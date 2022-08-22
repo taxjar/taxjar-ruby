@@ -1,6 +1,7 @@
 module Taxjar
   module Version
-  module_function
+    module_function
+
     def major
       3
     end
@@ -10,7 +11,7 @@ module Taxjar
     end
 
     def patch
-      3
+      4
     end
 
     def pre
@@ -22,7 +23,7 @@ module Taxjar
         major: major,
         minor: minor,
         patch: patch,
-        pre: pre,
+        pre: pre
       }
     end
 

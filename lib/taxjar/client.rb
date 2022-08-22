@@ -45,7 +45,7 @@ module Taxjar
       end
       ruby_version = "ruby #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}"
       openSSL_version = OpenSSL::OPENSSL_LIBRARY_VERSION
-      "TaxJar/Ruby (#{platform}; #{ruby_version}; #{openSSL_version}) taxjar-ruby/#{Taxjar::Version}"
+      "TaxJar/Ruby (#{platform}; #{ruby_version}; #{openSSL_version}) taxjar-ruby/#{Taxjar::Version}".encode("ISO-8859-1", invalid: :replace, undef: :replace)
     end
   end
 end
