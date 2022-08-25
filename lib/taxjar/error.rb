@@ -67,7 +67,13 @@ module Taxjar
 
       def from_response_code(code)
         message = HTTP::Response::Status::REASONS[code] || "Unknown Error"
-        new(message, code)
+        klass = case code  
+        when 400...500 then ClientError
+        when 500...600 then ServerError
+        else  
+          self
+        end
+        klass.new(message, code)
       end
 
       def for_json_parse_error(code)
